@@ -16,7 +16,7 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center">
-      <span onClick={() => navigate(-1)}>
+      <span onClick={() => navigate(-1)} style={{ cursor: "pointer" }}>
         <BackButton />
       </span>
       <Typography fontSize="20px" textAlign="center" sx={{ width: "90%" }}>

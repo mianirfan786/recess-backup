@@ -19,7 +19,7 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center">
-      <span onClick={() => navigate("/")}>
+      <span onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
         <Logo />
       </span>
       <Button
