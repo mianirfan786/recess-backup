@@ -6,9 +6,10 @@ const StyledTextInput = styled(TextField)(() => ({
     backgroundColor: "#fff!important",
     color: "#CED1DC!important",
   },
-  "& *, & input, & label, .MuiInputBase-adornedEnd": {
-    backgroundColor: "#fff",
-  },
+  "& *, & input, & label, .MuiInputBase-adornedEnd, .MuiInputBase-adornedEnd:hover":
+    {
+      backgroundColor: "#fff",
+    },
   "& label": {
     color: "#CED1DC",
   },
