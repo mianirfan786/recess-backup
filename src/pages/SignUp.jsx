@@ -77,6 +77,9 @@ const SignUp = () => {
             backgroundColor: "#000",
             borderRadius: 8,
             padding: 2,
+            "&:hover": {
+              backgroundColor: "#000",
+            },
           }}
         >
           Sign up

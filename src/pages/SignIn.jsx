@@ -96,6 +96,9 @@ const SignIn = () => {
             backgroundColor: "#000",
             borderRadius: 8,
             padding: 2,
+            "&:hover": {
+              backgroundColor: "#000",
+            },
           }}
         >
           Sign In

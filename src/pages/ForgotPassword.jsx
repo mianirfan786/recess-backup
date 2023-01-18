@@ -56,6 +56,9 @@ const ForgotPassword = () => {
             color: "#fff",
             borderRadius: 8,
             padding: 2,
+            "&:hover": {
+              backgroundColor: "#000",
+            },
           }}
         >
           Send Reset
