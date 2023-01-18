@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import SignIn from "./pages/SignIn";
@@ -7,7 +7,7 @@ import SignUp from "./pages/SignUp";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello world!</div>,
+    element: <Navigate to="/signin" />,
     errorElement: <ErrorPage />,
   },
   {
