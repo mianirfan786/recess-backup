@@ -1,0 +1,19 @@
+/* import custom font and color */
+@import "./fonts.scss";
+@import "./variable.module.scss";
+
+/* reset style  */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "HellixRegular";
+}
+
+body {
+  font-family: "HellixRegular";
+}
+
+.gradient {
+  background: $gradient;
+}
