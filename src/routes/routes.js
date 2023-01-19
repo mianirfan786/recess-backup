@@ -10,26 +10,23 @@ const routes = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
         element: <Home />,
       },
       {
-        path: "/signin",
+        path: "/sign-in",
         element: <SignIn />,
       },
       {
-        path: "/signup",
+        path: "/sign-up",
         element: <SignUp />,
       },
       {
         path: "/forgot-password",
         element: <ForgotPassword />,
-      },
-      {
-        path: "*",
-        element: <ErrorPage />,
       },
     ],
   },
