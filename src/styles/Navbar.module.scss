@@ -1,0 +1,28 @@
+@import "./variable.module.scss";
+
+.navLink {
+  color: #afb1ba !important;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  &:hover {
+    color: $primaryColor;
+  }
+  svg,
+  span {
+    color: #afb1ba !important;
+  }
+}
+
+.navSelected {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: $primaryColor;
+  font-weight: 700;
+}
