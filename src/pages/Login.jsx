@@ -1,19 +1,18 @@
-import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 // mui imports
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
 import ContinueWithSocialMedia from "../components/ContinueWithSocialMedia";
-import Logo from "../icons/Logo";
-import StyledTextInput from "../components/StyledTextInput";
 import FormContainer from "../components/FormContainer";
+import StyledTextInput from "../components/StyledTextInput";
 import useSignIn from "../hooks/useSignIn";
+import Logo from "../icons/Logo";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -74,7 +73,7 @@ const Login = () => {
   const { inputs, formData, handleOnChange, handleSubmit } = useSignIn();
   const navigate = useNavigate();
   const handleOnSubmit = () => {
-    navigate("/explore");
+    navigate("/home");
   };
 
   return (

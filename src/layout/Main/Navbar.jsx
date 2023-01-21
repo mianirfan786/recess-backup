@@ -1,14 +1,13 @@
-import { Button, Container, Typography } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import * as React from "react";
+import { HiOutlineUser, HiUser } from "react-icons/hi";
 import { IoNotificationsOutline, IoNotificationsSharp } from "react-icons/io5";
 import { RiHome6Fill, RiHome6Line, RiSearch2Line } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
-import user from "../../images/user.jpg";
-import styles from "../../styles/Navbar.module.scss";
 
 const paths = [
   {
@@ -28,6 +27,12 @@ const paths = [
     icon: <IoNotificationsOutline />,
     activeIcon: <IoNotificationsSharp />,
     label: "Notifications",
+  },
+  {
+    path: "/profile",
+    icon: <HiOutlineUser />,
+    activeIcon: <HiUser />,
+    label: "Profile",
   },
 ];
 
@@ -95,28 +100,6 @@ const Navbar = () => {
                       {item.label}
                     </Button>
                   ))}
-                  {/* user  */}
-                  <Box
-                    onClick={() => handleNavClick("/profile")}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                    }}
-                    className={styles.user}
-                  >
-                    <img src={user} alt="" />
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color:
-                          pathname === "/profile" ? "primary.main" : "#afb1ba",
-                        fontWeight: pathname === "/profile" ? 700 : 500,
-                      }}
-                    >
-                      Profile
-                    </Typography>
-                  </Box>
                 </nav>
               </Box>
             </Box>

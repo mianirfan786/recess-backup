@@ -124,9 +124,11 @@ const PopularCard = ({ event }) => {
                 textTransform: "capitalize",
                 textShadow: "0px 4px 4px rgba(0, 0, 0, 0.15)",
                 color: "text.primary",
+                boxShadow: 0,
                 "&:hover": {
                   backgroundColor: "primary.main",
                   color: "info.main",
+                  boxShadow: 0,
                 },
               }}
               variant="contained"
@@ -174,9 +176,11 @@ const PopularCard = ({ event }) => {
               textTransform: "capitalize",
               textShadow: "0px 4px 4px rgba(0, 0, 0, 0.15)",
               color: "text.primary",
+              boxShadow: 0,
               "&:hover": {
                 backgroundColor: "primary.main",
                 color: "info.main",
+                boxShadow: 0,
               },
             }}
             variant="contained"
