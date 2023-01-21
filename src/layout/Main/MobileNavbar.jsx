@@ -103,16 +103,15 @@ const MobileNavbar = () => {
   );
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", pt: 10 }}>
       <CssBaseline />
 
       <Box
         sx={{
-          // position: "fixed",
-          // bottom: 0,
-          // display: { xs: "block", md: "none" },
+          position: "fixed",
+          bottom: 0,
           width: "100%",
-          // zIndex: 999,
+          zIndex: 999,
         }}
       >
         {mobileMenu}
