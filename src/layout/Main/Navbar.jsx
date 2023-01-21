@@ -3,7 +3,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import PropTypes from "prop-types";
 import * as React from "react";
 import { IoNotificationsOutline, IoNotificationsSharp } from "react-icons/io5";
 import { RiHome6Fill, RiHome6Line, RiSearch2Line } from "react-icons/ri";
@@ -44,66 +43,66 @@ const Navbar = () => {
     setActive(!active);
   };
 
-  const mobileMenu = (
-    <Box
-      sx={{
-        px: 2,
-        py: 1,
-        bgcolor: "info.main",
-        borderRadius: "25px 25px 0px 0px",
-        width: "100%",
-      }}
-    >
-      <nav
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 2,
-        }}
-      >
-        {paths.map((item) => (
-          <Button
-            onClick={() => handleNavClick(item.path)}
-            startIcon={pathname === item.path ? item.activeIcon : item.icon}
-            sx={{
-              textTransform: "capitalize",
-              color: pathname === item.path ? "primary" : "#afb1ba",
-              fontWeight: pathname === item.path ? 700 : 500,
-              flexDirection: "column",
-            }}
-            variant="text"
-            key={item.label}
-          >
-            {item.label}
-          </Button>
-        ))}
-        {/* user  */}
-        <Box
-          onClick={() => handleNavClick("/profile")}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 0,
-            ml: 1,
-          }}
-          className={styles.user}
-        >
-          <img src={user} alt="" />
-          <Typography
-            variant="body2"
-            sx={{
-              color: pathname === "/profile" ? "primary.main" : "#afb1ba",
-              fontWeight: pathname === "/profile" ? 700 : 500,
-            }}
-          >
-            Profile
-          </Typography>
-        </Box>
-      </nav>
-    </Box>
-  );
+  // const mobileMenu = (
+  //   <Box
+  //     sx={{
+  //       px: 2,
+  //       py: 1,
+  //       bgcolor: "info.main",
+  //       borderRadius: "25px 25px 0px 0px",
+  //       width: "100%",
+  //     }}
+  //   >
+  //     <nav
+  //       style={{
+  //         display: "flex",
+  //         flexDirection: "row",
+  //         alignItems: "center",
+  //         gap: 2,
+  //       }}
+  //     >
+  //       {paths.map((item) => (
+  //         <Button
+  //           onClick={() => handleNavClick(item.path)}
+  //           startIcon={pathname === item.path ? item.activeIcon : item.icon}
+  //           sx={{
+  //             textTransform: "capitalize",
+  //             color: pathname === item.path ? "primary" : "#afb1ba",
+  //             fontWeight: pathname === item.path ? 700 : 500,
+  //             flexDirection: "column",
+  //           }}
+  //           variant="text"
+  //           key={item.label}
+  //         >
+  //           {item.label}
+  //         </Button>
+  //       ))}
+  //       {/* user  */}
+  //       <Box
+  //         onClick={() => handleNavClick("/profile")}
+  //         sx={{
+  //           display: "flex",
+  //           flexDirection: "column",
+  //           alignItems: "center",
+  //           gap: 0,
+  //           ml: 1,
+  //         }}
+  //         className={styles.user}
+  //       >
+  //         <img src={user} alt="" />
+  //         <Typography
+  //           variant="body2"
+  //           sx={{
+  //             color: pathname === "/profile" ? "primary.main" : "#afb1ba",
+  //             fontWeight: pathname === "/profile" ? 700 : 500,
+  //           }}
+  //         >
+  //           Profile
+  //         </Typography>
+  //       </Box>
+  //     </nav>
+  //   </Box>
+  // );
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -186,7 +185,7 @@ const Navbar = () => {
         </Toolbar>
       </AppBar>
 
-      <Box
+      {/* <Box
         sx={{
           position: "fixed",
           bottom: 0,
@@ -196,13 +195,9 @@ const Navbar = () => {
         }}
       >
         {mobileMenu}
-      </Box>
+      </Box> */}
     </Box>
   );
-};
-
-Navbar.propTypes = {
-  window: PropTypes.func,
 };
 
 export default Navbar;
