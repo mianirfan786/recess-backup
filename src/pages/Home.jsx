@@ -1,3 +1,4 @@
+import Activities from "../components/HomeComponents/Activities/Activities";
 import HomeHeader from "../components/HomeComponents/HomeHeader";
 import Popular from "../components/HomeComponents/Popular/Popular";
 import RecentlyAdded from "../components/HomeComponents/RecentlyAdded/RecentlyAdded";
@@ -12,6 +13,7 @@ const Home = () => {
       <Sponsored />
       <Popular />
       <RecentlyAdded />
+      <Activities />
     </div>
   );
 };
