@@ -68,7 +68,13 @@ const RecentlyAdded = () => {
           </Box>
         </Stack>
       </Container>
-      <Container sx={{ py: { xs: 2, md: 4 } }}>
+      <Container
+        sx={{
+          py: { xs: 2, md: 4 },
+          pr: { xs: 0, md: "inherit" },
+          pl: { xs: 0.5, md: "inherit" },
+        }}
+      >
         <Swiper
           slidesPerView={1.3}
           spaceBetween={20}

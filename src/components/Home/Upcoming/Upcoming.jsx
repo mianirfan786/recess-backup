@@ -64,35 +64,49 @@ const events = [
 
 const Upcoming = () => {
   return (
-    <Container sx={{ py: { xs: 2, md: 4 } }}>
-      <Typography
-        sx={{ fontSize: { xs: 30, md: 44 }, fontWeight: 700 }}
-        color="text.secondary"
-        variant="h3"
+    <div>
+      <Container
+        sx={{
+          py: { xs: 2, md: 4 },
+        }}
       >
-        Upcoming Events
-      </Typography>
-      <Box sx={{ my: 4 }}>
-        <Swiper
-          slidesPerView={1.3}
-          spaceBetween={20}
-          breakpoints={{
-            1024: {
-              slidesPerView: 3.2,
-              spaceBetween: 20,
-            },
-          }}
-          grabCursor={true}
-          className="mySwiper"
+        <Typography
+          sx={{ fontSize: { xs: 30, md: 44 }, fontWeight: 700 }}
+          color="text.secondary"
+          variant="h3"
         >
-          {events.map((event) => (
-            <SwiperSlide key={event.id}>
-              <EventCard event={event} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Box>
-    </Container>
+          Upcoming Events
+        </Typography>
+      </Container>
+      <Container
+        sx={{
+          py: { xs: 2, md: 4 },
+          pr: { xs: 0, md: "inherit" },
+          pl: { xs: 0.5, md: "inherit" },
+        }}
+      >
+        <Box>
+          <Swiper
+            slidesPerView={1.3}
+            spaceBetween={20}
+            breakpoints={{
+              1024: {
+                slidesPerView: 3.2,
+                spaceBetween: 20,
+              },
+            }}
+            grabCursor={true}
+            className="mySwiper"
+          >
+            {events.map((event) => (
+              <SwiperSlide key={event.id}>
+                <EventCard event={event} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Box>
+      </Container>
+    </div>
   );
 };
 
