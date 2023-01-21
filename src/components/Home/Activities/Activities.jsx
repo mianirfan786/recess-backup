@@ -1,7 +1,7 @@
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import "swiper/css";
-import frisbee from "../../../images/frisbee-3.png";
-import ActivitiesCard from "./ActivitiesCard";
+import frisbee from "../../../images/firsbee-4.png";
+import EventCard from "../../EventCard/EventCard";
 
 const events = [
   {
@@ -53,7 +53,7 @@ const Activities = () => {
           >
             {events.map((event) => (
               <Grid item xs={2} sm={4} md={4} key={event.id}>
-                <ActivitiesCard event={event} />
+                <EventCard event={event} />
               </Grid>
             ))}
           </Grid>

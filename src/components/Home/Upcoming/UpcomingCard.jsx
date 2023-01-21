@@ -2,7 +2,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { BsCalendarEvent } from "react-icons/bs";
 import styles from "../../../styles/Home.module.scss";
 
-const EventCard = ({ event }) => {
+const UpcomingCard = ({ event }) => {
   const { title, time, date, bgcolor, image, eventJoined } = event;
   return (
     <Box
@@ -82,4 +82,4 @@ const EventCard = ({ event }) => {
   );
 };
 
-export default EventCard;
+export default UpcomingCard;

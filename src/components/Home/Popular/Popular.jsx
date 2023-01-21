@@ -5,7 +5,7 @@ import evenUser2 from "../../../images/even-user-2.png";
 import evenUser3 from "../../../images/even-user-3.png";
 import frisbee1 from "../../../images/frisbee-1.png";
 import frisbee2 from "../../../images/frisbee-2.png";
-import PopularCard from "./PopularCard";
+import EventCard from "../../EventCard/EventCard";
 
 const events = [
   {
@@ -71,7 +71,7 @@ const Popular = () => {
           >
             {events.map((event) => (
               <Grid item xs={2} sm={4} md={4} key={event.id}>
-                <PopularCard event={event} />
+                <EventCard event={event} />
               </Grid>
             ))}
           </Grid>

@@ -1,4 +1,3 @@
-import ExploreFilter from "../components/Explore/ExploreHeader/ExploreFilter";
 import ExploreHeader from "../components/Explore/ExploreHeader/ExploreHeader";
 import ExploreView from "../components/Explore/ExploreView/ExploreView";
 

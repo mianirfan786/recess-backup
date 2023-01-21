@@ -2,10 +2,20 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import "swiper/css";
-import styles from "../../../styles/Home.module.scss";
+import styles from "../../styles/Event.module.scss";
 
-const ActivitiesCard = ({ event }) => {
-  const { id, image, title, location, des } = event;
+const EventCard = ({ event }) => {
+  const {
+    id,
+    image,
+    title,
+    location,
+    participant,
+    date,
+    time,
+    eventJoined,
+    des,
+  } = event;
   const [like, setLike] = useState({ id: null, isLike: false });
   const handleLike = (id) => {
     setLike({ id: id, isLike: !like.isLike });
@@ -45,15 +55,68 @@ const ActivitiesCard = ({ event }) => {
           >
             {location}
           </Typography>
-          <Typography
-            sx={{ fontSize: { xs: 12, md: 14 } }}
-            color="primary"
-            variant="h6"
-            gutterBottom
-          >
-            {des}
-          </Typography>
-          {/* on mobile screen like and join  */}
+          {des && (
+            <Typography
+              sx={{ fontSize: { xs: 12, md: 14 } }}
+              color="primary"
+              variant="h6"
+              gutterBottom
+            >
+              {des}
+            </Typography>
+          )}
+          {participant > 0 && (
+            <Typography
+              sx={{ fontSize: { xs: 12, md: 14 }, mb: { xs: 1, md: 2 } }}
+              variant="body1"
+              color="error"
+            >
+              {participant} participants
+            </Typography>
+          )}
+          {date && time && (
+            <Stack
+              direction="row"
+              sx={{ mb: { xs: 1, md: 2 } }}
+              gap={{ xs: 0.5, md: 1 }}
+            >
+              <Typography
+                sx={{ fontSize: { xs: 12, md: 14 } }}
+                color="error"
+                variant="h6"
+              >
+                {date} .
+              </Typography>
+
+              <Typography
+                sx={{ fontSize: { xs: 12, md: 14 } }}
+                color="error"
+                variant="h6"
+              >
+                {time}
+              </Typography>
+            </Stack>
+          )}
+          {eventJoined?.length > 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: { xs: 0.5, md: 1 },
+              }}
+              className={styles.eventJoined}
+            >
+              <Box>
+                {eventJoined.map((user) => (
+                  <img key={user.id} src={user.image} alt="" />
+                ))}
+              </Box>
+              <Typography color="info.main" variant="h6">
+                +20
+              </Typography>
+            </Box>
+          )}
+          {/* on mobile screen, join and like */}
           <Stack
             direction="row"
             gap={2}
@@ -107,7 +170,6 @@ const ActivitiesCard = ({ event }) => {
             </Button>
           </Stack>
         </Box>
-
         {/* on desktop screen, join and like */}
         <Stack
           direction="column"
@@ -164,4 +226,4 @@ const ActivitiesCard = ({ event }) => {
   );
 };
 
-export default ActivitiesCard;
+export default EventCard;

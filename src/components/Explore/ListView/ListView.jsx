@@ -1,5 +1,5 @@
 import { Box, Container, Grid } from "@mui/material";
-import PopularCard from "../../Home/Popular/PopularCard";
+import EventCard from "../../EventCard/EventCard";
 
 const ListView = ({ events }) => {
   return (
@@ -12,7 +12,7 @@ const ListView = ({ events }) => {
         >
           {events.map((event) => (
             <Grid item xs={2} sm={4} md={4} key={event.id}>
-              <PopularCard event={event} />
+              <EventCard event={event} />
             </Grid>
           ))}
         </Grid>
