@@ -26,11 +26,21 @@
   }
 }
 
+.eventImage {
+  width: 200px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
 @media only screen and (max-width: 900px) {
   .user {
     img {
       width: 58px;
       height: 58px;
     }
+  }
+  .eventImage {
+    width: 100%;
   }
 }

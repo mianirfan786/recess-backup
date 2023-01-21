@@ -40,7 +40,7 @@ const events = [
 
 const Popular = () => {
   return (
-    <Box sx={{ bgcolor: "#F6FBF9" }}>
+    <Box sx={{ bgcolor: "#EBF2FB" }}>
       <Container sx={{ py: { xs: 2, md: 4 } }}>
         <Stack
           direction="row"

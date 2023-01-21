@@ -1,8 +1,8 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import basketball from "../../../images/basketball.png";
-import outdoor from "../../../images/outdoor.png";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import basketball from "../../../images/basketball.png";
+import outdoor from "../../../images/outdoor.png";
 
 const events = [
   {
@@ -102,12 +102,11 @@ const Sponsored = () => {
                   },
                 }}
               >
-                <Box sx={{ mt: "auto" }}>
+                <Box sx={{ mt: "auto", width: 1 }}>
                   <Typography
                     variant="h4"
                     sx={{
                       color: "#fff",
-                      fontWeight: 700,
                       width: 2 / 3,
                       zIndex: 9999,
                       mb: 2,

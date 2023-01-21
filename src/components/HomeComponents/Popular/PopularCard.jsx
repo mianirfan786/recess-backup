@@ -21,16 +21,7 @@ const PopularCard = ({ event }) => {
     >
       <Stack direction="row" justifyContent="space-between" gap={2}>
         <Box>
-          <img
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              borderRadius: "15px",
-            }}
-            src={image}
-            alt=""
-          />
+          <img className={styles.eventImage} src={image} alt="" />
         </Box>
         <Box>
           <Typography variant="h5" gutterBottom>
