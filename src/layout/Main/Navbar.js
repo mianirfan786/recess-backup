@@ -192,6 +192,7 @@ const Navbar = () => {
           bottom: 0,
           display: { xs: "block", md: "none" },
           width: "100%",
+          zIndex: 999,
         }}
       >
         {mobileMenu}
