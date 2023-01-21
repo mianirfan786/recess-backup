@@ -1,13 +1,15 @@
-import Header from "../components/HomeComponents/Header";
-import Sponsored from "../components/HomeComponents/Sponsored";
-import Upcoming from "../components/HomeComponents/Upcoming";
+import HomeHeader from "../components/HomeComponents/HomeHeader";
+import Popular from "../components/HomeComponents/Popular/Popular";
+import Sponsored from "../components/HomeComponents/Sponsored/Sponsored";
+import Upcoming from "../components/HomeComponents/Upcoming/Upcoming";
 
 const Home = () => {
   return (
     <div>
-      <Header />
+      <HomeHeader />
       <Upcoming />
       <Sponsored />
+      <Popular />
     </div>
   );
 };

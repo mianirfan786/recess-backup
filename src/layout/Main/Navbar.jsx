@@ -43,67 +43,6 @@ const Navbar = () => {
     setActive(!active);
   };
 
-  // const mobileMenu = (
-  //   <Box
-  //     sx={{
-  //       px: 2,
-  //       py: 1,
-  //       bgcolor: "info.main",
-  //       borderRadius: "25px 25px 0px 0px",
-  //       width: "100%",
-  //     }}
-  //   >
-  //     <nav
-  //       style={{
-  //         display: "flex",
-  //         flexDirection: "row",
-  //         alignItems: "center",
-  //         gap: 2,
-  //       }}
-  //     >
-  //       {paths.map((item) => (
-  //         <Button
-  //           onClick={() => handleNavClick(item.path)}
-  //           startIcon={pathname === item.path ? item.activeIcon : item.icon}
-  //           sx={{
-  //             textTransform: "capitalize",
-  //             color: pathname === item.path ? "primary" : "#afb1ba",
-  //             fontWeight: pathname === item.path ? 700 : 500,
-  //             flexDirection: "column",
-  //           }}
-  //           variant="text"
-  //           key={item.label}
-  //         >
-  //           {item.label}
-  //         </Button>
-  //       ))}
-  //       {/* user  */}
-  //       <Box
-  //         onClick={() => handleNavClick("/profile")}
-  //         sx={{
-  //           display: "flex",
-  //           flexDirection: "column",
-  //           alignItems: "center",
-  //           gap: 0,
-  //           ml: 1,
-  //         }}
-  //         className={styles.user}
-  //       >
-  //         <img src={user} alt="" />
-  //         <Typography
-  //           variant="body2"
-  //           sx={{
-  //             color: pathname === "/profile" ? "primary.main" : "#afb1ba",
-  //             fontWeight: pathname === "/profile" ? 700 : 500,
-  //           }}
-  //         >
-  //           Profile
-  //         </Typography>
-  //       </Box>
-  //     </nav>
-  //   </Box>
-  // );
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -184,18 +123,6 @@ const Navbar = () => {
           </Container>
         </Toolbar>
       </AppBar>
-
-      {/* <Box
-        sx={{
-          position: "fixed",
-          bottom: 0,
-          display: { xs: "block", md: "none" },
-          width: "100%",
-          zIndex: 999,
-        }}
-      >
-        {mobileMenu}
-      </Box> */}
     </Box>
   );
 };

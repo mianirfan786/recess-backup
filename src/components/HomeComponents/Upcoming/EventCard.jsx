@@ -1,6 +1,6 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { BsCalendarEvent } from "react-icons/bs";
-import styles from "../../styles/Home.module.scss";
+import styles from "../../../styles/Home.module.scss";
 
 const EventCard = ({ event }) => {
   const { title, time, date, bgcolor, image, eventJoined } = event;
@@ -25,11 +25,9 @@ const EventCard = ({ event }) => {
         >
           <BsCalendarEvent className={styles.calendarIcon} />
           <Typography color="info.main" variant="h6">
-            {date}
+            {date} .
           </Typography>
-          <Typography color="info.main" variant="h6">
-            {" . "}
-          </Typography>
+
           <Typography color="info.main" variant="h6">
             {time}
           </Typography>

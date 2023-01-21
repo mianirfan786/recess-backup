@@ -3,7 +3,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import user from "../../images/user.jpg";
 import styles from "../../styles/Home.module.scss";
 
-const Header = () => {
+const HomeHeader = () => {
   return (
     <Container sx={{ py: { xs: 2, md: 4 } }}>
       <Stack
@@ -57,4 +57,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HomeHeader;

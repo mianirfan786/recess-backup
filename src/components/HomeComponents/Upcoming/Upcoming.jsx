@@ -1,10 +1,10 @@
 import { Box, Container, Typography } from "@mui/material";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import evenUser1 from "../../images/even-user-1.png";
-import evenUser2 from "../../images/even-user-2.png";
-import evenUser3 from "../../images/even-user-3.png";
-import vollyballMatch from "../../images/vollyball-match.png";
+import evenUser1 from "../../../images/even-user-1.png";
+import evenUser2 from "../../../images/even-user-2.png";
+import evenUser3 from "../../../images/even-user-3.png";
+import vollyballMatch from "../../../images/vollyball-match.png";
 import EventCard from "./EventCard";
 
 const events = [

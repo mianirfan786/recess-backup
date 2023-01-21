@@ -1,6 +1,6 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import basketball from "../../images/basketball.png";
-import outdoor from "../../images/outdoor.png";
+import basketball from "../../../images/basketball.png";
+import outdoor from "../../../images/outdoor.png";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -41,7 +41,7 @@ const events = [
 
 const Sponsored = () => {
   return (
-    <Box>
+    <Box sx={{ bgcolor: "#F6FBF9" }}>
       <Container sx={{ py: { xs: 2, md: 4 } }}>
         <Stack
           direction="row"
