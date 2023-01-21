@@ -75,7 +75,7 @@ const Upcoming = () => {
       <Box sx={{ my: 4 }}>
         <Swiper
           slidesPerView={1.3}
-          spaceBetween={10}
+          spaceBetween={20}
           breakpoints={{
             1024: {
               slidesPerView: 3.2,

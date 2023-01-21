@@ -15,11 +15,7 @@ const EventCard = ({ event }) => {
     >
       <img className={styles.eventThumb} src={image} alt="" />
       <Box sx={{ my: { xs: 1, md: 2 }, px: 1 }}>
-        <Typography
-          sx={{ fontSize: { xs: 20, md: 24 }, fontWeight: 500 }}
-          color="info.main"
-          variant="h3"
-        >
+        <Typography color="info.main" variant="h4">
           {title}
         </Typography>
         <Stack
@@ -28,25 +24,13 @@ const EventCard = ({ event }) => {
           gap={{ xs: 0.5, md: 1 }}
         >
           <BsCalendarEvent className={styles.calendarIcon} />
-          <Typography
-            sx={{ fontSize: { xs: 14, md: 16 } }}
-            color="info.main"
-            variant="h4"
-          >
+          <Typography color="info.main" variant="h6">
             {date}
           </Typography>
-          <Typography
-            sx={{ fontSize: { xs: 14, md: 16 } }}
-            color="info.main"
-            variant="h4"
-          >
+          <Typography color="info.main" variant="h6">
             {" . "}
           </Typography>
-          <Typography
-            sx={{ fontSize: { xs: 14, md: 16 } }}
-            color="info.main"
-            variant="h4"
-          >
+          <Typography color="info.main" variant="h6">
             {time}
           </Typography>
         </Stack>
@@ -54,7 +38,6 @@ const EventCard = ({ event }) => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ mt: { xs: 2, md: 4 } }}
           gap={1}
         >
           <Box className={styles.eventJoined}>
@@ -70,7 +53,7 @@ const EventCard = ({ event }) => {
               fontWeight: 700,
               textTransform: "capitalize",
               textShadow: "0px 4px 4px rgba(0, 0, 0, 0.15)",
-
+              color: "text.primary",
               "&:hover": {
                 backgroundColor: "primary.main",
                 color: "info.main",
