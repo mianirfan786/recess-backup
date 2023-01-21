@@ -38,10 +38,22 @@ const EventCard = ({ event }) => {
           alignItems="center"
           gap={1}
         >
-          <Box className={styles.eventJoined}>
-            {eventJoined.map((user) => (
-              <img key={user.id} src={user.image} alt="" />
-            ))}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: { xs: 0.5, md: 1 },
+            }}
+            className={styles.eventJoined}
+          >
+            <Box>
+              {eventJoined.map((user) => (
+                <img key={user.id} src={user.image} alt="" />
+              ))}
+            </Box>
+            <Typography color="info.main" variant="h6">
+              +20
+            </Typography>
           </Box>
           <Button
             sx={{

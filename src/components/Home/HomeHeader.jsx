@@ -45,7 +45,7 @@ const HomeHeader = () => {
               alignItems: "center",
               textAlign: "center",
               cursor: "pointer",
-              boxShadow: 3,
+              boxShadow: 1,
             }}
             variant="contained"
           >
