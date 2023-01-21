@@ -4,9 +4,9 @@ import ErrorPage from "../pages/ErrorPage";
 import Explore from "../pages/Explore";
 import ForgotPassword from "../pages/ForgotPassword";
 import Home from "../pages/Home";
+import Login from "../pages/Login";
 import Notifications from "../pages/Notifications";
 import Profile from "../pages/Profile";
-import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 
 const routes = createBrowserRouter([
@@ -38,7 +38,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <SignIn />,
+        element: <Login />,
       },
       {
         path: "/sign-up",

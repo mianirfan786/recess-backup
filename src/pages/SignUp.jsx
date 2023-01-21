@@ -75,6 +75,7 @@ const SignUp = () => {
           variant="contained"
           sx={{
             backgroundColor: "#000",
+            color: "info.main",
             borderRadius: 8,
             padding: 2,
             "&:hover": {

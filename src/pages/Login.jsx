@@ -24,7 +24,7 @@ const Header = () => {
       </span>
       <Button
         component={RouterLink}
-        to="/signup"
+        to="/sign-up"
         variant="outlined"
         sx={{ borderRadius: 8, borderColor: "#CED1DC" }}
         color="inherit"
@@ -70,8 +70,12 @@ const SignInForm = ({ inputs, formData, handleOnChange }) => (
   </Stack>
 );
 
-const SignIn = () => {
+const Login = () => {
   const { inputs, formData, handleOnChange, handleSubmit } = useSignIn();
+  const navigate = useNavigate();
+  const handleOnSubmit = () => {
+    navigate("/explore");
+  };
 
   return (
     <FormContainer>
@@ -90,10 +94,11 @@ const SignIn = () => {
         </Typography>
         <SignInForm {...{ inputs, formData, handleOnChange }} />
         <Button
-          onClick={handleSubmit}
+          onClick={handleOnSubmit}
           variant="contained"
           sx={{
             backgroundColor: "#000",
+            color: "info.main",
             borderRadius: 8,
             padding: 2,
             "&:hover": {
@@ -101,7 +106,7 @@ const SignIn = () => {
             },
           }}
         >
-          Sign In
+          Log In
         </Button>
       </Stack>
       <ContinueWithSocialMedia
@@ -117,4 +122,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Login;

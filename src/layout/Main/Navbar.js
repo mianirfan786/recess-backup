@@ -108,7 +108,14 @@ const Navbar = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="static" sx={{ bgcolor: "transparent", boxShadow: 0 }}>
+      <AppBar
+        position="static"
+        sx={{
+          bgcolor: "transparent",
+          boxShadow: 0,
+          display: { xs: "none", md: "block" },
+        }}
+      >
         <Toolbar>
           <Container>
             <Box
