@@ -1,9 +1,9 @@
-import Activities from "../components/HomeComponents/Activities/Activities";
-import HomeHeader from "../components/HomeComponents/HomeHeader";
-import Popular from "../components/HomeComponents/Popular/Popular";
-import RecentlyAdded from "../components/HomeComponents/RecentlyAdded/RecentlyAdded";
-import Sponsored from "../components/HomeComponents/Sponsored/Sponsored";
-import Upcoming from "../components/HomeComponents/Upcoming/Upcoming";
+import Activities from "../components/Home/Activities/Activities";
+import HomeHeader from "../components/Home/HomeHeader";
+import Popular from "../components/Home/Popular/Popular";
+import RecentlyAdded from "../components/Home/RecentlyAdded/RecentlyAdded";
+import Sponsored from "../components/Home/Sponsored/Sponsored";
+import Upcoming from "../components/Home/Upcoming/Upcoming";
 
 const Home = () => {
   return (
