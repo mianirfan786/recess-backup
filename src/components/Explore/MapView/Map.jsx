@@ -1,4 +1,4 @@
-import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
+import { GoogleMap, InfoWindow, MarkerF } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import location from "../../../images/location.png";
 
@@ -27,15 +27,13 @@ const Map = ({ center, events }) => {
   return (
     <GoogleMap mapContainerStyle={mapContainerStyle} zoom={10} center={center}>
       {/* Show a marker for the user's current position */}
-      {userPosition && <Marker position={userPosition} icon={location} />}
+      {userPosition && <MarkerF position={userPosition} icon={location} />}
 
       {/* Show markers for each location in the markers array */}
       {events?.map((event) => (
-        <Marker
-          key={event?.label}
+        <MarkerF
           position={{ lat: event?.lat, lng: event?.lng }}
-          icon="https://cdn-icons-png.flaticon.com/512/4127/4127806.png"
-          label={event?.label}
+          icon={event?.icon}
           onClick={() => {
             setSelected(event);
           }}

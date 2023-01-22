@@ -8,38 +8,38 @@ import marker5 from "../../../images/marker-5.png";
 import Map from "./Map";
 
 const center = {
-  lat: 26.24,
-  lng: 73.03,
+  lat: 23.76,
+  lng: 90.38,
 };
 
 const markers = [
   {
-    lat: 26.24,
-    lng: 73.03,
+    lat: 23.84,
+    lng: 90.25,
     icon: marker1,
     label: "Marker 1",
   },
   {
-    lat: 26.3,
-    lng: 73.02,
+    lat: 23.62,
+    lng: 90.47,
     icon: marker2,
     label: "Marker 2",
   },
   {
-    lat: 26.21,
-    lng: 73.09,
+    lat: 24.37,
+    lng: 90.0,
     icon: marker3,
     label: "Marker 3",
   },
   {
-    lat: 26.29,
-    lng: 73.08,
+    lat: 23.86,
+    lng: 90.0,
     icon: marker4,
     label: "Marker 4",
   },
   {
-    lat: 26.22,
-    lng: 73.04,
+    lat: 23.46,
+    lng: 91.18,
     icon: marker5,
     label: "Marker 5",
   },
