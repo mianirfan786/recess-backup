@@ -8,7 +8,7 @@ const Main = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("lg"));
 
-  const excludedRoute = !["/login", "/sign-up", "/forget-password"].includes(
+  const excludedRoute = !["/login", "/sign-up", "/forgot-password"].includes(
     pathname
   );
   return (

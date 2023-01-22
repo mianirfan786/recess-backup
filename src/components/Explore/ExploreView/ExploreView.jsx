@@ -74,7 +74,7 @@ const ExploreView = () => {
     setView(view);
   };
   return (
-    <Box sx={{ bgcolor: "info.main", py: { xs: 2, md: 4 } }}>
+    <Box sx={{ bgcolor: "info.main", pt: { xs: 2, md: 4 } }}>
       <Container>
         <Stack
           direction="row"
@@ -104,7 +104,7 @@ const ExploreView = () => {
       </Container>
 
       {/* show based on view */}
-      <Box sx={{ py: { xs: 2, md: 4 } }}>
+      <Box sx={{ pt: { xs: 2, md: 4 }, pb: 0 }}>
         {view === "list" ? (
           <ListView events={events} />
         ) : (
