@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { AiOutlinePlus } from "react-icons/ai";
 import user from "../../images/user.jpg";
 import styles from "../../styles/Home.module.scss";
@@ -32,7 +32,7 @@ const HomeHeader = () => {
           </Box>
         </Stack>
         <Box>
-          <Box
+          <Button
             sx={{
               bgcolor: "primary.main",
               color: "info.main",
@@ -46,11 +46,12 @@ const HomeHeader = () => {
               textAlign: "center",
               cursor: "pointer",
               boxShadow: 1,
+              p: 0,
             }}
             variant="contained"
           >
             <AiOutlinePlus />
-          </Box>
+          </Button>
         </Box>
       </Stack>
     </Container>

@@ -56,7 +56,7 @@ const Navbar = () => {
         sx={{
           bgcolor: "transparent",
           boxShadow: 0,
-          display: { xs: "none", md: "block" },
+          display: { xs: "none", sm: "block" },
         }}
       >
         <Toolbar>
@@ -64,7 +64,7 @@ const Navbar = () => {
             <Box
               sx={{
                 flexGrow: 1,
-                display: { xs: "none", md: "flex" },
+                display: { xs: "none", sm: "flex" },
                 justifyContent: "center",
                 alignItems: "center",
                 bgcolor: "info.main",
@@ -75,7 +75,7 @@ const Navbar = () => {
                 boxShadow: 1,
               }}
             >
-              <Box sx={{ display: { xs: "none", md: "block" } }}>
+              <Box sx={{ display: { xs: "none", sm: "block" } }}>
                 <nav
                   style={{
                     display: "flex",

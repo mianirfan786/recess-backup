@@ -30,7 +30,7 @@ const EventCard = ({ event }) => {
     >
       <Stack
         direction="row"
-        justifyContent={{ xs: "inherit", md: "space-between" }}
+        justifyContent={{ xs: "inherit", lg: "space-between" }}
         gap={2}
       >
         <Box>
@@ -121,7 +121,7 @@ const EventCard = ({ event }) => {
             direction="row"
             gap={2}
             alignItems="center"
-            sx={{ display: { xs: "flex", md: "none" }, my: 1 }}
+            sx={{ display: { xs: "flex", lg: "none" }, my: 1 }}
           >
             <Box
               onClick={() => handleLike(id)}
@@ -176,7 +176,7 @@ const EventCard = ({ event }) => {
           gap={2}
           justifyContent="space-between"
           alignItems="center"
-          sx={{ display: { xs: "none", md: "flex" } }}
+          sx={{ display: { xs: "none", lg: "flex" } }}
         >
           <Box
             onClick={() => handleLike(id)}

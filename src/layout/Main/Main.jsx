@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 const Main = () => {
   const { pathname } = useLocation();
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("lg"));
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
   const excludedRoute = !["/login", "/sign-up", "/forgot-password"].includes(
     pathname

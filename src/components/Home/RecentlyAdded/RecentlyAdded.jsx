@@ -79,8 +79,16 @@ const RecentlyAdded = () => {
           slidesPerView={1.3}
           spaceBetween={20}
           breakpoints={{
+            600: {
+              slidesPerView: 2.1,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 2.7,
+              spaceBetween: 20,
+            },
             1024: {
-              slidesPerView: 3.5,
+              slidesPerView: 3.2,
               spaceBetween: 20,
             },
           }}
