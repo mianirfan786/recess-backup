@@ -13,6 +13,7 @@ import FormContainer from "../components/FormContainer";
 import StyledTextInput from "../components/StyledTextInput";
 import useSignIn from "../hooks/useSignIn";
 import Logo from "../icons/Logo";
+import { Box } from "@mui/material";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -105,18 +106,20 @@ const Login = () => {
             },
           }}
         >
-          Log In
+          Sign In
         </Button>
       </Stack>
       <ContinueWithSocialMedia
         sx={{ marginTop: 5, marginBottom: 8, textAlign: "center" }}
       />
-      <Typography textAlign="center">
-        New to Today?{" "}
-        <Link component={RouterLink} to="/signup" underline="hover">
-          Sign up
-        </Link>
-      </Typography>
+      <Box sx={{ pt: 4, pb: 6 }}>
+        <Typography textAlign="center">
+          New to Today?{" "}
+          <Link component={RouterLink} to="/signup" underline="hover">
+            Sign up
+          </Link>
+        </Typography>
+      </Box>
     </FormContainer>
   );
 };

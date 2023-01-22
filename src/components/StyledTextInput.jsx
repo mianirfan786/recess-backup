@@ -2,6 +2,11 @@ import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
 const StyledTextInput = styled(TextField)(() => ({
+  // need to add padding just to the mui input field
+  // so that the label doesn't get cut off
+  "& .MuiFilledInput-root": {
+    paddingLeft: 15,
+  },
   "& .Mui-focused": {
     backgroundColor: "#fff!important",
     color: "#CED1DC!important",
@@ -12,6 +17,7 @@ const StyledTextInput = styled(TextField)(() => ({
     },
   "& label": {
     color: "#CED1DC",
+    marginLeft: 10,
   },
   "& .MuiInputBase-root": {
     borderRadius: 12,

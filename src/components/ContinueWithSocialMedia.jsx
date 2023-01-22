@@ -127,7 +127,7 @@ const AppleIcon = () => (
 
 const ContinueWithSocialMedia = ({ sx }) => {
   return (
-    <Stack sx={sx} spacing={2}>
+    <Stack sx={{ pt: 6, pb: 8 }} spacing={2}>
       <Stack
         justifyContent="center"
         alignItems="center"
