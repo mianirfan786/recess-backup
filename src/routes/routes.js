@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import Notifications from "../pages/Notifications";
 import Profile from "../pages/Profile";
 import SignUp from "../pages/SignUp";
+import EventDetails from "../pages/EventDetails";
 
 const routes = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const routes = createBrowserRouter([
         path: "/forgot-password",
         element: <ForgotPassword />,
       },
+      {
+        path: "/event/:id",
+        element: <EventDetails/>,
+      }
     ],
   },
 ]);
