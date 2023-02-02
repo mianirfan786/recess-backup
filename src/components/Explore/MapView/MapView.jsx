@@ -7,12 +7,7 @@ import marker4 from "../../../images/marker-4.png";
 import marker5 from "../../../images/marker-5.png";
 import Map from "./Map";
 
-const center = {
-  lat: 23.76,
-  lng: 90.38,
-};
-
-const markers = [
+const _markers = [
   {
     lat: 23.84,
     lng: 90.25,
@@ -46,7 +41,12 @@ const markers = [
   // Add more markers as needed
 ];
 
-const MapView = () => {
+const _center = {
+  lat: 23.76,
+  lng: 90.38,
+};
+
+const MapView = ({ center = _center, markers = _markers, height }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
@@ -61,7 +61,7 @@ const MapView = () => {
   if (isLoaded && !loadError) {
     return (
       <div>
-        <Map center={center} events={markers} />
+        <Map center={center} events={markers} height={height} />
       </div>
     );
   }

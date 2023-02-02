@@ -4,10 +4,9 @@ import location from "../../../images/location.png";
 
 const mapContainerStyle = {
   width: "100%",
-  height: "100vh",
 };
 
-const Map = ({ center, events }) => {
+const Map = ({ center, events, height }) => {
   const [selected, setSelected] = useState(null);
   const [userPosition, setUserPosition] = useState(null);
 
@@ -22,16 +21,20 @@ const Map = ({ center, events }) => {
       (error) => console.log(error)
     );
   }, []);
-  console.log(events);
 
   return (
-    <GoogleMap mapContainerStyle={mapContainerStyle} zoom={10} center={center}>
+    <GoogleMap
+      mapContainerStyle={{ ...mapContainerStyle, height: height || "100vh" }}
+      zoom={10}
+      center={center}
+    >
       {/* Show a marker for the user's current position */}
       {userPosition && <MarkerF position={userPosition} icon={location} />}
 
       {/* Show markers for each location in the markers array */}
-      {events?.map((event) => (
+      {events?.map((event, index) => (
         <MarkerF
+          key={index}
           position={{ lat: event?.lat, lng: event?.lng }}
           icon={event?.icon}
           onClick={() => {
