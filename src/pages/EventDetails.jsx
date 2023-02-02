@@ -1,7 +1,11 @@
-import {Container} from "@mui/material";
+import Details from "../components/EventDetails/Details/Details";
 
 const EventDetails = () => {
-    return <Container sx={{py: {xs: 2, md: 4}}}><div>event details</div></Container>
-}
+  return (
+    <div>
+      <Details />
+    </div>
+  );
+};
 
-export default EventDetails
+export default EventDetails;
