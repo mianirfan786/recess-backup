@@ -11,6 +11,8 @@ import SignUp from "../pages/SignUp";
 import EventDetails from "../pages/EventDetails";
 import { ROUTES } from "./index";
 import NotificationsSettings from "../pages/NotificationsSettings";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import TermsOfServices from "../pages/TermsOfServices";
 
 const routes = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ const routes = createBrowserRouter([
       {
         path: ROUTES.NOTIFICATIONS_SETTINGS,
         element: <NotificationsSettings />,
+      },
+      {
+        path: ROUTES.PRIVACY_POLICY,
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: ROUTES.TERMS_OF_SERVICES,
+        element: <TermsOfServices />,
       },
     ],
   },

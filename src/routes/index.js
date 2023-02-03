@@ -10,6 +10,7 @@ export const ROUTES = {
   RESET_PASSWORD: "/reset-password",
   DELETE_ACCOUNT: "/delete-account",
   PRIVACY_POLICY: "/privacy-policy",
+  TERMS_OF_SERVICES: "/terms-of-services",
   PAYMENTS: "/payments",
   NOTIFICATIONS_SETTINGS: "/notifications-settings",
 };
