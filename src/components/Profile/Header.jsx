@@ -4,12 +4,13 @@ import PageHeader from "../PageHeader";
 
 const Header = () => {
   return (
-    <Stack spacing={2}>
+    <Stack gap={2}>
       <PageHeader title="Profile" />
       <Stack
         alignItems="center"
         gap={2}
         flexDirection={{ xs: "column", sm: "row" }}
+        justifyContent="center"
       >
         <Box
           maxWidth="150px"

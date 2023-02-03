@@ -1,7 +1,7 @@
 import { Avatar, Box, Stack, Typography } from "@mui/material";
 import timeSince from "../../utils/timeSince";
 
-const notificationTypes = {
+export const notificationTypes = {
   reminder: "Reminder",
   update: "Update",
   new: "New",

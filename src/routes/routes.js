@@ -10,6 +10,7 @@ import Profile from "../pages/Profile";
 import SignUp from "../pages/SignUp";
 import EventDetails from "../pages/EventDetails";
 import { ROUTES } from "./index";
+import NotificationsSettings from "../pages/NotificationsSettings";
 
 const routes = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const routes = createBrowserRouter([
       {
         path: ROUTES.EVENT_DETAILS,
         element: <EventDetails />,
+      },
+      {
+        path: ROUTES.NOTIFICATIONS_SETTINGS,
+        element: <NotificationsSettings />,
       },
     ],
   },

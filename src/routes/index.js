@@ -11,4 +11,5 @@ export const ROUTES = {
   DELETE_ACCOUNT: "/delete-account",
   PRIVACY_POLICY: "/privacy-policy",
   PAYMENTS: "/payments",
+  NOTIFICATIONS_SETTINGS: "/notifications-settings",
 };
