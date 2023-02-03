@@ -1,27 +1,11 @@
 import { Box, Stack, Typography } from "@mui/material";
-import BackButton from "../../icons/BackIcon";
 import user from "../../images/user.jpg";
+import PageHeader from "../PageHeader";
 
 const Header = () => {
   return (
     <Stack spacing={2}>
-      <Stack position="relative" flexDirection="row">
-        <Box
-          sx={{ transform: "translateY(-50%)" }}
-          top="50%"
-          position="absolute"
-        >
-          <BackButton />
-        </Box>
-        <Typography
-          width="100%"
-          ml={{ xs: 0, sm: 4 }}
-          textAlign={{ xs: "center", sm: "initial" }}
-          variant="h3"
-        >
-          Profile
-        </Typography>
-      </Stack>
+      <PageHeader title="Profile" />
       <Stack
         alignItems="center"
         gap={2}

@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Stack, Typography } from "@mui/material";
-import { ROUTES } from "../../routes/routes";
 import Notification from "../../icons/Notification";
 import Payments from "../../icons/Payments";
 import PrivacyPolicy from "../../icons/Privacy";
 import DeleteAccount from "../../icons/Delete";
 import ResetPassword from "../../icons/ResetPassword";
 import RightArrow from "../../icons/RightArrow";
+import { ROUTES } from "../../routes";
 
 const actions = [
   { icon: Notification(), title: "Notifications", link: ROUTES.NOTIFICATIONS },
