@@ -68,16 +68,17 @@ const MobileNavbar = () => {
         {paths.map((item) => (
           <Button
             onClick={() => handleNavClick(item.path)}
-            startIcon={pathname === item.path ? item.activeIcon : item.icon}
             sx={{
               textTransform: "capitalize",
               color: pathname === item.path ? "primary" : "#afb1ba",
               fontWeight: pathname === item.path ? 700 : 500,
               flexDirection: "column",
+              fontSize: "14px",
             }}
             variant="text"
             key={item.label}
           >
+            {pathname === item.path ? item.activeIcon : item.icon}
             {item.label}
           </Button>
         ))}

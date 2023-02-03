@@ -1,5 +1,18 @@
+import { Container, Stack } from "@mui/material";
+import Header from "../components/Profile/Header";
+import Actions from "../components/Profile/Actions";
+import Footer from "../components/Profile/Footer";
+
 const Profile = () => {
-  return <div>Profile page</div>;
+  return (
+    <Container sx={{ flex: 1, display: "flex", my: 2 }}>
+      <Stack flex={1} spacing={4}>
+        <Header />
+        <Actions />
+        <Footer />
+      </Stack>
+    </Container>
+  );
 };
 
 export default Profile;

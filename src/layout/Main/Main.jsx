@@ -13,7 +13,12 @@ const Main = () => {
   );
   return (
     <div>
-      <Box sx={{ minHeight: "100vh" }} className="gradient">
+      <Box
+        sx={{ minHeight: "100vh" }}
+        display="flex"
+        flexDirection="column"
+        className="gradient"
+      >
         {matches && excludedRoute && <Navbar />}
         <Outlet />
         {!matches && excludedRoute && <MobileNavbar />}

@@ -9,8 +9,8 @@ const iconStyle = {
   alignItems: "center",
   justifyContent: "center",
   aspectRatio: "1/1",
-  width: "30px",
-  height: "30px",
+  width: { xs: "30px", sm: "40px" },
+  height: { xs: "30px", sm: "40px" },
   opacity: 0.8,
   padding: "7px",
 };

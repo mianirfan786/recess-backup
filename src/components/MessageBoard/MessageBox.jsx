@@ -8,7 +8,7 @@ const MessageBox = () => {
       py={3}
       px={2}
       borderRadius="20px"
-      sx={{ backgroundColor: "F7FAFF", border: "1px solid #E2EFFF" }}
+      sx={{ backgroundColor: "#F7FAFF", border: "1px solid #E2EFFF" }}
     >
       <Avatar sizes="small" />
       <InputBase
