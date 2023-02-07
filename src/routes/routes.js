@@ -13,6 +13,12 @@ import { ROUTES } from "./index";
 import NotificationsSettings from "../pages/NotificationsSettings";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsOfServices from "../pages/TermsOfServices";
+import Payments from "../pages/Payments";
+import PaymentDetails from "../pages/PaymentDetails";
+import Transactions from "../pages/Transactions";
+import SetUpPaymentMethod from "../pages/SetUpPaymentMethod";
+import PayWith from "../pages/PayWith";
+import AddCardDetails from "../pages/AddCardDetails";
 
 const routes = createBrowserRouter([
   {
@@ -69,6 +75,12 @@ const routes = createBrowserRouter([
         path: ROUTES.TERMS_OF_SERVICES,
         element: <TermsOfServices />,
       },
+      { path: ROUTES.PAYMENTS, element: <Payments /> },
+      { path: ROUTES.TRANSACTIONS, element: <Transactions /> },
+      { path: ROUTES.PAYMENT_DETAILS, element: <PaymentDetails /> },
+      { path: ROUTES.SET_UP_PAYMENT, element: <SetUpPaymentMethod /> },
+      { path: ROUTES.PAY_WITH, element: <PayWith /> },
+      { path: ROUTES.ADD_CARD_DETAILS, element: <AddCardDetails /> },
     ],
   },
 ]);

@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import BackButton from "../icons/BackIcon";
 
-const PageHeader = ({ title }) => {
+const PageHeader = ({ title, ...props }) => {
   const navigate = useNavigate();
 
   return (
-    <Stack position="relative" flexDirection="row">
+    <Stack {...props} position="relative" flexDirection="row">
       <Box sx={{ transform: "translateY(-50%)" }} top="50%" position="absolute">
         <IconButton
           onClick={() => navigate(-1)}

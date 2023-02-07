@@ -12,5 +12,10 @@ export const ROUTES = {
   PRIVACY_POLICY: "/privacy-policy",
   TERMS_OF_SERVICES: "/terms-of-services",
   PAYMENTS: "/payments",
+  SET_UP_PAYMENT: "/set-up-payment",
+  PAY_WITH: "/pay-with",
+  ADD_CARD_DETAILS: "/add-card-details",
+  TRANSACTIONS: "/transactions",
+  PAYMENT_DETAILS: "/payment-details",
   NOTIFICATIONS_SETTINGS: "/notifications-settings",
 };
