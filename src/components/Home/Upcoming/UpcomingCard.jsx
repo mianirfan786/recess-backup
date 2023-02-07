@@ -1,9 +1,12 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { BsCalendarEvent } from "react-icons/bs";
 import styles from "../../../styles/Home.module.scss";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../routes";
 
 const UpcomingCard = ({ event }) => {
   const { title, time, date, bgcolor, image, eventJoined } = event;
+  const navigate = useNavigate();
   return (
     <Box
       className={styles.eventCard}
@@ -56,6 +59,7 @@ const UpcomingCard = ({ event }) => {
             </Typography>
           </Box>
           <Button
+            onClick={() => navigate(ROUTES.EVENT_DETAILS)}
             sx={{
               px: 3,
               borderRadius: 50,
