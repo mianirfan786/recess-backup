@@ -18,4 +18,5 @@ export const ROUTES = {
   TRANSACTIONS: "/transactions",
   PAYMENT_DETAILS: "/payment-details",
   NOTIFICATIONS_SETTINGS: "/notifications-settings",
+  CREATE_EVENT: "/create-event",
 };

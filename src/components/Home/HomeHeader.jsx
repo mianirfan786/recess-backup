@@ -1,9 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { AiOutlinePlus } from "react-icons/ai";
 import user from "../../images/user.jpg";
 import styles from "../../styles/Home.module.scss";
+import { ROUTES } from "../../routes";
 
 const HomeHeader = () => {
+  const navigate = useNavigate();
+
   return (
     <Container sx={{ py: { xs: 2, md: 4 } }}>
       <Stack
@@ -33,6 +37,7 @@ const HomeHeader = () => {
         </Stack>
         <Box>
           <Button
+            onClick={() => navigate(ROUTES.CREATE_EVENT)}
             sx={{
               bgcolor: "primary.main",
               color: "info.main",

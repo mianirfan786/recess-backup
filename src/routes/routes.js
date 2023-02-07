@@ -19,6 +19,7 @@ import Transactions from "../pages/Transactions";
 import SetUpPaymentMethod from "../pages/SetUpPaymentMethod";
 import PayWith from "../pages/PayWith";
 import AddCardDetails from "../pages/AddCardDetails";
+import CreateEvent from "../pages/CreateEvent";
 
 const routes = createBrowserRouter([
   {
@@ -81,6 +82,7 @@ const routes = createBrowserRouter([
       { path: ROUTES.SET_UP_PAYMENT, element: <SetUpPaymentMethod /> },
       { path: ROUTES.PAY_WITH, element: <PayWith /> },
       { path: ROUTES.ADD_CARD_DETAILS, element: <AddCardDetails /> },
+      { path: ROUTES.CREATE_EVENT, element: <CreateEvent /> },
     ],
   },
 ]);
