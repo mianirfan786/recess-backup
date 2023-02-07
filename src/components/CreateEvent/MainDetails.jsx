@@ -68,7 +68,7 @@ const MainDetails = () => {
   };
 
   return (
-    <Stack maxWidth="700px" gap={4} width="100%">
+    <Stack gap={4} width="100%">
       <Stack gap={2}>
         <DetailCard title="Title">
           <input
