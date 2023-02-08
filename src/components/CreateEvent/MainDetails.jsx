@@ -10,7 +10,8 @@ const CostCard = ({ active, children, onClick }) => {
       p={3}
       sx={{
         cursor: "pointer",
-        width: "80px",
+        minWidth: { xs: "60px", sm: "80px" },
+        width: { xs: "60px", sm: "80px" },
         color: active ? "white" : "black",
         borderRadius: "20px",
         aspectRatio: "1/1",

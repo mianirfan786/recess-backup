@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Stack } from "@mui/material";
 import PageHeader from "../components/PageHeader";
-import { useState } from "react";
 import SetPhoto from "../components/CreateEvent/SetPhoto";
 import MainDetails from "../components/CreateEvent/MainDetails";
 import Map from "../components/CreateEvent/Map";
@@ -20,6 +19,7 @@ const CreateEvent = () => {
     keywords: "",
     maxParticipants: 0,
     cost: 0,
+    address: null,
   });
 
   return (
