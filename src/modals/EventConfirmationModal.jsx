@@ -20,7 +20,7 @@ const EventConfirmationModal = ({ open, onClose, event }) => {
 
   const onModalClose = () => {
     setAttendees(0);
-    onClose(0);
+    onClose();
   };
 
   return (

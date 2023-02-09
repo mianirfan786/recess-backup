@@ -13,6 +13,7 @@ import EventConfirmationModal from "../modals/EventConfirmationModal";
 import { useModalsContext } from "../modals/ModalsContext";
 import { MODALS } from "../modals/modals";
 import getDate from "../utils/getDate";
+import FlagEventModal from "../modals/FlagEventModal";
 
 const markers = [
   {
@@ -68,6 +69,10 @@ const EventDetails = ({ event = _event }) => {
       <EventConfirmationModal
         open={openModal === MODALS.EVENT_CONFIRMATION}
         event={event}
+        onClose={() => setOpenModal(null)}
+      />
+      <FlagEventModal
+        open={openModal === MODALS.EVENT_FLAG}
         onClose={() => setOpenModal(null)}
       />
       <Box mt={{ xs: 0, sm: 2 }} sx={{ backgroundColor: "#FFFF" }}>

@@ -52,6 +52,7 @@ const NotificationsSettings = () => {
         <Stack gap={2}>
           {settings.map(({ title, description, color, type }) => (
             <Stack
+              key={title}
               borderRadius="15px"
               bgcolor="white"
               gap={2}

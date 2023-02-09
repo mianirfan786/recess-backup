@@ -14,6 +14,7 @@ import StyledTextInput from "../components/StyledTextInput";
 import useSignIn from "../hooks/useSignIn";
 import Logo from "../icons/Logo";
 import { Box } from "@mui/material";
+import { ROUTES } from "../routes";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -115,7 +116,7 @@ const Login = () => {
       <Box sx={{ pt: 4, pb: 6 }}>
         <Typography textAlign="center">
           New to Today?{" "}
-          <Link component={RouterLink} to="/signup" underline="hover">
+          <Link component={RouterLink} to={ROUTES.SIGN_UP} underline="hover">
             Sign up
           </Link>
         </Typography>

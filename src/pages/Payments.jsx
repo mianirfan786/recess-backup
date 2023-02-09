@@ -17,6 +17,21 @@ const actions = [
     title: "Transactions",
     link: ROUTES.TRANSACTIONS,
   },
+  {
+    icon: PaymentDetails(),
+    title: "Pay with (demo)",
+    link: ROUTES.PAY_WITH,
+  },
+  {
+    icon: PaymentDetails(),
+    title: "Set up payments (demo)",
+    link: ROUTES.SET_UP_PAYMENT,
+  },
+  {
+    icon: PaymentDetails(),
+    title: "Add card details (demo)",
+    link: ROUTES.ADD_CARD_DETAILS,
+  },
 ];
 
 const Payments = () => {

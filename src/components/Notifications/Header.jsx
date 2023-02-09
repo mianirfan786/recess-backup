@@ -1,7 +1,12 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
 import user from "../../images/user.jpg";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../routes";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <Stack position="relative" flexDirection="row">
       <Box sx={{ transform: "translateY(-50%)" }} top="50%" position="absolute">
@@ -33,6 +38,12 @@ const Header = () => {
       >
         Notifications
       </Typography>
+      <IconButton
+        onClick={() => navigate(ROUTES.NOTIFICATIONS_SETTINGS)}
+        sx={{ width: "40px", height: "40px", position: "absolute", right: 0 }}
+      >
+        <SettingsIcon />
+      </IconButton>
     </Stack>
   );
 };
