@@ -64,6 +64,7 @@ const SortAndFilterModal = ({ open, onClose, onApply = () => null }) => {
 
               return (
                 <Stack
+                  key={name}
                   p="4px"
                   onClick={() => onOptionClick(option)}
                   sx={{
@@ -97,6 +98,7 @@ const SortAndFilterModal = ({ open, onClose, onApply = () => null }) => {
 
               return (
                 <Stack
+                  key={price}
                   onClick={() => onPriceRangeChange(price)}
                   p={3}
                   sx={{

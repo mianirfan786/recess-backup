@@ -1,5 +1,4 @@
 import { Button, Typography, Stack, Box, Switch } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import FormContainer from "../components/FormContainer";
 import StyledTextInput from "../components/StyledTextInput";
@@ -8,8 +7,9 @@ import BackButton from "../icons/BackIcon";
 import { useState } from "react";
 import phoneIcon from "../images/phone-icon.svg";
 import emailIcon from "../images/email-icon.svg";
+import styled from "@emotion/styled";
 
-const StyledSwitch = styled(Switch)(({ theme }) => ({
+const StyledSwitch = styled(Switch)({
   width: 80,
   height: 52,
   padding: 7,
@@ -19,6 +19,8 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
     transform: "translateX(4px)",
     "& + .MuiSwitch-track": {
       borderRadius: "40px",
+      opacity: 1,
+      backgroundColor: "white !important",
     },
     "&.Mui-checked": {
       color: "#fff",
@@ -31,29 +33,24 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
         backgroundColor: "white",
       },
     },
-  },
-  "& .MuiSwitch-thumb": {
-    backgroundColor: theme.palette.mode === "dark" ? "#003892" : "#001e3c",
-    width: 32,
-    height: 32,
-    "&:before": {
-      content: "''",
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      left: 0,
-      top: 0,
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-      backgroundImage: `url('${emailIcon}')})`,
+    "& .MuiSwitch-thumb": {
+      backgroundColor: "#001e3c",
+      width: 32,
+      height: 32,
+      "&:before": {
+        content: "''",
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        left: 0,
+        top: 0,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundImage: `url('${emailIcon}')})`,
+      },
     },
   },
-  "& .MuiSwitch-track": {
-    opacity: 1,
-    backgroundColor: "white",
-    borderRadius: 20 / 2,
-  },
-}));
+});
 
 const Header = () => {
   const navigate = useNavigate();

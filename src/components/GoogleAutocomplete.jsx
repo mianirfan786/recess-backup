@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import { useEffect } from "react";
+import { usePositionContext } from "../context/positionContext";
 
 // This key was created specifically for the demo in mui.com.
 // You need to create a new one for your application.
@@ -31,7 +32,24 @@ export default function GoogleAutocomplete({ onChange }) {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState([]);
+  const [touched, setTouched] = React.useState(false);
   const loaded = React.useRef(false);
+
+  const { address } = usePositionContext();
+
+  console.log(value);
+
+  useEffect(() => {
+    if (address) {
+      setValue({
+        description: `${address.city}, ${address.principalSubdivision}, ${address.countryName}`,
+        structured_formatting: {
+          main_text: address.city,
+          secondary_text: `${address.principalSubdivision}, ${address.countryName}`,
+        },
+      });
+    }
+  }, [address]);
 
   useEffect(() => {
     if (value) {
@@ -109,6 +127,11 @@ export default function GoogleAutocomplete({ onChange }) {
       options={options}
       includeInputInList
       filterSelectedOptions
+      onClick={() => {
+        if (!touched) {
+          setTouched(true);
+        }
+      }}
       value={value}
       onChange={(event, newValue) => {
         setOptions(newValue ? [newValue, ...options] : options);

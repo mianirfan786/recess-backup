@@ -4,15 +4,18 @@ import { RouterProvider } from "react-router-dom";
 import routes from "./routes/routes";
 import theme from "./utils/theme";
 import { ModalsContextProvider } from "./modals/ModalsContext";
+import { PositionProvider } from "./context/positionContext";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <ModalsContextProvider>
-        <CssBaseline>
-          <RouterProvider router={routes} />
-        </CssBaseline>
-      </ModalsContextProvider>
+      <PositionProvider>
+        <ModalsContextProvider>
+          <CssBaseline>
+            <RouterProvider router={routes} />
+          </CssBaseline>
+        </ModalsContextProvider>
+      </PositionProvider>
     </ThemeProvider>
   );
 }
