@@ -81,7 +81,7 @@ const Login = () => {
   return (
     <FormContainer>
       <Header />
-      <Stack sx={{ marginTop: 8 }} spacing={5}>
+      <Stack sx={{ marginTop: 5 }} spacing={5}>
         <Typography
           align="center"
           sx={{

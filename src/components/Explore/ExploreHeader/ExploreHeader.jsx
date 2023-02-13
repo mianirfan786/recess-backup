@@ -1,7 +1,11 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { CiFilter } from "react-icons/ci";
+import { useModalsContext } from "../../../modals/ModalsContext";
+import { MODALS } from "../../../modals/modals";
 
 const ExploreHeader = () => {
+  const { setOpenModal } = useModalsContext();
+
   return (
     <Container sx={{ py: { xs: 2, md: 4 } }}>
       <Stack
@@ -15,6 +19,7 @@ const ExploreHeader = () => {
         </Box>
         <Box>
           <Box
+            onClick={() => setOpenModal(MODALS.SORT_FILTER)}
             sx={{
               bgcolor: "info.main",
               color: "#28303F",

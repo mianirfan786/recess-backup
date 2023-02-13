@@ -12,6 +12,8 @@ import frisbee4 from "../../../images/firsbee-4.png";
 import frisbee2 from "../../../images/frisbee-2.png";
 import frisbee3 from "../../../images/frisbee-3.png";
 import glof from "../../../images/glof.png";
+import LocationIcon from "../../../icons/LocationIcon";
+import GoogleAutocomplete from "../../GoogleAutocomplete";
 
 const events = [
   {
@@ -76,6 +78,30 @@ const ExploreView = () => {
   return (
     <Box sx={{ bgcolor: "info.main", pt: { xs: 2, md: 4 } }}>
       <Container>
+        {view === "list" && (
+          <Stack
+            mb={{ xs: 2, md: 4 }}
+            height="100%"
+            p={1}
+            borderRadius="20px"
+            flexDirection="row"
+            alignItems="center"
+            gap={1}
+            sx={{ backgroundColor: "#ECF5F2" }}
+          >
+            <Stack
+              p={2}
+              height="100%"
+              borderRadius="15px"
+              alignItems="center"
+              justifyContent="center"
+              sx={{ backgroundColor: "white" }}
+            >
+              <LocationIcon />
+            </Stack>
+            <GoogleAutocomplete onChange={() => null} />
+          </Stack>
+        )}
         <Stack
           direction="row"
           justifyContent="space-between"

@@ -39,12 +39,14 @@ const HomeHeader = () => {
           <Button
             onClick={() => navigate(ROUTES.CREATE_EVENT)}
             sx={{
+              aspectRatio: "1/1",
               bgcolor: "primary.main",
               color: "info.main",
               fontSize: { xs: 24, md: 30 },
               borderRadius: "50%",
-              width: { xs: 50, sm: 60 },
-              height: { xs: 50, sm: 60 },
+              width: { xs: "50px", sm: "60px" },
+              height: { xs: "50px", sm: "60px" },
+              minWidth: "unset",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

@@ -1,0 +1,46 @@
+const PhoneIcon = () => (
+  <svg
+    width="20"
+    height="21"
+    viewBox="0 0 20 21"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clipPath="url(#clip0_2129_1217)">
+      <path
+        d="M3.33325 9.4987C3.33325 6.356 3.33325 4.78465 4.30956 3.80834C5.28587 2.83203 6.85722 2.83203 9.99992 2.83203C13.1426 2.83203 14.714 2.83203 15.6903 3.80834C16.6666 4.78465 16.6666 6.356 16.6666 9.4987V12.832C16.6666 15.9747 16.6666 17.5461 15.6903 18.5224C14.714 19.4987 13.1426 19.4987 9.99992 19.4987C6.85722 19.4987 5.28587 19.4987 4.30956 18.5224C3.33325 17.5461 3.33325 15.9747 3.33325 12.832V9.4987Z"
+        stroke="#CED1DC"
+        strokeWidth="1.41762"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12.6666 4.83203H7.33325"
+        stroke="#CED1DC"
+        strokeWidth="1.41762"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle
+        cx="1"
+        cy="1"
+        r="1"
+        transform="matrix(1 0 0 -1 9 16.416)"
+        stroke="#CED1DC"
+        strokeWidth="1.41762"
+        strokeLinejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_2129_1217">
+        <rect
+          width="20"
+          height="20"
+          fill="white"
+          transform="translate(0 0.832031)"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export default PhoneIcon;

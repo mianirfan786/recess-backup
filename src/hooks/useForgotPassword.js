@@ -1,5 +1,6 @@
 import { useState } from "react";
 import EmailIcon from "../icons/EmailIcon";
+import PhoneIcon from "../icons/PhoneIcon";
 
 // List of Inputs to be mapped in the form
 const inputsData = [
@@ -10,13 +11,20 @@ const inputsData = [
     required: true,
     InputProps: { endAdornment: <EmailIcon /> },
   },
+  {
+    label: "Phone Number",
+    type: "tel",
+    name: "phone",
+    required: true,
+    InputProps: { endAdornment: <PhoneIcon /> },
+  },
 ];
 
 export default function useForgotPassword() {
   const [formData, setFormData] = useState({
     email: "",
+    phone: "",
   });
-  console.log(formData);
 
   // handle input change
   const handleOnChange = (e) => {

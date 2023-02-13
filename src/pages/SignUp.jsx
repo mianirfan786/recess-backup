@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Checkbox,
   FormControlLabel,
@@ -15,11 +16,21 @@ import BackButton from "../icons/BackIcon";
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <Stack direction="row" justifyContent="space-between" alignItems="center">
-      <span onClick={() => navigate(-1)} style={{ cursor: "pointer" }}>
+    <Stack
+      position="relative"
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Box
+        left={0}
+        position="absolute"
+        onClick={() => navigate(-1)}
+        style={{ cursor: "pointer" }}
+      >
         <BackButton />
-      </span>
-      <Typography fontSize="20px" textAlign="center" sx={{ width: "90%" }}>
+      </Box>
+      <Typography fontWeight="bold" fontSize="20px" textAlign="center">
         Sign up
       </Typography>
     </Stack>
@@ -61,7 +72,7 @@ const SignUp = () => {
   return (
     <FormContainer>
       <Header />
-      <Stack sx={{ marginTop: 8 }} spacing={5}>
+      <Stack sx={{ marginTop: 5 }} spacing={5}>
         <Typography
           align="center"
           sx={{
