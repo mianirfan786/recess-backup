@@ -37,8 +37,6 @@ export default function GoogleAutocomplete({ onChange }) {
 
   const { address } = usePositionContext();
 
-  console.log(value);
-
   useEffect(() => {
     if (address) {
       setValue({

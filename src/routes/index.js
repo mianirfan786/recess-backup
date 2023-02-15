@@ -20,3 +20,12 @@ export const ROUTES = {
   NOTIFICATIONS_SETTINGS: "/notifications-settings",
   CREATE_EVENT: "/create-event",
 };
+
+export const isRouteProtected = (route) => {
+  return (
+    route !== ROUTES.LOGIN &&
+    route !== ROUTES.SIGN_UP &&
+    route !== ROUTES.FORGOT_PASSWORD &&
+    route !== ROUTES.RESET_PASSWORD
+  );
+};

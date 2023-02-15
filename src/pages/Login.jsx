@@ -73,10 +73,6 @@ const SignInForm = ({ inputs, formData, handleOnChange }) => (
 
 const Login = () => {
   const { inputs, formData, handleOnChange, handleSubmit } = useSignIn();
-  const navigate = useNavigate();
-  const handleOnSubmit = () => {
-    navigate("/home");
-  };
 
   return (
     <FormContainer>
@@ -95,7 +91,7 @@ const Login = () => {
         </Typography>
         <SignInForm {...{ inputs, formData, handleOnChange }} />
         <Button
-          onClick={handleOnSubmit}
+          onClick={handleSubmit}
           variant="contained"
           sx={{
             backgroundColor: "#000",
