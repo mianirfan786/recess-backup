@@ -1,5 +1,7 @@
+import { IconButton } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import useSignIn from "../hooks/useSignIn";
 
 const Line = () => (
   <svg
@@ -126,6 +128,8 @@ const AppleIcon = () => (
 );
 
 const ContinueWithSocialMedia = ({ sx }) => {
+  const { handleGoogleSignIn } = useSignIn();
+
   return (
     <Stack sx={{ pt: 6, pb: 8 }} spacing={2}>
       <Stack
@@ -144,9 +148,11 @@ const ContinueWithSocialMedia = ({ sx }) => {
         direction="row"
         spacing={2}
       >
-        <FaceBookIcon />
-        <GoogleIcon />
-        <AppleIcon />
+        {/* <FaceBookIcon /> */}
+        <IconButton onClick={handleGoogleSignIn}>
+          <GoogleIcon />
+        </IconButton>
+        {/* <AppleIcon /> */}
       </Stack>
     </Stack>
   );

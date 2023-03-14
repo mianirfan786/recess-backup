@@ -68,10 +68,27 @@ export default function useSignIn() {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    try {
+      const res = await FirebaseAuth.googleSignIn();
+      return res;
+    } catch (error) {
+      if ("message" in error) {
+        showToast({
+          type: "error",
+          message: error.message.replace("Firebase: ", ""),
+        });
+      } else {
+        showToast({ type: "error", message: error });
+      }
+    }
+  };
+
   return {
     inputs: inputsData,
     formData,
     handleOnChange,
     handleSubmit,
+    handleGoogleSignIn,
   };
 }

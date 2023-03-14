@@ -5,6 +5,8 @@ import {
   sendPasswordResetEmail,
   updateProfile,
   updateEmail,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "./config";
@@ -15,6 +17,11 @@ import { showToast } from "../utils/toast";
 export default class FirebaseAuth {
   static logInWithEmailAndPassword(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
+  }
+
+  static googleSignIn() {
+    const googleAuthProvider = new GoogleAuthProvider();
+    return signInWithPopup(auth, googleAuthProvider);
   }
 
   static passwordReset(email) {
