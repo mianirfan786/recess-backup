@@ -17,6 +17,7 @@ import FlagEventModal from "../modals/FlagEventModal";
 import {useParams} from "react-router-dom";
 import {ViewEventById} from "../firebase/functions/event";
 import {useEffect, useState} from "react";
+import {GetUsersByIds} from "../firebase/functions/user";
 
 const markers = [
     {
@@ -48,14 +49,6 @@ const _event = {
         "Loading...",
 };
 
-const users = [...new Array(7)].map((_, index) => ({
-    image: menFace,
-    id: index,
-    name: "Leslie",
-    surname: "Alexander",
-    host: index === 0,
-}));
-
 const EventDetails = ({event = _event}) => {
     const {id} = useParams();
     const [title, setTitle] = useState(event.title);
@@ -69,21 +62,25 @@ const EventDetails = ({event = _event}) => {
     const [cost, setCost] = useState(event.cost);
     const [description, setDescription] = useState(event.description);
     const [coordinates, setCoordinates] = useState(event.coordinates);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        ViewEventById(id).then((event) => {
-            setTitle(event.title);
-            setmaxParticipants(event.maxParticipants);
-            setStartTime(timeTo12HrFormat(event.startTime));
-            setEndTime(timeTo12HrFormat(event.endTime));
-            setDate(new Date(event.date));
-            setPhotos(event.photos);
-            setKeywords(event.keywords);
-            setCost(event.cost === 0 ? "Free" : event.cost);
-            setDescription(event.description);
+        ViewEventById(id).then((data) => {
+            setTitle(data.title);
+            setmaxParticipants(data.maxParticipants);
+            setStartTime(timeTo12HrFormat(data.startTime));
+            setEndTime(timeTo12HrFormat(data.endTime));
+            setDate(new Date(data.date));
+            setPhotos(data.photos);
+            setKeywords(data.keywords);
+            setCost(event.cost === 0 ? "Free" : data.cost);
+            setDescription(data.description);
+            /* change event.date */
+            GetUsersByIds(data.joined).then((usersData) => {
+                setUsers(usersData);
+            });
         });
     }, []);
-    console.log("Event Details: ", id)
 
     function timeTo12HrFormat(time) {
         const timeArr = time.split(':');
@@ -104,6 +101,16 @@ const EventDetails = ({event = _event}) => {
         <>
             <EventConfirmationModal
                 open={openModal === MODALS.EVENT_CONFIRMATION}
+                id={id}
+                title={title}
+                maxParticipants={maxParticipants}
+                date={date}
+                startTime={startTime}
+                endTime={endTime}
+                photos={photos}
+                keywords={keywords}
+                cost={cost}
+                description={description}
                 event={event}
                 onClose={() => setOpenModal(null)}
             />
@@ -133,7 +140,7 @@ const EventDetails = ({event = _event}) => {
                         position="absolute"
                     >
                         <FeaturesCard
-                            cost={cost}
+                            cost={cost === 0 ? "Free" : cost}
                             keyword={keywords}
                             participant={maxParticipants}
                         />
@@ -150,7 +157,15 @@ const EventDetails = ({event = _event}) => {
                                     <Typography color="primary" variant="body2">
                                         {location}
                                     </Typography>
-                                    <Typography variant="body2">{getDate(date)}</Typography>
+                                    <Typography variant="body2">
+
+                                        {date.toLocaleDateString('en-US', {
+                                            weekday: 'short',
+                                            day: 'numeric',
+                                            month: 'long',
+                                            year: 'numeric',
+                                        })}
+                                    </Typography>
                                     <Typography variant="body2">{startTime} - {endTime}</Typography>
                                 </Stack>
                             </Stack>
@@ -159,7 +174,7 @@ const EventDetails = ({event = _event}) => {
                                 <AddressCard address={location}/>
                             </Stack>
                             <Typography variant="body1">{description}</Typography>
-                            <Registered users={users}/>
+                            <Registered users={users} maxParticipants={maxParticipants}/>
                         </Stack>
                         <Stack mb={2} gap={1}>
                             <Typography variant="h4" fontWeight="bold">
@@ -191,7 +206,7 @@ const EventDetails = ({event = _event}) => {
                                 },
                             }}
                         >
-                            Join - {cost}
+                            Join - {cost === 0 ? "Free" : cost}
                         </Button>
                     </Stack>
                 </Container>

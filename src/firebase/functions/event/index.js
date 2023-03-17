@@ -38,9 +38,11 @@ export const addEvent = async (event) => {
             const eventWithPhotos = {...event, photos: photoUrls};
 
             // Add Event to Firebase with Timestamp and CreatedBy
-            await setDoc(doc(db, "events", Math.random().toString(36).substring(2)), {
-                ...eventWithPhotos, timeStamp: Date.now(), CreatedBy: currentUser
+            const res = await setDoc(doc(db, "events", Math.random().toString(36).substring(2)), {
+                ...eventWithPhotos, timeStamp: Date.now(), CreatedBy: currentUser, joined: [currentUser]
             });
+            /* after Doc is set */
+            console.log(res);
         })
     };
     reader.readAsDataURL(event.photos[0]);

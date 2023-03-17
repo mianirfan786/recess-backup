@@ -1,6 +1,5 @@
 import {Box, Button, Container, Grid, Stack, Typography} from "@mui/material";
 import "swiper/css";
-import frisbee from "../../../images/firsbee-4.png";
 import EventCard from "../../EventCard/EventCard";
 import {ViewEventsCreatedByMe} from "../../../firebase/functions/event";
 import {useEffect, useState} from "react";
@@ -13,6 +12,7 @@ const Activities = () => {
             setEvents(events);
         });
     }, []);
+    console.log("Activities");
     return (
         <Box sx={{bgcolor: "#EBF2FB"}}>
             <Container sx={{py: {xs: 2, md: 4}}}>

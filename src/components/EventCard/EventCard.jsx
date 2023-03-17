@@ -26,7 +26,7 @@ const EventCard = ({event}) => {
             setLike({id: id, isLike: res});
         });
     }, []);
-    console.log("Popular Card: ", id);
+    console.log("Event Card: ", id);
     const handleLike = (id) => {
         if (like.isLike) {
             DislikeEventById(id);

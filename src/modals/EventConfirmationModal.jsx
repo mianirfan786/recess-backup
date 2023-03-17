@@ -3,9 +3,12 @@ import DefaultModal from "./DefaultModal";
 import CustomDivider from "../components/CustomDivider";
 import getDate from "../utils/getDate";
 import { useState } from "react";
+import {JoinEventById} from "../firebase/functions/event/event-join";
 
-const EventConfirmationModal = ({ open, onClose, event }) => {
+const EventConfirmationModal = (props) => {
+  console.log(props);
   const {
+    id,
     title,
     location,
     participant,
@@ -14,17 +17,19 @@ const EventConfirmationModal = ({ open, onClose, event }) => {
     image,
     description,
     coordinates,
-  } = event;
+  } = props;
 
   const [attendees, setAttendees] = useState(0);
 
   const onModalClose = () => {
+    console.log(id);
+    JoinEventById(id);
     setAttendees(0);
-    onClose();
+    props.onClose();
   };
 
   return (
-    <DefaultModal open={open} onClose={onModalClose}>
+    <DefaultModal open={props.open} onClose={onModalClose}>
       <Stack textAlign="center" gap={3}>
         <Typography variant="h4">Event Confirmation</Typography>
         <Typography variant="h3">{title}</Typography>
@@ -46,7 +51,12 @@ const EventConfirmationModal = ({ open, onClose, event }) => {
           >
             <Typography variant="body1">Date</Typography>
             <Typography variant="body1" fontWeight="bold">
-              {getDate(date)}
+              {date.toLocaleDateString('en-US', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
             </Typography>
           </Stack>
           <Stack
@@ -56,7 +66,7 @@ const EventConfirmationModal = ({ open, onClose, event }) => {
           >
             <Typography variant="body1">Time</Typography>
             <Typography variant="body1" fontWeight="bold">
-              10:00 PM - 12:30 PM
+              {props.startTime} - {props.endTime}
             </Typography>
           </Stack>
           <Stack
@@ -76,7 +86,7 @@ const EventConfirmationModal = ({ open, onClose, event }) => {
           >
             <Typography variant="body1">Keyword</Typography>
             <Typography variant="body1" fontWeight="bold">
-              Golf
+              {props.keywords}
             </Typography>
           </Stack>
           <Stack
@@ -86,7 +96,7 @@ const EventConfirmationModal = ({ open, onClose, event }) => {
           >
             <Typography variant="body1">Max Players</Typography>
             <Typography variant="body1" fontWeight="bold">
-              {participant}
+              {props.maxParticipants}
             </Typography>
           </Stack>
           <Stack
@@ -96,7 +106,7 @@ const EventConfirmationModal = ({ open, onClose, event }) => {
           >
             <Typography variant="body1">Latitude</Typography>
             <Typography variant="body1" fontWeight="bold">
-              {coordinates.lat.toFixed(2)}
+              {props.event.coordinates.lat.toFixed(2)}
             </Typography>
           </Stack>
           <Stack
@@ -106,7 +116,7 @@ const EventConfirmationModal = ({ open, onClose, event }) => {
           >
             <Typography variant="body1">Longitude</Typography>
             <Typography variant="body1" fontWeight="bold">
-              {coordinates.lng.toFixed(2)}
+              {props.event.coordinates.lng.toFixed(2)}
             </Typography>
           </Stack>
         </Stack>
@@ -147,7 +157,7 @@ const EventConfirmationModal = ({ open, onClose, event }) => {
         >
           <Typography variant="body1">Participation Cost</Typography>
           <Typography variant="body1" fontWeight="bold">
-            Free
+            {props.cost ? `$${props.cost}` : "Free"}
           </Typography>
         </Stack>
         <Button

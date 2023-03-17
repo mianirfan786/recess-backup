@@ -1,9 +1,9 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {Box, Button, Stack, Typography} from "@mui/material";
 import "swiper/css";
-import { useState } from "react";
+import {useState} from "react";
 
-const RecentlyAddedCard = ({ event }) => {
-    const { id, photos, title, date, time, keywords, bgColor } = event;
+const RecentlyAddedCard = ({event}) => {
+    const {id, photos, title, date, time, keywords, bgColor, joined, maxParticipants} = event;
 
     console.log("Recently Added Card: ", id)
     return (
@@ -31,7 +31,7 @@ const RecentlyAddedCard = ({ event }) => {
                 },
             }}
         >
-            <Box sx={{ mt: "auto", width: 1 }}>
+            <Box sx={{mt: "auto", width: 1}}>
                 <Box>
                     <Typography
                         variant="h4"
@@ -46,8 +46,8 @@ const RecentlyAddedCard = ({ event }) => {
                     </Typography>
                     <Stack
                         direction="row"
-                        sx={{ my: { xs: 1, md: 2 } }}
-                        gap={{ xs: 0.5, md: 1 }}
+                        sx={{my: {xs: 1, md: 2}}}
+                        gap={{xs: 0.5, md: 1}}
                     >
                         <Typography color="info.main" variant="h6">
                             {date} .
@@ -68,7 +68,7 @@ const RecentlyAddedCard = ({ event }) => {
                         sx={{
                             px: 3,
                             borderRadius: 50,
-                            fontSize: { xs: 14, md: 16 },
+                            fontSize: {xs: 14, md: 16},
                             fontWeight: 700,
                             textTransform: "capitalize",
                             textShadow: "0px 4px 4px rgba(0, 0, 0, 0.15)",
@@ -86,7 +86,7 @@ const RecentlyAddedCard = ({ event }) => {
                         Join
                     </Button>
                     <Typography variant="body1" color="info.main">
-                        1/8
+                        {joined.length} / {maxParticipants}
                     </Typography>
                 </Stack>
             </Box>
