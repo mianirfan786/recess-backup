@@ -30,15 +30,12 @@ const EventCard = ({event}) => {
             console.log("-> error ", error);
         }
     }, []);
-    console.log("Event Card: ", id);
     const handleLike = (id) => {
         if (like.isLike) {
             DislikeEventById(id);
-            console.log("Dislike");
             setLike({id: id, isLike: false});
         } else {
             LikeEventById(id);
-            console.log("Like");
             setLike({id: id, isLike: true});
         }
     };

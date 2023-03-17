@@ -10,8 +10,6 @@ const Activities = () => {
     useEffect(() => {
         ViewEventsCreatedByMe(2).then((events) => {
             setEvents(events);
-            console.log("Activities");
-            console.log(events);
         });
     }, []);
     return (
