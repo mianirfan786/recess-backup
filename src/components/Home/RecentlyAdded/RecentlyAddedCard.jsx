@@ -3,10 +3,12 @@ import "swiper/css";
 import {useState} from "react";
 import {ROUTES} from "../../../routes";
 import {useNavigate} from "react-router-dom";
+import {timeTo12HrFormat} from "../../../utils/timeFunctions";
 
 const RecentlyAddedCard = ({event}) => {
     const navigate = useNavigate();
-    const {id, photos, title, date, time, keywords, bgColor, joined, maxParticipants} = event;
+    event.date = new Date(event.date);
+    const {id, photos, title, date, startTime, bgColor, joined, maxParticipants} = event;
     return (
         <Box
             sx={{
@@ -51,11 +53,16 @@ const RecentlyAddedCard = ({event}) => {
                         gap={{xs: 0.5, md: 1}}
                     >
                         <Typography color="info.main" variant="h6">
-                            {date} .
+                            {date.toLocaleDateString('en-US', {
+                                weekday: 'short',
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                            })} -
                         </Typography>
 
                         <Typography color="info.main" variant="h6">
-                            {time}
+                            {timeTo12HrFormat(startTime)}
                         </Typography>
                     </Stack>
                 </Box>

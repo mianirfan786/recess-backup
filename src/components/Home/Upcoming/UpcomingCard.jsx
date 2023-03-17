@@ -4,11 +4,12 @@ import styles from "../../../styles/Home.module.scss";
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "../../../routes";
 import {useState} from "react";
+import {timeTo12HrFormat} from "../../../utils/timeFunctions";
 
 const UpcomingCard = ({event}) => {
+    event.date = new Date(event.date);
     const {id, title, startTime, date, photos, bgColor} = event;
     const navigate = useNavigate();
-
 
     return (
         <Box
@@ -31,11 +32,15 @@ const UpcomingCard = ({event}) => {
                 >
                     <BsCalendarEvent className={styles.calendarIcon}/>
                     <Typography color="info.main" variant="h6">
-                        {date} .
+                        {date.toLocaleDateString('en-US', {
+                            weekday: 'short',
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric',
+                        })} -
                     </Typography>
-
                     <Typography color="info.main" variant="h6">
-                        {startTime}
+                        {timeTo12HrFormat(startTime)}
                     </Typography>
                 </Stack>
                 <Stack

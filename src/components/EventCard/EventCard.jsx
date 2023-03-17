@@ -6,9 +6,11 @@ import styles from "../../styles/Event.module.scss";
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "../../routes";
 import {DislikeEventById, IsEventLikedByUser, LikeEventById} from "../../firebase/functions/event/event-likes";
+import {timeTo12HrFormat} from "../../utils/timeFunctions";
 
 const EventCard = ({event}) => {
     const navigate = useNavigate();
+    event.date = new Date(event.date);
     const {
         id,
         photos,
@@ -104,7 +106,12 @@ const EventCard = ({event}) => {
                                 color="error"
                                 variant="h6"
                             >
-                                {date} .
+                                {date.toLocaleDateString('en-US', {
+                                    weekday: 'short',
+                                    day: 'numeric',
+                                    month: 'long',
+                                    year: 'numeric',
+                                })} -
                             </Typography>
 
                             <Typography
@@ -112,7 +119,7 @@ const EventCard = ({event}) => {
                                 color="error"
                                 variant="h6"
                             >
-                                {startTime}
+                                {timeTo12HrFormat(startTime)}
                             </Typography>
                         </Stack>
                     )}

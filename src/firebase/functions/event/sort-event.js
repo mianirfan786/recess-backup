@@ -31,3 +31,18 @@ export const SortEventByTimeStamp = async (maxLimit) => {
 }
 /* sort event by time creation :: End */
 
+/* sort event by max players :: Start */
+export const SortEventByMaxPlayers = async (maxPlayers, maxLimit) => {
+    const q = query(collection(db, "events"), orderBy("maxParticipants", "desc"), limit(maxLimit));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+}
+/* sort event by max players :: End */
+
+/* sort event by no. of attendees :: Start */
+export const SortEventByAttendees = async (maxLimit) => {
+    const q = query(collection(db, "events"), orderBy("attendees", "desc"), limit(maxLimit));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+}
+/* sort event by no. of attendees :: End */

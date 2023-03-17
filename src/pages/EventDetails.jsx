@@ -7,18 +7,17 @@ import AddressCard from "../components/EventDetails/Details/AddressCard";
 import Registered from "../components/EventDetails/Registered/Registered";
 import MapView from "../components/Explore/MapView/MapView";
 import marker3 from "../images/marker-3.png";
-import menFace from "../images/men-face.jpg";
 import MessageBoard from "../components/MessageBoard/MessageBoard";
 import EventConfirmationModal from "../modals/EventConfirmationModal";
 import {useModalsContext} from "../modals/ModalsContext";
 import {MODALS} from "../modals/modals";
-import getDate from "../utils/getDate";
 import FlagEventModal from "../modals/FlagEventModal";
 import {useParams} from "react-router-dom";
 import {ViewEventById} from "../firebase/functions/event";
 import {useEffect, useState} from "react";
 import {GetUsersByIds} from "../firebase/functions/user";
 import {HasUserJoinedEvent} from "../firebase/functions/event/event-join";
+import {timeTo12HrFormat} from "../utils/timeFunctions";
 
 const markers = [
     {
@@ -87,18 +86,7 @@ const EventDetails = ({event = _event}) => {
         })
     }, []);
 
-    function timeTo12HrFormat(time) {
-        const timeArr = time.split(':');
-        let hours = parseInt(timeArr[0]);
-        let minutes = parseInt(timeArr[1]);
-        let designation = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        const timeStr = hours + ':' + minutes + ' ' + designation;
-        return timeStr;
 
-    }
 
     const {openModal, setOpenModal} = useModalsContext();
 

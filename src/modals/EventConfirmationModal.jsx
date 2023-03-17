@@ -1,7 +1,6 @@
 import { Button, IconButton, Stack, Typography } from "@mui/material";
 import DefaultModal from "./DefaultModal";
 import CustomDivider from "../components/CustomDivider";
-import getDate from "../utils/getDate";
 import { useState } from "react";
 import {JoinEventById} from "../firebase/functions/event/event-join";
 
@@ -21,7 +20,8 @@ const EventConfirmationModal = (props) => {
   const [attendees, setAttendees] = useState(0);
 
   const onModalClose = () => {
-    JoinEventById(id);
+    console.log("Mattendees ", attendees);
+    JoinEventById(id, attendees);
     setAttendees(0);
     props.onClose();
   };

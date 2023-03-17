@@ -9,23 +9,25 @@ let currentUser = null;
 getCurrentUser();
 
 /* join event :: Start */
-export const JoinEventById = async (id) => {
+export const JoinEventById = async (id, noOfAttendees) => {
+    console.log("noOfAttendees " + noOfAttendees);
     currentUser = await getCurrentUser();
     const eventRef = doc(db, "events", id);
     const event = await getDoc(eventRef);
     if (event.exists) {
         const data = event.data();
-        if (event.joined === undefined) {
+        if (event.data().joined === undefined) {
             return updateDoc(eventRef, {
                 joined: [currentUser]
             })
         }
-        if (event.joined.includes(currentUser)) {
+        if (event.data().joined.includes(currentUser)) {
             return;
         }
-        return await eventRef.update({
-            joined: [...data.joined, currentUser]
-        });
+        return await updateDoc(eventRef, {
+            joined: [...data.joined, currentUser],
+            attendees: data.attendees + noOfAttendees
+        })
     }
 }
 /* join event :: End */
