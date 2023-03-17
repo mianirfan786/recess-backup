@@ -3,11 +3,14 @@ import {doc, getDoc, getFirestore, updateDoc} from "firebase/firestore";
 import {getCurrentUser} from "../user";
 import app from "../../config";
 
-const currentUser = getCurrentUser()
 const db = getFirestore(app);
+
+let currentUser = null;
+getCurrentUser();
 
 /* is event liked by the user :: Start */
 export const IsEventLikedByUser = async (id) => {
+    currentUser = await getCurrentUser();
     const eventRef = doc(db, "events", id);
     const event = await getDoc(eventRef);
     if (event.exists) {
@@ -23,6 +26,7 @@ export const IsEventLikedByUser = async (id) => {
 
 /* like the event :: Start */
 export const LikeEventById = async (id) => {
+    currentUser = await getCurrentUser();
     const eventRef = doc(db, "events", id);
     const event = await getDoc(eventRef);
     if (event.exists) {
@@ -44,17 +48,19 @@ export const LikeEventById = async (id) => {
 
 /* dislike the event :: Start */
 export const DislikeEventById = async (id) => {
+    currentUser = await getCurrentUser();
     const eventRef = doc(db, "events", id);
     const event = await getDoc(eventRef);
-    console.log("disliked");
     if (event.exists) {
         const data = event.data();
-        if (event.likes === undefined) {
+        if (event.likes.length === 0) {
             return;
         }
         if (!event.likes.includes(currentUser)) {
             return;
         }
+        console.log("DislikeEventById");
+        console.log(data.likes);
         return await updateDoc(eventRef, {
             likes: data.likes.filter((item) => item !== currentUser)
         })

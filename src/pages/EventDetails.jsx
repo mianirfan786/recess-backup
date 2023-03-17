@@ -18,6 +18,7 @@ import {useParams} from "react-router-dom";
 import {ViewEventById} from "../firebase/functions/event";
 import {useEffect, useState} from "react";
 import {GetUsersByIds} from "../firebase/functions/user";
+import {HasUserJoinedEvent} from "../firebase/functions/event/event-join";
 
 const markers = [
     {
@@ -63,6 +64,7 @@ const EventDetails = ({event = _event}) => {
     const [description, setDescription] = useState(event.description);
     const [coordinates, setCoordinates] = useState(event.coordinates);
     const [users, setUsers] = useState([]);
+    const [IsUserJoined, setIsUserJoined] = useState(false);
 
     useEffect(() => {
         ViewEventById(id).then((data) => {
@@ -80,6 +82,9 @@ const EventDetails = ({event = _event}) => {
                 setUsers(usersData);
             });
         });
+        HasUserJoinedEvent(id).then((data) => {
+            setIsUserJoined(data);
+        })
     }, []);
 
     function timeTo12HrFormat(time) {
@@ -206,7 +211,10 @@ const EventDetails = ({event = _event}) => {
                                 },
                             }}
                         >
-                            Join - {cost === 0 ? "Free" : cost}
+                            {
+                                IsUserJoined ? "Already Joined" : `Join - ${cost === 0 ? "Free" : cost}`
+                            }
+
                         </Button>
                     </Stack>
                 </Container>

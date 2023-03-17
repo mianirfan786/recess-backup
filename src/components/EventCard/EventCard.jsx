@@ -22,17 +22,23 @@ const EventCard = ({event}) => {
     } = event;
     const [like, setLike] = useState({id: null, isLike: false});
     useEffect(() => {
-        IsEventLikedByUser(id).then((res) => {
-            setLike({id: id, isLike: res});
-        });
+        try{
+            IsEventLikedByUser(id).then((res) => {
+                setLike({id: id, isLike: res});
+            });
+        }catch(error){
+            console.log("-> error ", error);
+        }
     }, []);
     console.log("Event Card: ", id);
     const handleLike = (id) => {
         if (like.isLike) {
             DislikeEventById(id);
+            console.log("Dislike");
             setLike({id: id, isLike: false});
         } else {
             LikeEventById(id);
+            console.log("Like");
             setLike({id: id, isLike: true});
         }
     };

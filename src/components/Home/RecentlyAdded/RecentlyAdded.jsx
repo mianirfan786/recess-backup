@@ -16,7 +16,6 @@ const RecentlyAdded = () => {
             setEvents(events);
         });
     }, []);
-    console.log("recently added")
 
     return (
         <Box sx={{bgcolor: "#F6FBF9"}}>

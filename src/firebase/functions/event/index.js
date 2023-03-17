@@ -17,7 +17,6 @@ export const addEvent = async (event) => {
 
     // Read the first photo from the event object
     currentUser = await getCurrentUser();
-    console.log(currentUser);
     const reader = new FileReader();
     reader.onload = function (e) {
         const imgSrc = e.target.result;
@@ -84,6 +83,7 @@ export const ViewEventCreatedByUser = async (CreatedBy, maxItems) => {
 
 /* view event created by current loggedIn user :: Start */
 export const ViewEventsCreatedByMe = async (maxLimit) => {
+    currentUser = await getCurrentUser();
     return ViewEventCreatedByUser(currentUser, maxLimit);
 }
 /* view event created by current loggedIn user :: End */

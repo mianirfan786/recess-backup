@@ -9,7 +9,6 @@ const UpcomingCard = ({event}) => {
     const {id, title, startTime, date, photos, bgColor} = event;
     const navigate = useNavigate();
 
-    console.log("Upcoming Card: ", id);
 
     return (
         <Box

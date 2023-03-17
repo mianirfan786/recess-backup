@@ -10,9 +10,10 @@ const Activities = () => {
     useEffect(() => {
         ViewEventsCreatedByMe(2).then((events) => {
             setEvents(events);
+            console.log("Activities");
+            console.log(events);
         });
     }, []);
-    console.log("Activities");
     return (
         <Box sx={{bgcolor: "#EBF2FB"}}>
             <Container sx={{py: {xs: 2, md: 4}}}>

@@ -5,10 +5,12 @@ import {getCurrentUser} from "../user";
 
 const db = getFirestore(app);
 
-const currentUser = getCurrentUser();
+let currentUser = null;
+getCurrentUser();
 
 /* join event :: Start */
 export const JoinEventById = async (id) => {
+    currentUser = await getCurrentUser();
     const eventRef = doc(db, "events", id);
     const event = await getDoc(eventRef);
     if (event.exists) {
@@ -27,3 +29,17 @@ export const JoinEventById = async (id) => {
     }
 }
 /* join event :: End */
+
+export const HasUserJoinedEvent = async (id) => {
+    currentUser = await getCurrentUser();
+    const eventRef = doc(db, "events", id);
+    const event = await getDoc(eventRef);
+    if (event.exists) {
+        const data = event.data();
+        if (data.joined !== undefined)
+            return data.joined.includes(currentUser);
+        else
+            return false;
+    }
+    return false;
+}

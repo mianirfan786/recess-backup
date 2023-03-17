@@ -1,11 +1,12 @@
 import {Box, Button, Stack, Typography} from "@mui/material";
 import "swiper/css";
 import {useState} from "react";
+import {ROUTES} from "../../../routes";
+import {useNavigate} from "react-router-dom";
 
 const RecentlyAddedCard = ({event}) => {
+    const navigate = useNavigate();
     const {id, photos, title, date, time, keywords, bgColor, joined, maxParticipants} = event;
-
-    console.log("Recently Added Card: ", id)
     return (
         <Box
             sx={{
@@ -65,6 +66,10 @@ const RecentlyAddedCard = ({event}) => {
                     gap={1}
                 >
                     <Button
+                        onClick={function (e) {
+                            e.preventDefault();
+                            navigate(ROUTES.EVENT_DETAILS.replace(":id", id));
+                        }}
                         sx={{
                             px: 3,
                             borderRadius: 50,

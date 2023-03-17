@@ -16,7 +16,6 @@ const Upcoming = () => {
             setEvents(events);
         });
     }, []);
-    console.log("upcoming")
   return (
       <div>
         <Container

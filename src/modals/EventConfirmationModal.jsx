@@ -6,7 +6,6 @@ import { useState } from "react";
 import {JoinEventById} from "../firebase/functions/event/event-join";
 
 const EventConfirmationModal = (props) => {
-  console.log(props);
   const {
     id,
     title,
@@ -22,7 +21,6 @@ const EventConfirmationModal = (props) => {
   const [attendees, setAttendees] = useState(0);
 
   const onModalClose = () => {
-    console.log(id);
     JoinEventById(id);
     setAttendees(0);
     props.onClose();
