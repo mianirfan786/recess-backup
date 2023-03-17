@@ -6,14 +6,17 @@ import evenUser2 from "../../../images/even-user-2.png";
 import evenUser3 from "../../../images/even-user-3.png";
 import vollyballMatch from "../../../images/vollyball-match.png";
 import UpcomingCard from "./UpcomingCard";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {SortEventByUpcoming} from "../../../firebase/functions/event/sort-event";
 
 const Upcoming = () => {
   const [events, setEvents] = useState([]);
-  SortEventByUpcoming(4).then((events) => {
-    setEvents(events);
-  });
+    useEffect(() => {
+        SortEventByUpcoming(4).then((events) => {
+            setEvents(events);
+        });
+    }, []);
+    console.log("upcoming")
   return (
       <div>
         <Container

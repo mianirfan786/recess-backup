@@ -3,33 +3,47 @@ import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 
 import app from "../../config";
 import {getCurrentUser} from "../user";
+import {calculateRGB} from "../extra/getAverageRGB";
 
 
 /* Basic Variables */
 const storage = getStorage();
 const db = getFirestore(app);
-const currentUser = getCurrentUser();
+let currentUser = null;
+getCurrentUser();
 
 /* add event :: Start */
 export const addEvent = async (event) => {
-    console.log("addEvent", event);
 
-    // Upload each photo to Firebase Storage With Random Name
-    const photoUrls = await Promise.all(
-        event.photos.map(async (photo) => {
-            const photoRef = ref(storage, `photos/${Math.random().toString(36).substring(2)}`);
-            await uploadBytes(photoRef, photo);
-            return await getDownloadURL(photoRef);
+    // Read the first photo from the event object
+    currentUser = await getCurrentUser();
+    console.log(currentUser);
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const imgSrc = e.target.result;
+        calculateRGB(imgSrc).then(async (rgb) => {
+            event = {...event, bgColor: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1)`}
+
+            // Upload each photo to Firebase Storage With Random Name
+            const photoUrls = await Promise.all(
+                event.photos.map(async (photo) => {
+                    console.log(photo.path);
+                    const photoRef = ref(storage, `photos/${Math.random().toString(36).substring(2)}`);
+                    await uploadBytes(photoRef, photo);
+                    return await getDownloadURL(photoRef);
+                })
+            );
+
+            // Add photo URLs to the event object
+            const eventWithPhotos = {...event, photos: photoUrls};
+
+            // Add Event to Firebase with Timestamp and CreatedBy
+            await setDoc(doc(db, "events", Math.random().toString(36).substring(2)), {
+                ...eventWithPhotos, timeStamp: Date.now(), CreatedBy: currentUser
+            });
         })
-    );
-
-    // Add photo URLs to the event object
-    const eventWithPhotos = {...event, photos: photoUrls};
-
-    // Add Event to Firebase with Timestamp and CreatedBy
-    await setDoc(doc(db, "events", Math.random().toString(36).substring(2)), {
-        ...eventWithPhotos, timeStamp: Date.now(), CreatedBy: currentUser
-    });
+    };
+    reader.readAsDataURL(event.photos[0]);
 }
 /* add event :: End */
 

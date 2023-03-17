@@ -6,14 +6,17 @@ import evenUser3 from "../../../images/even-user-3.png";
 import frisbee1 from "../../../images/frisbee-1.png";
 import frisbee2 from "../../../images/frisbee-2.png";
 import EventCard from "../../EventCard/EventCard";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {SortEventByPopular} from "../../../firebase/functions/event/sort-event";
 
 const Popular = () => {
   const [events, setEvents] = useState([]);
-  SortEventByPopular(2).then((events) => {
-    setEvents(events);
-  });
+  useEffect(() => {
+    SortEventByPopular(2).then((events) => {
+      setEvents(events);
+    });
+  }, []);
+  console.log("popular")
   return (
       <Box sx={{ bgcolor: "#EBF2FB" }}>
         <Container sx={{ py: { xs: 2, md: 4 } }}>

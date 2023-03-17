@@ -1,5 +1,5 @@
 import {Box, Button, Stack, Typography} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
 import "swiper/css";
 import styles from "../../styles/Event.module.scss";
@@ -21,9 +21,12 @@ const EventCard = ({event}) => {
         description,
     } = event;
     const [like, setLike] = useState({id: null, isLike: false});
-    IsEventLikedByUser(id).then((res) => {
-        setLike({id: id, isLike: res});
-    });
+    useEffect(() => {
+        IsEventLikedByUser(id).then((res) => {
+            setLike({id: id, isLike: res});
+        });
+    }, []);
+    console.log("Popular Card: ", id);
     const handleLike = (id) => {
         if (like.isLike) {
             DislikeEventById(id);

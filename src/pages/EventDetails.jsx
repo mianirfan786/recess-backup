@@ -16,7 +16,7 @@ import getDate from "../utils/getDate";
 import FlagEventModal from "../modals/FlagEventModal";
 import {useParams} from "react-router-dom";
 import {ViewEventById} from "../firebase/functions/event";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const markers = [
     {
@@ -70,17 +70,20 @@ const EventDetails = ({event = _event}) => {
     const [description, setDescription] = useState(event.description);
     const [coordinates, setCoordinates] = useState(event.coordinates);
 
-    const FetchedEvent = ViewEventById(id).then((event) => {
-        setTitle(event.title);
-        setmaxParticipants(event.maxParticipants);
-        setStartTime(timeTo12HrFormat(event.startTime));
-        setEndTime(timeTo12HrFormat(event.endTime));
-        setDate(new Date(event.date));
-        setPhotos(event.photos);
-        setKeywords(event.keywords);
-        setCost(event.cost === 0 ? "Free" : event.cost);
-        setDescription(event.description);
-    });
+    useEffect(() => {
+        ViewEventById(id).then((event) => {
+            setTitle(event.title);
+            setmaxParticipants(event.maxParticipants);
+            setStartTime(timeTo12HrFormat(event.startTime));
+            setEndTime(timeTo12HrFormat(event.endTime));
+            setDate(new Date(event.date));
+            setPhotos(event.photos);
+            setKeywords(event.keywords);
+            setCost(event.cost === 0 ? "Free" : event.cost);
+            setDescription(event.description);
+        });
+    }, []);
+    console.log("Event Details: ", id)
 
     function timeTo12HrFormat(time) {
         const timeArr = time.split(':');

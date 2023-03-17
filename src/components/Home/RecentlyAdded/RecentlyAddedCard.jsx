@@ -3,43 +3,9 @@ import "swiper/css";
 import { useState } from "react";
 
 const RecentlyAddedCard = ({ event }) => {
-    const { photos, title, date, time, keywords } = event;
-    const [bgGradient, setBgGradient] = useState("transparent");
-    const waitForTitle = setInterval(() => {
-        if (title !== null) clearInterval(waitForTitle);
-        try{
-            getAverageRGB();
-        }
-        catch{
+    const { id, photos, title, date, time, keywords, bgColor } = event;
 
-        }
-    }, 1000);
-
-    const getAverageRGB = () => {
-        let imgUrl = photos[0];
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.src = imgUrl;
-        img.onload = () => {
-            const canvas = document.createElement("canvas");
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0);
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-            let r = 0, g = 0, b = 0, count = 0;
-            for (let i = 0; i < imageData.length; i += 4) {
-                r += imageData[i];
-                g += imageData[i + 1];
-                b += imageData[i + 2];
-                count++;
-            }
-            r = Math.floor(r / count);
-            g = Math.floor(g / count);
-            b = Math.floor(b / count);
-            setBgGradient(`linear-gradient(180deg, rgba(${r},${g},${b},0) 20%, rgba(${r},${g},${b},1) 90%)`);
-        };
-    }
+    console.log("Recently Added Card: ", id)
     return (
         <Box
             sx={{
@@ -59,7 +25,7 @@ const RecentlyAddedCard = ({ event }) => {
                     left: 0,
                     width: "100%",
                     height: "100%",
-                    background: bgGradient,
+                    background: `linear-gradient(180deg, rgba(0,0,0,0) 20%, ${bgColor} 90%)`,
                     borderRadius: "25px",
                     zIndex: -1,
                 },
