@@ -4,9 +4,19 @@ import { AiOutlinePlus } from "react-icons/ai";
 import user from "../../images/user.jpg";
 import styles from "../../styles/Home.module.scss";
 import { ROUTES } from "../../routes";
+import {useEffect, useState} from "react";
+import {GetCurrentUserDetails} from "../../firebase/functions/user";
 
 const HomeHeader = () => {
   const navigate = useNavigate();
+    const [userName, setUserName] = useState("");
+    useEffect(
+        () => {
+            GetCurrentUserDetails().then((data) => {
+                console.log(data);
+                setUserName(data.displayName);
+            } );
+        },[])
 
   return (
     <Container sx={{ py: { xs: 2, md: 4 } }}>
@@ -31,7 +41,7 @@ const HomeHeader = () => {
               color="text.secondary"
               variant="h3"
             >
-              <b>Christoph</b> Hellmuth
+                {userName}
             </Typography>
           </Box>
         </Stack>

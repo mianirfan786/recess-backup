@@ -26,7 +26,8 @@ export const JoinEventById = async (id, noOfAttendees) => {
         }
         return await updateDoc(eventRef, {
             joined: [...data.joined, currentUser],
-            attendees: data.attendees + noOfAttendees
+            attendees: data.attendees + noOfAttendees,
+            participantCount: data.participantCount + 1
         })
     }
 }

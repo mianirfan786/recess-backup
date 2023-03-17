@@ -12,7 +12,6 @@ import Location from "../components/Home/Location";
 
 const Home = () => {
   const { openModal, setOpenModal } = useModalsContext();
-
   return (
     <div>
       <HomeHeader />

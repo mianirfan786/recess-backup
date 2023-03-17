@@ -46,3 +46,11 @@ export const SortEventByAttendees = async (maxLimit) => {
     return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
 }
 /* sort event by no. of attendees :: End */
+
+/* sort event by No of participants :: Start */
+export const SortEventByParticipantCount = async ( maxLimit) => {
+    const q = query(collection(db, "events"), orderBy("participantCount", "desc"), limit(maxLimit));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+}
+/* sort event by No of participants :: End */
