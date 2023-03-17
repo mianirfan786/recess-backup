@@ -12,7 +12,7 @@ const RecentlyAdded = () => {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        SortEventByTimeStamp(4).then((events) => {
+        SortEventByTimeStamp(4, -1,-1).then((events) => {
             setEvents(events);
         });
     }, []);

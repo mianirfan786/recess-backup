@@ -64,6 +64,7 @@ const EventDetails = ({event = _event}) => {
     const [coordinates, setCoordinates] = useState(event.coordinates);
     const [users, setUsers] = useState([]);
     const [IsUserJoined, setIsUserJoined] = useState(false);
+    const [displayAddress, setDisplayAddress] = useState(event.displayAddress);
 
     useEffect(() => {
         ViewEventById(id).then((data) => {
@@ -76,6 +77,7 @@ const EventDetails = ({event = _event}) => {
             setKeywords(data.keywords);
             setCost(event.cost === 0 ? "Free" : data.cost);
             setDescription(data.description);
+            setDisplayAddress(data.displayAddress);
             /* change event.date */
             GetUsersByIds(data.joined).then((usersData) => {
                 setUsers(usersData);
@@ -164,7 +166,7 @@ const EventDetails = ({event = _event}) => {
                             </Stack>
                             <Stack gap={1}>
                                 <LocationCard coordinates={coordinates}/>
-                                <AddressCard address={location}/>
+                                <AddressCard address={displayAddress}/>
                             </Stack>
                             <Typography variant="body1">{description}</Typography>
                             <Registered users={users} maxParticipants={maxParticipants}/>
