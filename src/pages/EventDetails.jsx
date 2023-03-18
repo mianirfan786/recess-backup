@@ -19,7 +19,7 @@ import {GetUsersByIds} from "../firebase/functions/user";
 import {HasUserJoinedEvent} from "../firebase/functions/event/event-join";
 import {timeTo12HrFormat} from "../utils/timeFunctions";
 
-const markers = [
+const _markers = [
     {
         lat: 24.37,
         lng: 90.0,
@@ -39,6 +39,7 @@ const _event = {
     location: "Loading...",
     keywords: "Loading...",
     coordinates: {lat: 32.158915943, lng: 536.1564159},
+    address: {latitude: 10.00, longitude: 10.00},
     maxParticipants: "Loading...",
     date: new Date(),
     startTime: "Loading...",
@@ -49,7 +50,7 @@ const _event = {
         "Loading...",
 };
 
-const EventDetails = ({event = _event}) => {
+const EventDetails = ({event = _event, markers = _markers}) => {
     const {id} = useParams();
     const [title, setTitle] = useState(event.title);
     const [location, setLocation] = useState(event.location);
@@ -62,6 +63,7 @@ const EventDetails = ({event = _event}) => {
     const [cost, setCost] = useState(event.cost);
     const [description, setDescription] = useState(event.description);
     const [coordinates, setCoordinates] = useState(event.coordinates);
+    const [address, setAddress] = useState(event.address);
     const [users, setUsers] = useState([]);
     const [IsUserJoined, setIsUserJoined] = useState(false);
     const [displayAddress, setDisplayAddress] = useState(event.displayAddress);
@@ -77,6 +79,7 @@ const EventDetails = ({event = _event}) => {
             setKeywords(data.keywords);
             setCost(event.cost === 0 ? "Free" : data.cost);
             setDescription(data.description);
+            setAddress(data.address);
             setDisplayAddress(data.displayAddress);
             /* change event.date */
             GetUsersByIds(data.joined).then((usersData) => {
@@ -87,7 +90,6 @@ const EventDetails = ({event = _event}) => {
             setIsUserJoined(data);
         })
     }, []);
-
 
 
     const {openModal, setOpenModal} = useModalsContext();
@@ -165,7 +167,7 @@ const EventDetails = ({event = _event}) => {
                                 </Stack>
                             </Stack>
                             <Stack gap={1}>
-                                <LocationCard coordinates={coordinates}/>
+                                <LocationCard coordinates={address}/>
                                 <AddressCard address={displayAddress}/>
                             </Stack>
                             <Typography variant="body1">{description}</Typography>
@@ -176,7 +178,7 @@ const EventDetails = ({event = _event}) => {
                                 Map
                             </Typography>
                             <Box borderRadius={3} overflow="hidden">
-                                <MapView height="500px" markers={markers} center={center}/>
+                                <MapView height="500px" markers={address} center={address}/>
                             </Box>
                         </Stack>
                         <Stack gap={1}>

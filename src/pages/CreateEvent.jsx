@@ -29,7 +29,7 @@ const CreateEvent = () => {
     function handleSubmit(event) {
         event.preventDefault();
 
-        if (state.photos === null || state.title === "" || state.description === "" || state.keywords === "" || state.maxParticipants === 0) {
+        if (state.photos === null || state.title === "" || state.description === "" || state.keywords === "" || state.maxParticipants === 0 || state.address === null) {
             toast("All fields must be filled", {type: "error"})
             return;
         }

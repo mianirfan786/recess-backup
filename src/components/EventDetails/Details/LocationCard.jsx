@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import MapIcon from "../../../icons/MapIcon";
 
 const LocationCard = ({ coordinates }) => {
-  const { lat, lng } = coordinates;
+  const { latitude, longitude } = coordinates;
 
   return (
     <Box
@@ -29,14 +29,14 @@ const LocationCard = ({ coordinates }) => {
           <Typography variant="body2" color="#9A9EA0">
             Latitude
           </Typography>
-          <Typography variant="body1">{lat.toFixed(2)}</Typography>
+          <Typography variant="body1">{latitude.toFixed(2)}</Typography>
         </Stack>
         <span>-</span>
         <Stack gap={1}>
           <Typography variant="body2" color="#9A9EA0">
             Longitude
           </Typography>
-          <Typography variant="body1">{lng.toFixed(2)}</Typography>
+          <Typography variant="body1">{longitude.toFixed(2)}</Typography>
         </Stack>
       </Stack>
     </Box>

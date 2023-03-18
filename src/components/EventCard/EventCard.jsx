@@ -230,6 +230,10 @@ const EventCard = ({event}) => {
                         )}
                     </Box>
                     <Button
+                        onClick={function(e) {
+                            e.preventDefault();
+                            navigate(ROUTES.EVENT_DETAILS.replace(":id", id));
+                        }}
                         sx={{
                             px: 3,
                             borderRadius: 50,
