@@ -2,11 +2,11 @@ import { Box, Typography } from "@mui/material";
 import "swiper/css";
 
 const SponsoredCard = ({ event }) => {
-  const { image, title, price, bgGradient } = event;
+  const { photos, title, cost, bgColor } = event;
   return (
     <Box
       sx={{
-        background: `url(${image}) no-repeat center center `,
+        background: `url(${photos}) no-repeat center center `,
         backgroundSize: "cover",
         height: 350,
         borderRadius: "25px",
@@ -22,7 +22,7 @@ const SponsoredCard = ({ event }) => {
           left: 0,
           width: "100%",
           height: "100%",
-          background: bgGradient,
+          background: `linear-gradient(180.15deg, rgba(148, 192, 193, 0) 56.02%, ${bgColor} 73.84%, #7F9989 99.87%)`,
           borderRadius: "25px",
           zIndex: -1,
         },
@@ -54,7 +54,7 @@ const SponsoredCard = ({ event }) => {
             padding: "2px 8px",
           }}
         >
-          ${price}
+           {cost == 0 ? "Free" : "$" + cost}
         </Typography>
       </Box>
     </Box>

@@ -1,18 +1,39 @@
 import {Box, Button, Container, Grid, Stack, Typography} from "@mui/material";
 import "swiper/css";
-import evenUser1 from "../../../images/even-user-1.png";
-import evenUser2 from "../../../images/even-user-2.png";
-import evenUser3 from "../../../images/even-user-3.png";
-import frisbee1 from "../../../images/frisbee-1.png";
-import frisbee2 from "../../../images/frisbee-2.png";
 import EventCard from "../../EventCard/EventCard";
 import {useEffect, useState} from "react";
-import {SortEventByPopular} from "../../../firebase/functions/event/sort-event";
+import {
+    SortEventWithCityByPopular,
+    SortEventWithCityBySponsor,
+    SortEventWithLocationByPopular
+} from "../../../firebase/functions/event/sort-event";
+import {FilterEventsWithLocationBySponsored} from "../../../firebase/functions/event/event-filter";
 
-const Popular = () => {
+const Popular = ({currentCity}) => {
     const [events, setEvents] = useState([]);
     useEffect(() => {
-        SortEventByPopular(2).then((events) => {
+        let isMounted = true;
+        if (currentCity.trim() !== "") {
+            console.log("currentCity", currentCity);
+            SortEventWithCityByPopular(currentCity, 4).then((events) => {
+                if (isMounted) {
+                    setEvents(events);
+                }
+            });
+        } else {
+            console.log("Without current city");
+            SortEventWithLocationByPopular(4,-1,-1).then((events) => {
+                if (isMounted) {
+                    setEvents(events);
+                }
+            });
+        }
+        return () => {
+            isMounted = false;
+        };
+    }, [currentCity]);
+    useEffect(() => {
+        SortEventWithLocationByPopular(2).then((events) => {
             setEvents(events);
         });
     }, []);

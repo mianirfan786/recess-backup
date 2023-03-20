@@ -1,68 +1,62 @@
 import DefaultModal from "./DefaultModal";
-import { Stack, Typography } from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
 import basketballTag from "../images/basketball-tag.png";
+import {useState, useEffect} from "react";
+import {GetKeywordsFromAllEvents} from "../firebase/functions/event";
+import {AddKeywordInUser} from "../firebase/functions/user";
 
 const tags = [...new Array(20)].map((_, i) => ({
-  title: "Basketball",
-  participants: 123,
-  image: basketballTag,
-  id: i + 1,
+    title: "Basketball",
+    image: basketballTag,
+    id: i + 1,
 }));
 
-const TagsModal = ({ open, onClose }) => {
-  const onTagClick = (tag) => {
-    onClose();
-  };
+const TagsModal = ({open, onClose, onData}) => {
+    const [_tags, setTags] = useState(tags);
+    useEffect(() => {
+        GetKeywordsFromAllEvents().then((data) => {
+            setTags(data);
+        });
+    }, []);
 
-  return (
-    <DefaultModal open={open} onClose={onClose}>
-      <Stack textAlign="center" gap={3}>
-        <Typography variant="h4">Tags</Typography>
-        <Stack
-          flexWrap="wrap"
-          maxHeight={{ xs: "50vh", sm: "500px" }}
-          overflow="auto"
-          flexDirection="row"
-        >
-          {tags.map((tag) => {
-            const { id, title, participants, image } = tag;
+    const onTagClick = (tag) => {
+        AddKeywordInUser(tag);
+        onData()
+        onClose();
+    };
 
-            return (
-              <Stack
-                onClick={() => onTagClick(tag)}
-                sx={{ cursor: "pointer" }}
-                p={1}
-                width={{ xs: "33%", sm: "25%", md: "20%" }}
-                key={id}
-                gap={1}
-              >
+    return (
+        <DefaultModal open={open} onClose={onClose}>
+            <Stack textAlign="center" gap={3}>
+                <Typography variant="h4">Tags</Typography>
                 <Stack
-                  width="100%"
-                  borderRadius="20px"
-                  p={2}
-                  sx={{ backgroundColor: "#F6FBF9", aspectRatio: "1/1" }}
+                    flexWrap="wrap"
+                    maxHeight={{xs: "50vh", sm: "500px"}}
+                    overflow="auto"
+                    flexDirection="row"
                 >
-                  <img
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1/1",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                    src={image}
-                    alt={title}
-                  />
+                    {_tags.map((tag) => {
+                        return (
+                            <Box
+                                onClick={() => onTagClick(tag)}
+                                borderRadius="20px"
+                                key={Math.random().toString(36).substring(2)}
+                                sx={{
+                                    backgroundColor: "#EBF2FB",
+                                    margin: "4px",
+                                    width: "content-box",
+                                    cursor: "pointer",
+                                }}
+                                p="10px"
+                            >
+                                <b> + </b> {tag}
+                            </Box>
+                        );
+                    })}
                 </Stack>
-                <Typography fontWeight={500} variant="body1">
-                  {title} ({participants})
-                </Typography>
-              </Stack>
-            );
-          })}
-        </Stack>
-      </Stack>
-    </DefaultModal>
-  );
+            </Stack>
+        </DefaultModal>
+    );
 };
 
 export default TagsModal;

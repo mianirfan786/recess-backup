@@ -44,6 +44,8 @@ export const addEvent = async (event) => {
                 joined: [currentUser],
                 attendees: 1,
                 participantCount: 1,
+                latitude: event.address.latitude,
+                longitude: event.address.longitude,
                 comments: [],
             });
             /* after Doc is set */
@@ -94,3 +96,65 @@ export const ViewEventsCreatedByMe = async (maxLimit) => {
 }
 /* view event created by current loggedIn user :: End */
 
+
+const GetLatitudeAndLongitudeOfDistance = async (latitude, longitude, distance) => {
+    let lat = 0.0144927536231884
+    let lon = 0.0181818181818182
+
+    let lowerLat = latitude - (lat * distance)
+    let lowerLon = longitude - (lon * distance)
+
+    let greaterLat = latitude + (lat * distance)
+    let greaterLon = longitude + (lon * distance)
+
+    return {lowerLat, lowerLon, greaterLat, greaterLon}
+}
+
+const GetUserLocation = async () => {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            resolve(position);
+            /* console it */
+            return {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            }
+        }, function (error) {
+            reject(error);
+        });
+    });
+}
+
+export const GetAreaNearUser = async (distance) => {
+    const userLocation = await GetUserLocation();
+    return GetLatitudeAndLongitudeOfDistance(userLocation.coords.latitude, userLocation.coords.longitude, distance);
+}
+
+export const getUserLocationCity = async() => {
+    try {
+        const position = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+
+        const { latitude, longitude } = position.coords;
+
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=locality&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`);
+        const data = await response.json();
+
+        if (data.results.length > 0) {
+            return data.results[0].formatted_address;
+        }
+
+        return null;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+
+export const GetKeywordsFromAllEvents = async () => {
+    const eventsCol = collection(db, "events");  // Get a reference to the "events" collection.
+    const eventDocs = await getDocs(eventsCol);  // Retrieve all documents in the "events" collection.
+    return eventDocs.docs.map((doc) => doc.data().keywords);   // Return an array of the data objects for each document.
+}

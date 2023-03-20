@@ -13,7 +13,6 @@ const HomeHeader = () => {
     useEffect(
         () => {
             GetCurrentUserDetails().then((data) => {
-                console.log(data);
                 setUserName(data.displayName);
             } );
         },[])

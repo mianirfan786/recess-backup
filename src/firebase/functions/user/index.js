@@ -80,3 +80,25 @@ export const UpdateUserPhotoAndNameById = async (id, user) => {
     }
 }
 /* update user photo and name :: End */
+
+export const AddKeywordInUser = async (keyword) => {
+    const currentUser = await getCurrentUser();
+    const docRef = doc(db, "users", currentUser);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        const currentKeywords = docSnap.data().keywords || []; // Get the current keywords array or initialize to empty array.
+        const updatedKeywords = [...new Set([...currentKeywords, keyword])]; // Create a new array with the existing keywords and the new keyword, removing any duplicates.
+        return await updateDoc(docRef, {
+            keywords: updatedKeywords
+        });
+    }
+}
+
+export const GetAllKeywordsFromUser = async () => {
+    const currentUser = await getCurrentUser();
+    const docRef = doc(db, "users", currentUser);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return docSnap.data().keywords;
+    }
+}

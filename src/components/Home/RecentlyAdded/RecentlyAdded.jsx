@@ -1,21 +1,36 @@
 import {Box, Button, Container, Stack, Typography} from "@mui/material";
 import "swiper/css";
 import {Swiper, SwiperSlide} from "swiper/react";
-import baseball from "../../../images/baseball.png";
-import frisbee from "../../../images/ultimate-frisbee.png";
 import RecentlyAddedCard from "./RecentlyAddedCard";
 import {useEffect, useState} from "react";
-import {SortEventByTimeStamp} from "../../../firebase/functions/event/sort-event";
+import {
+    SortEventWithCityByTimeStamp,
+    SortEventWithLocationByTimeStamp
+} from "../../../firebase/functions/event/sort-event";
 
 
-const RecentlyAdded = () => {
+const RecentlyAdded = ({currentCity}) => {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        SortEventByTimeStamp(4, -1,-1).then((events) => {
-            setEvents(events);
-        });
-    }, []);
+        let isMounted = true;
+        if (currentCity.trim() !== "") {
+            SortEventWithCityByTimeStamp(currentCity, 4).then((events) => {
+                if (isMounted) {
+                    setEvents(events);
+                }
+            });
+        } else {
+            SortEventWithLocationByTimeStamp(4,-1,-1).then((events) => {
+                if (isMounted) {
+                    setEvents(events);
+                }
+            });
+        }
+        return () => {
+            isMounted = false;
+        };
+    }, [currentCity]);
 
     return (
         <Box sx={{bgcolor: "#F6FBF9"}}>

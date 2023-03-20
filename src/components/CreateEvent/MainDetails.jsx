@@ -154,7 +154,7 @@ const MainDetails = () => {
                         />
                     </DetailCard>
                 </Stack>
-                <DetailCard title="Keywords">
+                <DetailCard title="Keyword">
                     <input
                         value={keywords}
                         onChange={(e) =>
