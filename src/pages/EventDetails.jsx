@@ -186,7 +186,7 @@ const EventDetails = ({event = _event, markers = _markers}) => {
                                 Message Board
                             </Typography>
                             <Box borderRadius="20px" overflow="hidden">
-                                <MessageBoard/>
+                                <MessageBoard id={id}/>
                             </Box>
                         </Stack>
                         <Button

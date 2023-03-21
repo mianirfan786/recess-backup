@@ -1,73 +1,53 @@
-import {doc, getDoc, getFirestore, updateDoc} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, getFirestore, updateDoc} from "firebase/firestore";
 import app from "../../config";
-
+import {getCurrentUser} from "../user";
 
 
 const db = getFirestore(app);
+let currentUser = null;
+getCurrentUser();
 
-const AddCommentInEventById = async (eventId, commenter, commentText) => {
-    const postRef = doc(db, "events", eventId);
-    const postSnap = await getDoc(postRef);
+export const AddCommentInEventById = async (eventId, text) => {
+    currentUser = await getCurrentUser();
+    const eventRef = doc(db, "events", eventId);
+    const commentsCollectionRef = collection(eventRef, "comments");
 
-    if (postSnap.exists()) {
-        const comments = postSnap.data().comments;
-        const newComment = {
-            commenter: commenter,
-            text: commentText,
-            replies: [],
-        };
-        comments.push(newComment);
-        await updateDoc(postRef, { comments: comments });
-        console.log("Comment added to event: ", eventId);
-    } else {
-        console.log("Post not found");
-    }
+    const newComment = {
+        userId: currentUser,
+        text: text,
+        replies: [],
+        timeStamp: Date.now(),
+    };
+
+    await addDoc(commentsCollectionRef, newComment);
+    console.log("Comment added to event: ", eventId);
 };
 
+export const AddReplyInCommentById = async (eventId, commentId, text) => {
+    currentUser = await getCurrentUser();
+    const eventRef = doc(db, "events", eventId);
+    const commentRef = doc(eventRef, "comments", commentId);
 
-const AddReplyToCommentInEvent = async (eventId, commentIndex, replier, replyText) => {
-    const postRef = doc(db, "events", eventId);
-    const postSnap = await getDoc(postRef);
-
-    if (postSnap.exists()) {
-        const comments = postSnap.data().comments;
-        const replies = comments[commentIndex].replies;
-        const newReply = {
-            replier: replier,
-            text: replyText,
-        };
-        replies.push(newReply);
-        await updateDoc(postRef, { comments: comments });
-        console.log("Reply added to comment ", commentIndex, " in events ", eventId);
-    } else {
-        console.log("Post not found");
+    const newReply = {
+        userId: currentUser,
+        text: text,
+        timeStamp: Date.now(),
     }
-};
 
+    await updateDoc(commentRef, {
+        replies: [...commentRef.replies, newReply]
+    });
+}
 
-const getCommentsByEventId = async (eventId) => {
-    const postRef = doc(db, "events", eventId);
-    const postSnap = await getDoc(postRef);
-
-    if (postSnap.exists()) {
-        const comments = postSnap.data().comments;
-        return comments;
+export const GetAllCommentsInEventById = async (eventId) => {
+    console.log("Getting all comments in event: ", eventId);
+    const eventRef = doc(db, "events", eventId);
+    const commentsCollectionRef = collection(eventRef, "comments");
+    const commentsQuerySnapshot = await getDocs(commentsCollectionRef);
+    if (!commentsQuerySnapshot.empty) {
+        return commentsQuerySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
     } else {
-        console.log("Post not found");
+        console.log("Comments not found");
         return null;
     }
-};
-
-const GetRepilesByCommentInEvent = async (eventId, commentIndex) => {
-    const postRef = doc(db, "events", eventId);
-    const postSnap = await getDoc(postRef);
-
-    if (postSnap.exists()) {
-        const comments = postSnap.data().comments;
-        const replies = comments[commentIndex].replies;
-        return replies;
-    } else {
-        console.log("Post not found");
-        return null;
-    }
-};
+}

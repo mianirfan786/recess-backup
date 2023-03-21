@@ -2,6 +2,8 @@ import {Stack, Typography} from "@mui/material";
 import Comment from "./Comment";
 import MessageBox from "./MessageBox";
 import mensFace from "../../images/men-face.jpg";
+import {useEffect, useState} from "react";
+import {GetAllCommentsInEventById} from "../../firebase/functions/event/event-comments";
 
 const _comments = [...new Array(25)].map((_, index) => ({
     id: index,
@@ -10,7 +12,13 @@ const _comments = [...new Array(25)].map((_, index) => ({
     dateCreated: new Date(),
 }));
 
-const MessageBoard = ({comments = _comments}) => {
+const MessageBoard = ({id}) => {
+    const [comments, setComments] = useState(_comments);
+    useEffect(() => {
+        GetAllCommentsInEventById(id).then((data) => {
+            console.log(data);
+        });
+    }, []);
     return (
         <Stack pt={2} gap={2} sx={{backgroundColor: "#F6FBF9"}}>
             <Typography px={2} variant="body1">
@@ -21,7 +29,7 @@ const MessageBoard = ({comments = _comments}) => {
                     <Comment comment={comment} key={comment.id}/>
                 ))}
             </Stack>
-            <MessageBox/>
+            <MessageBox id={id}/>
         </Stack>
     );
 };
