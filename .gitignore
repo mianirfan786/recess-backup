@@ -20,7 +20,6 @@
 
 npm-debug.log*
 yarn-debug.log*
-milestones.txt
 yarn-error.log*
 /.idea/.gitignore
 /.idea/modules.xml
