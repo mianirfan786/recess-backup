@@ -21,6 +21,7 @@ import PayWith from "../pages/PayWith";
 import AddCardDetails from "../pages/AddCardDetails";
 import CreateEvent from "../pages/CreateEvent";
 import ResetPassword from "../pages/ResetPassword";
+import Events from "../pages/Events";
 
 const routes = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const routes = createBrowserRouter([
       {
         path: ROUTES.EVENT_DETAILS,
         element: <EventDetails />,
+      },
+      {
+        path: ROUTES.EVENTS_PAGE,
+        element: <Events />,
       },
       {
         path: ROUTES.NOTIFICATIONS_SETTINGS,
