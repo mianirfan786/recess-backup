@@ -1,7 +1,15 @@
 import { Box, Stack, Typography } from "@mui/material";
 
 const UserCard = ({ user }) => {
-  const { name, surname, image, host } = user;
+  const { displayName, image, host } = user;
+  const nameParts = displayName.split(" ");
+  if(nameParts.length >= 1) {
+    var firstName = nameParts[0];
+    var lastName = nameParts[1];
+  }else{
+    var firstName = displayName;
+    var lastName = "";
+  }
   return (
     <Box
       sx={{ backgroundColor: "#F7FAFF", border: "1px solid #E2EFFF" }}
@@ -29,14 +37,14 @@ const UserCard = ({ user }) => {
         <img
           style={{ width: "100%", objectFit: "cover" }}
           src={image}
-          alt={name}
+          alt={displayName}
         />
       </Box>
       <Stack p={3}>
         <Typography variant="body1" fontWeight="bold">
-          {name}
+          {firstName}
         </Typography>
-        <Typography variant="body1">{surname}</Typography>
+        <Typography variant="body1">{lastName}</Typography>
       </Stack>
     </Box>
   );
