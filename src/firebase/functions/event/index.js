@@ -1,4 +1,4 @@
-import {collection, doc, getDoc, getDocs, getFirestore, limit, query, setDoc, where} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, getFirestore, limit, query, setDoc, where, Timestamp, orderBy} from "firebase/firestore";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 
 import app from "../../config";
@@ -35,11 +35,13 @@ export const addEvent = async (event) => {
             // Add photo URLs to the event object
             const eventWithPhotos = {...event, photos: photoUrls};
 
+
             // Add Event to Firebase with Timestamp and CreatedBy
             const res = await setDoc(doc(db, "events", Math.random().toString(36).substring(2)), {
                 ...eventWithPhotos,
-                timeStamp: Date.now(),
+                timeStamp: Timestamp.fromDate(new Date()),
                 CreatedBy: currentUser,
+                date: Timestamp.fromDate(new Date(event.date)),
                 joined: [currentUser],
                 attendees: 1,
                 participantCount: 1,
@@ -78,7 +80,11 @@ export const ViewEventCreatedByUser = async (CreatedBy, maxItems) => {
         // Map the query snapshot to an array of event objects
         // Return the array of event objects
         const querySnapshot = await getDocs(q);
-        return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+        const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+        /* sort events by date */
+        return events.sort((a, b) => {
+            return b.date.seconds - a.date.seconds;
+        } );
     } catch (error) {
         console.log('Error retrieving events: ', error);
         // Return an empty array or throw an error, depending on your use case

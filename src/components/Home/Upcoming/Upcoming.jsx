@@ -1,4 +1,4 @@
-import {Box, Container, Typography} from "@mui/material";
+import {Box, Button, Container, Typography, Stack} from "@mui/material";
 import "swiper/css";
 import {Swiper, SwiperSlide} from "swiper/react";
 import UpcomingCard from "./UpcomingCard";
@@ -7,9 +7,13 @@ import {
     SortEventWithCityByUpcoming,
     SortEventWithLocationByUpcoming
 } from "../../../firebase/functions/event/sort-event";
+import {useNavigate} from "react-router-dom";
+import {ROUTES} from "../../../routes";
 
 const Upcoming = ({currentCity}) => {
     const [events, setEvents] = useState([]);
+    const navigate = useNavigate();
+
     useEffect(() => {
         let isMounted = true;
         if (currentCity.trim() !== "") {
@@ -36,13 +40,29 @@ const Upcoming = ({currentCity}) => {
                     py: {xs: 2, md: 4},
                 }}
             >
-                <Typography
-                    sx={{fontSize: {xs: 30, md: 44}, fontWeight: 700}}
-                    color="text.secondary"
-                    variant="h3"
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
                 >
-                    Upcoming Events
-                </Typography>
+                    <Typography
+                        sx={{fontSize: {xs: 30, md: 44}, fontWeight: 700}}
+                        color="text.secondary"
+                        variant="h3"
+                    >
+                        Upcoming Events
+                    </Typography>
+                    <Box sx={{transform: "rotate(-90deg)"}}>
+                        <Button
+                            onClick={function (e) {
+                                e.preventDefault();
+                                navigate(ROUTES.EVENTS_PAGE + "?type=upcoming-event");
+                            }}
+                            sx={{color: "text.primary"}} variant="text">
+                            See all
+                        </Button>
+                    </Box>
+                </Stack>
             </Container>
             <Container
                 sx={{

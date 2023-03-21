@@ -20,7 +20,7 @@ export const AddCommentInEventById = async (eventId, text) => {
     };
 
     await addDoc(commentsCollectionRef, newComment);
-    console.log("Comment added to event: ", eventId);
+
 };
 
 export const AddReplyInCommentById = async (eventId, commentId, text) => {
@@ -40,14 +40,14 @@ export const AddReplyInCommentById = async (eventId, commentId, text) => {
 }
 
 export const GetAllCommentsInEventById = async (eventId) => {
-    console.log("Getting all comments in event: ", eventId);
+
     const eventRef = doc(db, "events", eventId);
     const commentsCollectionRef = collection(eventRef, "comments");
     const commentsQuerySnapshot = await getDocs(commentsCollectionRef);
     if (!commentsQuerySnapshot.empty) {
         return commentsQuerySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
     } else {
-        console.log("Comments not found");
+
         return null;
     }
 }

@@ -10,7 +10,10 @@ import {timeTo12HrFormat} from "../../utils/timeFunctions";
 
 const EventCard = ({event}) => {
     const navigate = useNavigate();
-    event.date = new Date(event.date);
+    try{
+        event.date = (event.date).toDate();
+    }catch(error){
+    }
     const {
         id,
         photos,

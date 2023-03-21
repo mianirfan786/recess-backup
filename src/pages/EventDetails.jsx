@@ -18,6 +18,7 @@ import {useEffect, useState} from "react";
 import {GetUsersByIds} from "../firebase/functions/user";
 import {HasUserJoinedEvent} from "../firebase/functions/event/event-join";
 import {timeTo12HrFormat} from "../utils/timeFunctions";
+import {toast} from "react-toastify";
 
 const _markers = [
     {
@@ -74,7 +75,7 @@ const EventDetails = ({event = _event, markers = _markers}) => {
             setmaxParticipants(data.maxParticipants);
             setStartTime(timeTo12HrFormat(data.startTime));
             setEndTime(timeTo12HrFormat(data.endTime));
-            setDate(new Date(data.date));
+            setDate((data.date).toDate());
             setPhotos(data.photos);
             setKeywords(data.keywords);
             setCost(event.cost === 0 ? "Free" : data.cost);
@@ -107,6 +108,8 @@ const EventDetails = ({event = _event, markers = _markers}) => {
                 photos={photos}
                 keywords={keywords}
                 cost={cost}
+                displayAddress={displayAddress}
+                address={address}
                 description={description}
                 event={event}
                 onClose={() => setOpenModal(null)}
@@ -190,7 +193,14 @@ const EventDetails = ({event = _event, markers = _markers}) => {
                             </Box>
                         </Stack>
                         <Button
-                            onClick={() => setOpenModal(MODALS.EVENT_CONFIRMATION)}
+                            onClick={() => {
+                                console.log("clicked" , date );
+                                if(date < new Date()){
+                                    toast("Event has already passed", {type: "error"})
+                                }else{
+                                    setOpenModal(MODALS.EVENT_CONFIRMATION)
+                                }
+                            }}
                             variant="contained"
                             fullWidth
                             sx={{

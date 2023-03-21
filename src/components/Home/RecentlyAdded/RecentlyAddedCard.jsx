@@ -7,7 +7,12 @@ import {timeTo12HrFormat} from "../../../utils/timeFunctions";
 
 const RecentlyAddedCard = ({event}) => {
     const navigate = useNavigate();
-    event.date = new Date(event.date);
+    try{
+        event.date = (event.date).toDate();
+    }
+    catch (e){
+
+    }
     const {id, photos, title, date, startTime, bgColor, joined, maxParticipants} = event;
     return (
         <Box

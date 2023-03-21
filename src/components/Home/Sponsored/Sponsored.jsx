@@ -9,9 +9,12 @@ import {
     SortEventWithCityByUpcoming,
     SortEventWithLocationByUpcoming
 } from "../../../firebase/functions/event/sort-event";
+import {ROUTES} from "../../../routes";
+import {useNavigate} from "react-router-dom";
 
 const Sponsored = ({currentCity}) => {
     const [events, setEvents] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
         let isMounted = true;
         if (currentCity.trim() !== "") {
@@ -49,7 +52,12 @@ const Sponsored = ({currentCity}) => {
                         </Typography>
                     </Box>
                     <Box sx={{transform: "rotate(-90deg)"}}>
-                        <Button sx={{color: "text.primary"}} variant="text">
+                        <Button
+                            onClick={function (e) {
+                                e.preventDefault();
+                                navigate(ROUTES.EVENTS_PAGE + "?type=sponsored-event");
+                            }}
+                            sx={{color: "text.primary"}} variant="text">
                             See all
                         </Button>
                     </Box>

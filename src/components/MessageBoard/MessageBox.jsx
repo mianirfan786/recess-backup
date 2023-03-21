@@ -1,11 +1,14 @@
 import {Avatar, InputBase, Stack} from "@mui/material";
 import {AddCommentInEventById} from "../../firebase/functions/event/event-comments";
 
-const MessageBox = ({id}) => {
+const MessageBox = ({onData, id}) => {
     const demo = (e) => {
         if (e.key === "Enter") {
             AddCommentInEventById(id, e.target.value);
             e.target.value = "";
+            setTimeout(() => {
+                onData();
+            }, 1000);
         }
     }
     return (

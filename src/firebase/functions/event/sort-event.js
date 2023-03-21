@@ -1,4 +1,4 @@
-import {collection, getDocs, getFirestore, limit, orderBy, query, where} from "firebase/firestore";
+import {collection, getDocs, getFirestore, limit, orderBy, query, Timestamp, where} from "firebase/firestore";
 
 import app from "../../config";
 import {GetAreaNearUser} from "./index";
@@ -99,28 +99,38 @@ export const SortEventByMaxPlayers = async (maxPlayers, maxLimit, minPriceLimit,
 
 
 export const SortEventWithLocationByUpcoming = async (maxItems) => {
-    const events = await SortEventByUpcoming(maxItems);
+    const q = query(collection(db, "events"), where("date", ">=", Timestamp.fromDate(new Date()), orderBy("date", "desc")));
+    const querySnapshot = await getDocs(q);
+    const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
     const area = await GetAreaNearUser(50);
-    /* area.lowerLat >= events.latitude && area.greaterLat <= events.latitude */
-    return events.filter((event) => {
+    const eventWithLocation = events.filter((event) => {
         return area.lowerLat <= event.latitude && area.greaterLat >= event.latitude && area.lowerLon <= event.longitude && area.greaterLon >= event.longitude;
-    } );
+    });
+    /* return maxItems */
+    return eventWithLocation.slice(0, maxItems);
 }
 
 export const SortEventWithLocationByPopular = async (maxItems) => {
-    const events = await SortEventByPopular(maxItems);
+    const q = query(collection(db, "events"), orderBy("attendees", "desc"));
+    const querySnapshot = await getDocs(q);
+    const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
     const area = await GetAreaNearUser(50);
-    return events.filter((event) => {
-        return area.lowerLat <= event.latitude && area.greaterLat >= event.latitude && area.lowerLon <= event.longitude && area.greaterLon >= event.longitude;
-    } );
+    return (events.filter((event) => {
+        return area.lowerLat <= event.latitude && area.greaterLat >= event.latitude && area.lowerLon <= event.longitude && area.greaterLon >= event.longitude && event.date >= Timestamp.fromDate(new Date());
+    })).slice(0, maxItems);
 }
 
 export const SortEventWithLocationByTimeStamp = async (maxItems, minPrice, MaxPrice) => {
-    const events = await SortEventByTimeStamp(maxItems, minPrice, MaxPrice);
+    const today = new Date();
+    const lastMonth = new Date(today);
+    lastMonth.setMonth(lastMonth.getMonth() - 1);
+    const q = query(collection(db, "events"), orderBy("timeStamp", "desc"));
+    const querySnapshot = await getDocs(q);
+    const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
     const area = await GetAreaNearUser(50);
-    return events.filter((event) => {
-        return area.lowerLat <= event.latitude && area.greaterLat >= event.latitude && area.lowerLon <= event.longitude && area.greaterLon >= event.longitude;
-    } );
+    return (events.filter((event) => {
+        return area.lowerLat <= event.latitude && area.greaterLat >= event.latitude && area.lowerLon <= event.longitude && area.greaterLon >= event.longitude && event.date >= Timestamp.fromDate(new Date());
+    })).slice(0, maxItems);
 }
 
 
@@ -128,8 +138,11 @@ export const SortEventWithCityByUpcoming = async (city, maxItems) => {
     const q = query(collection(db, "events"), where("address.city", "==", city));
     const querySnapshot = await getDocs(q);
     const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
-    return events.sort((a, b) => {
-        return a.date - b.date;
+    const returnEvents = events.sort((a, b) => {
+        return b.date - a.date;
+    });
+    return returnEvents.filter((event) => {
+        return event.date >= Timestamp.fromDate(new Date());
     }).slice(0, maxItems);
 }
 
@@ -137,8 +150,11 @@ export const SortEventWithCityByPopular = async (city, maxItems) => {
     const q = query(collection(db, "events"), where("address.city", "==", city));
     const querySnapshot = await getDocs(q);
     const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
-    return events.sort((a, b) => {
+    const returnEvents = events.sort((a, b) => {
         return b.participantCount - a.participantCount;
+    });
+    return returnEvents.filter((event) => {
+        return event.date >= Timestamp.fromDate(new Date());
     }).slice(0, maxItems);
 }
 
@@ -146,8 +162,11 @@ export const SortEventWithCityByTimeStamp = async (city, maxItems) => {
     const q = query(collection(db, "events"), where("address.city", "==", city));
     const querySnapshot = await getDocs(q);
     const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
-    return events.sort((a, b) => {
+    const returnEvents = events.sort((a, b) => {
         return b.timeStamp - a.timeStamp;
+    });
+    return returnEvents.filter((event) => {
+        return event.date >= Timestamp.fromDate(new Date());
     }).slice(0, maxItems);
 }
 
@@ -155,7 +174,10 @@ export const SortEventWithCityBySponsor = async (city, maxItems) => {
     const q = query(collection(db, "events"), where("address.city", "==", city));
     const querySnapshot = await getDocs(q);
     const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
-    return events.sort((a, b) => {
-        return b.sponsored - a.sponsored;
+    const returnEvents = events.sort((a, b) => {
+        return b.timeStamp - a.timeStamp;
+    });
+    return returnEvents.filter((event) => {
+        return event.date >= Timestamp.fromDate(new Date()) && event.sponsor === true;
     }).slice(0, maxItems);
 }

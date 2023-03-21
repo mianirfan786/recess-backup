@@ -10,7 +10,7 @@ getCurrentUser();
 
 /* join event :: Start */
 export const JoinEventById = async (id, noOfAttendees) => {
-    console.log("noOfAttendees " + noOfAttendees);
+
     currentUser = await getCurrentUser();
     const eventRef = doc(db, "events", id);
     const event = await getDoc(eventRef);
