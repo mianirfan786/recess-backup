@@ -1,7 +1,6 @@
 import {collection, getDocs, getFirestore, limit, orderBy, query, where} from "firebase/firestore";
 
 import app from "../../config";
-import {SortEventWithLocationByTimeStamp} from "./sort-event";
 import {GetAreaNearUser} from "./index";
 
 const db = getFirestore(app);
