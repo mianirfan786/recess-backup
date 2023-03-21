@@ -7,10 +7,13 @@ import {
     SortEventWithCityByTimeStamp,
     SortEventWithLocationByTimeStamp
 } from "../../../firebase/functions/event/sort-event";
+import {useNavigate} from "react-router-dom";
+import {ROUTES} from "../../../routes";
 
 
 const RecentlyAdded = ({currentCity}) => {
     const [events, setEvents] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         let isMounted = true;
@@ -49,7 +52,12 @@ const RecentlyAdded = ({currentCity}) => {
                         </Typography>
                     </Box>
                     <Box sx={{transform: "rotate(-90deg)"}}>
-                        <Button sx={{color: "text.primary"}} variant="text">
+                        <Button
+                            onClick={function (e) {
+                                e.preventDefault();
+                                navigate(ROUTES.EVENTS_PAGE + "?type=recently-added-event");
+                            }}
+                            sx={{color: "text.primary"}} variant="text">
                             See all
                         </Button>
                     </Box>

@@ -7,6 +7,7 @@ export const ROUTES = {
   SIGN_UP: "/sign-up",
   FORGOT_PASSWORD: "/forgot-password",
   EVENT_DETAILS: "/event/:id",
+  EVENTS_PAGE: "/events",
   RESET_PASSWORD: "/reset-password",
   DELETE_ACCOUNT: "/delete-account",
   PRIVACY_POLICY: "/privacy-policy",

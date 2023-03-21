@@ -3,10 +3,14 @@ import "swiper/css";
 import EventCard from "../../EventCard/EventCard";
 import {ViewEventsCreatedByMe} from "../../../firebase/functions/event";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {ROUTES} from "../../../routes";
 
 
 const Activities = () => {
     const [events, setEvents] = useState([]);
+    const navigate = useNavigate();
+
     useEffect(() => {
         ViewEventsCreatedByMe(2).then((events) => {
             setEvents(events);
@@ -29,7 +33,12 @@ const Activities = () => {
                         </Typography>
                     </Box>
                     <Box sx={{transform: "rotate(-90deg)"}}>
-                        <Button sx={{color: "text.primary"}} variant="text">
+                        <Button
+                            onClick={function (e) {
+                                e.preventDefault();
+                                navigate(ROUTES.EVENTS_PAGE + "?type=hosted-by-you");
+                            }}
+                            sx={{color: "text.primary"}} variant="text">
                             See all
                         </Button>
                     </Box>

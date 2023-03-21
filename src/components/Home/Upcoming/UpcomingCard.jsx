@@ -3,11 +3,16 @@ import {BsCalendarEvent} from "react-icons/bs";
 import styles from "../../../styles/Home.module.scss";
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "../../../routes";
-import {useState} from "react";
+import {Timestamp} from "firebase/firestore";
 import {timeTo12HrFormat} from "../../../utils/timeFunctions";
 
 const UpcomingCard = ({event}) => {
-    event.date = new Date(event.date);
+    try{
+        event.date = (event.date).toDate();
+    }
+    catch{
+        event.date = Timestamp.now().toDate();
+    }
     const {id, title, startTime, date, photos, bgColor} = event;
     const navigate = useNavigate();
 

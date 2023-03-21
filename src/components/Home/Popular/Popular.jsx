@@ -8,9 +8,12 @@ import {
     SortEventWithLocationByPopular
 } from "../../../firebase/functions/event/sort-event";
 import {FilterEventsWithLocationBySponsored} from "../../../firebase/functions/event/event-filter";
+import {ROUTES} from "../../../routes";
+import {useNavigate} from "react-router-dom";
 
 const Popular = ({currentCity}) => {
     const [events, setEvents] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
         let isMounted = true;
         if (currentCity.trim() !== "") {
@@ -52,7 +55,12 @@ const Popular = ({currentCity}) => {
                         </Typography>
                     </Box>
                     <Box sx={{transform: "rotate(-90deg)"}}>
-                        <Button sx={{color: "text.primary"}} variant="text">
+                        <Button
+                            onClick={function (e) {
+                                e.preventDefault();
+                                navigate(ROUTES.EVENTS_PAGE + "?type=popular-event");
+                            }}
+                            sx={{color: "text.primary"}} variant="text">
                             See all
                         </Button>
                     </Box>
