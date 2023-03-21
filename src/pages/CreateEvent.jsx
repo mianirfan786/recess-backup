@@ -41,7 +41,7 @@ const CreateEvent = () => {
             toast("Date must be filled", {type: "error"})
             return;
         }
-        console.log(state.selected);
+
         addEvent(state).then(
             () => {
                 toast("Event created successfully", {type: "success"})

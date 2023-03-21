@@ -54,11 +54,11 @@ export const DislikeEventById = async (id) => {
     if (event.exists) {
         const data = event.data();
         if (event.data().likes === undefined) {
-            console.log("No likes");
+
             return;
         }
         if (!event.data().likes.includes(currentUser)) {
-            console.log("User not liked");
+
             return;
         }
         return await updateDoc(eventRef, {

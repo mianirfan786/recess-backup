@@ -20,7 +20,7 @@ const EventConfirmationModal = (props) => {
   const [attendees, setAttendees] = useState(0);
 
   const onModalClose = () => {
-    console.log("Mattendees ", attendees);
+
     JoinEventById(id, attendees);
     setAttendees(0);
     props.onClose();

@@ -14,14 +14,12 @@ const Popular = ({currentCity}) => {
     useEffect(() => {
         let isMounted = true;
         if (currentCity.trim() !== "") {
-            console.log("currentCity", currentCity);
             SortEventWithCityByPopular(currentCity, 4).then((events) => {
                 if (isMounted) {
                     setEvents(events);
                 }
             });
         } else {
-            console.log("Without current city");
             SortEventWithLocationByPopular(4,-1,-1).then((events) => {
                 if (isMounted) {
                     setEvents(events);
