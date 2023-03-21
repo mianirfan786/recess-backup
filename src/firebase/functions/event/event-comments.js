@@ -1,4 +1,4 @@
-import {addDoc, collection, doc, getDocs, getFirestore, updateDoc} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, getFirestore, updateDoc} from "firebase/firestore";
 import app from "../../config";
 import {getCurrentUser} from "../user";
 

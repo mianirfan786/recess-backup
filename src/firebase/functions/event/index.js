@@ -1,4 +1,4 @@
-import {collection, doc, getDoc, getDocs, getFirestore, limit, query, setDoc, where, Timestamp} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, getFirestore, limit, query, setDoc, where, Timestamp, orderBy} from "firebase/firestore";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 
 import app from "../../config";
@@ -37,7 +37,7 @@ export const addEvent = async (event) => {
 
 
             // Add Event to Firebase with Timestamp and CreatedBy
-            await setDoc(doc(db, "events", Math.random().toString(36).substring(2)), {
+            const res = await setDoc(doc(db, "events", Math.random().toString(36).substring(2)), {
                 ...eventWithPhotos,
                 timeStamp: Timestamp.fromDate(new Date()),
                 CreatedBy: currentUser,

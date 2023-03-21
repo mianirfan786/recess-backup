@@ -26,7 +26,7 @@ export function documentDataToObject(doc) {
 }
 
 
-function Events() {
+function Events({}) {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isEnded, setIsEnded] = useState(false);
