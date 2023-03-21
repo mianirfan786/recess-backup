@@ -10,10 +10,18 @@ import {GetCurrentUserDetails} from "../../firebase/functions/user";
 const HomeHeader = () => {
   const navigate = useNavigate();
     const [userName, setUserName] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     useEffect(
         () => {
             GetCurrentUserDetails().then((data) => {
                 setUserName(data.displayName);
+                if(data.displayName.split(" ").length >= 1){
+                    setFirstName(data.displayName.split(" ")[0]);
+                    setLastName(data.displayName.split(" ")[1]);
+                }else{
+                    setFirstName(data.displayName);
+                }
             } );
         },[])
 
@@ -40,7 +48,7 @@ const HomeHeader = () => {
               color="text.secondary"
               variant="h3"
             >
-                {userName}
+                <b>{firstName}</b> {lastName}
             </Typography>
           </Box>
         </Stack>
