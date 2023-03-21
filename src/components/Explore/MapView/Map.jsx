@@ -10,7 +10,6 @@ const Map = ({center, events, height}) => {
     const [selected, setSelected] = useState(null);
     const [userPosition, setUserPosition] = useState(null);
     /* convert events to array of an object */
-    console.log("-> events", events);
     center = {
         lat: events?.latitude,
         lng: events?.longitude,

@@ -56,7 +56,7 @@ const Requested = ({updateKeywords}) => {
                         >
                             <AiOutlinePlus/>
                         </IconButton>
-                        {_activities.map((data) => (
+                        {_activities && _activities.map((data) => (
                             <Box
                                 borderRadius="20px"
                                 sx={{

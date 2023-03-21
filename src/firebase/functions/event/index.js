@@ -26,7 +26,6 @@ export const addEvent = async (event) => {
             // Upload each photo to Firebase Storage With Random Name
             const photoUrls = await Promise.all(
                 event.photos.map(async (photo) => {
-                    console.log(photo.path);
                     const photoRef = ref(storage, `photos/${Math.random().toString(36).substring(2)}`);
                     await uploadBytes(photoRef, photo);
                     return await getDownloadURL(photoRef);
@@ -49,7 +48,6 @@ export const addEvent = async (event) => {
                 comments: [],
             });
             /* after Doc is set */
-            console.log(res);
         })
     };
     reader.readAsDataURL(event.photos[0]);

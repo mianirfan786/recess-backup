@@ -42,7 +42,7 @@ const Activities = () => {
                         spacing={{xs: 2, md: 3}}
                         columns={{xs: 2, sm: 8, md: 8}}
                     >
-                        {events.map((event) => (
+                        {events.length > 0 && events.map((event) => (
                             <Grid item xs={2} sm={4} md={4} key={event.id}>
                                 <EventCard event={event}/>
                             </Grid>
