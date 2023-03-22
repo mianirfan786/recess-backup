@@ -24,7 +24,7 @@ const RecentlyAdded = ({currentCity}) => {
                 }
             });
         } else {
-            SortEventWithLocationByTimeStamp(4,-1,-1).then((events) => {
+            SortEventWithLocationByTimeStamp(4, -1, -1).then((events) => {
                 if (isMounted) {
                     setEvents(events);
                 }

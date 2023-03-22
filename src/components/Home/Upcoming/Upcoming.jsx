@@ -1,4 +1,4 @@
-import {Box, Button, Container, Typography, Stack} from "@mui/material";
+import {Box, Button, Container, Stack, Typography} from "@mui/material";
 import "swiper/css";
 import {Swiper, SwiperSlide} from "swiper/react";
 import UpcomingCard from "./UpcomingCard";

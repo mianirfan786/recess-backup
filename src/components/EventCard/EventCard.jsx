@@ -10,9 +10,9 @@ import {timeTo12HrFormat} from "../../utils/timeFunctions";
 
 const EventCard = ({event}) => {
     const navigate = useNavigate();
-    try{
+    try {
         event.date = (event.date).toDate();
-    }catch(error){
+    } catch (error) {
     }
     const {
         id,
@@ -27,11 +27,11 @@ const EventCard = ({event}) => {
     } = event;
     const [like, setLike] = useState({id: null, isLike: false});
     useEffect(() => {
-        try{
+        try {
             IsEventLikedByUser(id).then((res) => {
                 setLike({id: id, isLike: res});
             });
-        }catch(error){
+        } catch (error) {
             console.log("-> error ", error);
         }
     }, []);
@@ -176,7 +176,7 @@ const EventCard = ({event}) => {
                             )}
                         </Box>
                         <Button
-                            onClick={function(e) {
+                            onClick={function (e) {
                                 e.preventDefault();
                                 navigate(ROUTES.EVENT_DETAILS.replace(":id", id));
                             }}
@@ -233,7 +233,7 @@ const EventCard = ({event}) => {
                         )}
                     </Box>
                     <Button
-                        onClick={function(e) {
+                        onClick={function (e) {
                             e.preventDefault();
                             navigate(ROUTES.EVENT_DETAILS.replace(":id", id));
                         }}

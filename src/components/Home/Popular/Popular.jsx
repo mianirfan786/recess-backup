@@ -2,12 +2,7 @@ import {Box, Button, Container, Grid, Stack, Typography} from "@mui/material";
 import "swiper/css";
 import EventCard from "../../EventCard/EventCard";
 import {useEffect, useState} from "react";
-import {
-    SortEventWithCityByPopular,
-    SortEventWithCityBySponsor,
-    SortEventWithLocationByPopular
-} from "../../../firebase/functions/event/sort-event";
-import {FilterEventsWithLocationBySponsored} from "../../../firebase/functions/event/event-filter";
+import {SortEventWithCityByPopular, SortEventWithLocationByPopular} from "../../../firebase/functions/event/sort-event";
 import {ROUTES} from "../../../routes";
 import {useNavigate} from "react-router-dom";
 
@@ -23,7 +18,7 @@ const Popular = ({currentCity}) => {
                 }
             });
         } else {
-            SortEventWithLocationByPopular(4,-1,-1).then((events) => {
+            SortEventWithLocationByPopular(4, -1, -1).then((events) => {
                 if (isMounted) {
                     setEvents(events);
                 }

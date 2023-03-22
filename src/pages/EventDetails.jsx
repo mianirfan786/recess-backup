@@ -194,10 +194,10 @@ const EventDetails = ({event = _event, markers = _markers}) => {
                         </Stack>
                         <Button
                             onClick={() => {
-                                console.log("clicked" , date );
-                                if(date < new Date()){
+                                console.log("clicked", date);
+                                if (date < new Date()) {
                                     toast("Event has already passed", {type: "error"})
-                                }else{
+                                } else {
                                     setOpenModal(MODALS.EVENT_CONFIRMATION)
                                 }
                             }}

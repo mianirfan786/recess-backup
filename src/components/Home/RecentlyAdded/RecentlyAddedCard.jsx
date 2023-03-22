@@ -1,16 +1,14 @@
 import {Box, Button, Stack, Typography} from "@mui/material";
 import "swiper/css";
-import {useState} from "react";
 import {ROUTES} from "../../../routes";
 import {useNavigate} from "react-router-dom";
 import {timeTo12HrFormat} from "../../../utils/timeFunctions";
 
 const RecentlyAddedCard = ({event}) => {
     const navigate = useNavigate();
-    try{
+    try {
         event.date = (event.date).toDate();
-    }
-    catch (e){
+    } catch (e) {
 
     }
     const {id, photos, title, date, startTime, bgColor, joined, maxParticipants} = event;
