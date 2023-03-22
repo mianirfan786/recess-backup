@@ -4,11 +4,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import SponsoredCard from "./SponsoredCard";
 import {useEffect, useState} from "react";
 import {FilterEventsWithLocationBySponsored} from "../../../firebase/functions/event/event-filter";
-import {
-    SortEventWithCityBySponsor,
-    SortEventWithCityByUpcoming,
-    SortEventWithLocationByUpcoming
-} from "../../../firebase/functions/event/sort-event";
+import {SortEventWithCityBySponsor} from "../../../firebase/functions/event/sort-event";
 import {ROUTES} from "../../../routes";
 import {useNavigate} from "react-router-dom";
 

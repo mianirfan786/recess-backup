@@ -1,7 +1,6 @@
 import {collection, getDocs, getFirestore, limit, orderBy, query, where} from "firebase/firestore";
 
 import app from "../../config";
-import {SortEventWithLocationByTimeStamp} from "./sort-event";
 import {GetAreaNearUser} from "./index";
 
 const db = getFirestore(app);
@@ -35,5 +34,5 @@ export const FilterEventsWithLocationBySponsored = async (maxLimit) => {
     const area = await GetAreaNearUser(50);
     return events.filter((event) => {
         return area.lowerLat <= event.latitude && area.greaterLat >= event.latitude && area.lowerLon <= event.longitude && area.greaterLon >= event.longitude;
-    } );
+    });
 }

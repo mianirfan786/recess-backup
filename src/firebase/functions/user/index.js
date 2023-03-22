@@ -1,7 +1,7 @@
 import {doc, getDoc, getFirestore, updateDoc} from "firebase/firestore";
 
 import app from "../../config";
-import {getAuth, deleteUser} from "firebase/auth";
+import {deleteUser, getAuth} from "firebase/auth";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 
 const db = getFirestore(app);

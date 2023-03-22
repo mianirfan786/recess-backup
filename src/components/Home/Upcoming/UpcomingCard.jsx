@@ -7,10 +7,9 @@ import {Timestamp} from "firebase/firestore";
 import {timeTo12HrFormat} from "../../../utils/timeFunctions";
 
 const UpcomingCard = ({event}) => {
-    try{
+    try {
         event.date = (event.date).toDate();
-    }
-    catch{
+    } catch {
         event.date = Timestamp.now().toDate();
     }
     const {id, title, startTime, date, photos, bgColor} = event;

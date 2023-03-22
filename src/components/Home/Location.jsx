@@ -2,7 +2,6 @@ import {Container} from "@mui/material";
 import GoogleAutocomplete from "../GoogleAutocomplete";
 import {Stack} from "@mui/system";
 import LocationIcon from "../../icons/LocationIcon";
-import {SortEventWithCityByUpcoming} from "../../firebase/functions/event/sort-event";
 
 const Location = ({onData}) => {
     const HandleLocationChange = async (event) => {

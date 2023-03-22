@@ -1,5 +1,4 @@
-import {Box, Button, Skeleton, Typography} from "@mui/material";
-import {Grid} from "@mui/material";
+import {Box, Button, Grid, Skeleton, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import UpcomingCard from "../components/Home/Upcoming/UpcomingCard";
 
@@ -10,8 +9,8 @@ import {
     orderBy,
     query as firebaseQuery,
     startAfter,
-    where,
-    Timestamp
+    Timestamp,
+    where
 } from "firebase/firestore";
 
 import {db} from "../firebase/config";
@@ -40,7 +39,7 @@ function Events({}) {
             const _fetched = (snapshot.docs.map(documentDataToObject));
             let fethcedEvents = _fetched;
             const today = new Date();
-            switch (type){
+            switch (type) {
                 case "recently-added-event":
                     fethcedEvents = _fetched.filter((event) => event.date >= Timestamp.fromDate(today));
                     break;

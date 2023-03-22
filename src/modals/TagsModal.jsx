@@ -1,7 +1,7 @@
 import DefaultModal from "./DefaultModal";
 import {Box, Stack, Typography} from "@mui/material";
 import basketballTag from "../images/basketball-tag.png";
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 import {GetKeywordsFromAllEvents} from "../firebase/functions/event";
 import {AddKeywordInUser} from "../firebase/functions/user";
 

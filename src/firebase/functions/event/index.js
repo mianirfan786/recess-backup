@@ -1,4 +1,15 @@
-import {collection, doc, getDoc, getDocs, getFirestore, limit, query, setDoc, where, Timestamp, orderBy} from "firebase/firestore";
+import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    getFirestore,
+    limit,
+    query,
+    setDoc,
+    Timestamp,
+    where
+} from "firebase/firestore";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 
 import app from "../../config";
@@ -84,7 +95,7 @@ export const ViewEventCreatedByUser = async (CreatedBy, maxItems) => {
         /* sort events by date */
         return events.sort((a, b) => {
             return b.date.seconds - a.date.seconds;
-        } );
+        });
     } catch (error) {
         console.log('Error retrieving events: ', error);
         // Return an empty array or throw an error, depending on your use case
@@ -134,13 +145,13 @@ export const GetAreaNearUser = async (distance) => {
     return GetLatitudeAndLongitudeOfDistance(userLocation.coords.latitude, userLocation.coords.longitude, distance);
 }
 
-export const getUserLocationCity = async() => {
+export const getUserLocationCity = async () => {
     try {
         const position = await new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject);
         });
 
-        const { latitude, longitude } = position.coords;
+        const {latitude, longitude} = position.coords;
 
         const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=locality&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`);
         const data = await response.json();
