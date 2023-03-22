@@ -16,7 +16,14 @@ const Comment = ({comment}) => {
     }
     useEffect(() => {
         GetUsersById(userId).then((data) => {
-            setUser(data);
+            if(data === null){
+                let newData = {};
+                newData.displayName = "Deleted User";
+                newData.image = mensFace;
+                setUser(newData);
+            }else{
+                setUser(data);
+            }
         });
     }, []);
 
