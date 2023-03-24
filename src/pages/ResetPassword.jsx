@@ -5,6 +5,7 @@ import BackButton from "../icons/BackIcon";
 import FormContainer from "../components/FormContainer";
 import ResetPasswordIcon from "../icons/ResetPassword";
 import {useState} from "react";
+import {ResetPersonalPassword} from "../firebase/functions/user";
 
 const ResetPassword = () => {
     const navigate = useNavigate();
@@ -13,6 +14,10 @@ const ResetPassword = () => {
         password: "",
         newPassword: "",
     });
+
+    const handleResetPassword = () => {
+        ResetPersonalPassword(password, newPassword);
+    }
 
     return (
         <FormContainer>
@@ -81,6 +86,7 @@ const ResetPassword = () => {
                 />
                 <Button
                     variant="contained"
+                    onClick={handleResetPassword}
                     sx={{
                         backgroundColor: "#000",
                         color: "#fff",

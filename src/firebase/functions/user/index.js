@@ -1,8 +1,10 @@
-import {doc, getDoc, getFirestore, updateDoc} from "firebase/firestore";
+import {deleteDoc, doc, getDoc, getFirestore, updateDoc,} from "firebase/firestore";
 
 import app from "../../config";
-import {deleteUser, getAuth} from "firebase/auth";
+import {deleteUser, EmailAuthProvider, getAuth, reauthenticateWithCredential, updatePassword} from "firebase/auth";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
+import {toast} from "react-toastify";
+
 
 const db = getFirestore(app);
 const storage = getStorage();
@@ -46,15 +48,49 @@ export const GetCurrentUserDetails = async () => {
 }
 
 
-export const DeleteUserById = async (id) => {
-    currentUser = await getCurrentUser();
-    deleteUser(currentUser).then(() => {
-        console.log("User Deleted")
-    }).catch((error) => {
-        console.log(error)
-    });
+export const DeleteUserById = async (password) => {
+    const currentUser = await getCurrentUser();
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(
+        user.email,
+        password
+    );
+    try {
+        const result = await reauthenticateWithCredential(user, credential);
+        if (result === null || result === undefined) {
+            toast("Password is incorrect", {type: "error"})
+            return;
+        }
+        await deleteUser(user);
+        await deleteDoc(doc(db, "users", currentUser));
+    } catch {
+    }
 }
 
+export const ResetPersonalPassword = async (password, newPassword) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    try {
+        const credential = EmailAuthProvider.credential(
+            user.email,
+            password
+        );
+        const result = await reauthenticateWithCredential(user, credential);
+        if (result === null || result === undefined) {
+            toast("Password is incorrect", {type: "error"})
+            return;
+        }
+        updatePassword(user, newPassword).then(() => {
+            toast("Password updated successfully", {type: "success"})
+        }).catch((error) => {
+            console.log(error);
+        });
+
+    } catch {
+    }
+
+}
 
 /* update user photo and name :: Start */
 export const UpdateUserPhotoAndNameById = async (id, user) => {
