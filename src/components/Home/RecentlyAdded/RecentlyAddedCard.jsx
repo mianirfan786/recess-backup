@@ -3,6 +3,7 @@ import "swiper/css";
 import {ROUTES} from "../../../routes";
 import {useNavigate} from "react-router-dom";
 import {timeTo12HrFormat} from "../../../utils/timeFunctions";
+import {getContrastRatio} from "../../../utils/colors";
 
 const RecentlyAddedCard = ({event}) => {
     const navigate = useNavigate();
@@ -12,6 +13,8 @@ const RecentlyAddedCard = ({event}) => {
 
     }
     const {id, photos, title, date, startTime, bgColor, joined, maxParticipants} = event;
+    const fontColor = getContrastRatio(bgColor, "ffffff") > 0.70 ? "#000000" : "#ffffff";
+
     return (
         <Box
             sx={{
@@ -42,7 +45,7 @@ const RecentlyAddedCard = ({event}) => {
                     <Typography
                         variant="h4"
                         sx={{
-                            color: "#fff",
+                            color: `${fontColor}`,
                             width: 2 / 3,
                             zIndex: 9999,
                             mb: 2,
@@ -55,7 +58,7 @@ const RecentlyAddedCard = ({event}) => {
                         sx={{my: {xs: 1, md: 2}}}
                         gap={{xs: 0.5, md: 1}}
                     >
-                        <Typography color="info.main" variant="h6">
+                        <Typography color={fontColor} variant="h6">
                             {date.toLocaleDateString('en-US', {
                                 weekday: 'short',
                                 day: 'numeric',
@@ -64,7 +67,7 @@ const RecentlyAddedCard = ({event}) => {
                             })} -
                         </Typography>
 
-                        <Typography color="info.main" variant="h6">
+                        <Typography color={fontColor} variant="h6">
                             {timeTo12HrFormat(startTime)}
                         </Typography>
                     </Stack>
@@ -100,7 +103,7 @@ const RecentlyAddedCard = ({event}) => {
                     >
                         Join
                     </Button>
-                    <Typography variant="body1" color="info.main">
+                    <Typography variant="body1" color={fontColor}>
                         {joined.length} / {maxParticipants}
                     </Typography>
                 </Stack>
