@@ -63,6 +63,10 @@ const routes = createBrowserRouter([
                 element: <ForgotPassword/>,
             },
             {
+                path: ROUTES.FORGOT_ACCOUNT_PASSWORD,
+                element: <ForgotPassword/>,
+            },
+            {
                 path: ROUTES.EVENT_DETAILS,
                 element: <EventDetails/>,
             },
@@ -90,6 +94,7 @@ const routes = createBrowserRouter([
             {path: ROUTES.ADD_CARD_DETAILS, element: <AddCardDetails/>},
             {path: ROUTES.CREATE_EVENT, element: <CreateEvent/>},
             {path: ROUTES.RESET_PASSWORD, element: <ResetPassword/>},
+            {path: ROUTES.RESET_ACCOUNT_PASSWORD, element: <ResetPassword/>},
         ],
     },
 ]);
