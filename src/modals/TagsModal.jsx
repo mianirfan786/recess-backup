@@ -25,6 +25,14 @@ const TagsModal = ({open, onClose, onData}) => {
         onClose();
     };
 
+    const AddKeyword = (e) => {
+        if (e.key === "Enter") {
+            AddKeywordInUser(e.target.value);
+            onData()
+            onClose();
+        }
+    }
+
     return (
         <DefaultModal open={open} onClose={onClose}>
             <Stack textAlign="center" gap={3}>
@@ -53,6 +61,22 @@ const TagsModal = ({open, onClose, onData}) => {
                             </Box>
                         );
                     })}
+                    <Box>
+                        <input
+                            onKeyPress={AddKeyword}
+                            type="text"
+                            placeholder="Add your own tag"
+                            style={{
+                                borderRadius: "20px",
+                                outline: "none",
+                                border: "none",
+                                backgroundColor: "#EBF2FB",
+                                padding: "12px 20px",
+                                margin: "4px",
+                                width: "100%",
+                            }}
+                            />
+                    </Box>
                 </Stack>
             </Stack>
         </DefaultModal>
