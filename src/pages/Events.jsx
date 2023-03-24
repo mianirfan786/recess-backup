@@ -1,6 +1,7 @@
-import {Box, Button, Grid, Skeleton, Typography} from "@mui/material";
+import {Box, Button, Container, Grid, IconButton, Skeleton, Stack, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import UpcomingCard from "../components/Home/Upcoming/UpcomingCard";
+import EventCard from "../components/EventCard/EventCard";
+
 
 import {
     collection,
@@ -14,15 +15,29 @@ import {
 } from "firebase/firestore";
 
 import {db} from "../firebase/config";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {showToast} from "../utils/toast";
 import {getCurrentUser} from "../firebase/functions/user";
+import BackButton from "../icons/BackIcon";
 
 const postLimit = 10;
 
 export function documentDataToObject(doc) {
     return {id: doc.id, ...doc.data()};
 }
+
+const iconStyle = {
+    backgroundColor: "white",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    aspectRatio: "1/1",
+    width: {xs: "30px", sm: "40px"},
+    height: {xs: "30px", sm: "40px"},
+    opacity: 0.8,
+    padding: "7px",
+    marginTop: "10px"
+};
 
 
 function Events({}) {
@@ -32,6 +47,17 @@ function Events({}) {
     const [lastDoc, setLastDoc] = useState();
     const [searchParams, setSearchParams] = useSearchParams();
     const type = searchParams.get("type");
+    const keywordSearch = searchParams.get("keywordSearch");
+    const navigate = useNavigate();
+
+    let displayText = "";
+    if (type) {
+        displayText = type.replace(/-/g, " ");
+    } else if (keywordSearch) {
+        displayText = keywordSearch + " Events";
+    } else {
+        displayText = "Events";
+    }
 
     async function fetchPosts(query) {
         try {
@@ -39,20 +65,20 @@ function Events({}) {
             const _fetched = (snapshot.docs.map(documentDataToObject));
             let fethcedEvents = _fetched;
             const today = new Date();
-            switch (type) {
-                case "recently-added-event":
-                    fethcedEvents = _fetched.filter((event) => event.date >= Timestamp.fromDate(today));
-                    break;
-                case "upcoming-event":
-                    break;
-                case "past-event":
-                    fethcedEvents = _fetched.filter((event) => event.date < Timestamp.now().toDate());
-                    break;
-                case "popular-event":
-                    fethcedEvents = _fetched.filter((event) => event.date > Timestamp.fromDate(today));
-                    break;
-
-            }
+            if (type)
+                switch (type) {
+                    case "recently-added-event":
+                        fethcedEvents = _fetched.filter((event) => event.date >= Timestamp.fromDate(today));
+                        break;
+                    case "upcoming-event":
+                        break;
+                    case "past-event":
+                        fethcedEvents = _fetched.filter((event) => event.date < Timestamp.now().toDate());
+                        break;
+                    case "popular-event":
+                        fethcedEvents = _fetched.filter((event) => event.date > Timestamp.fromDate(today));
+                        break;
+                }
             return {
                 data: fethcedEvents,
                 lastDoc: snapshot.docs[snapshot.docs.length - 1],
@@ -119,11 +145,26 @@ function Events({}) {
                     break;
                 case "requested-by-you":
                     whereQuery.push(where("RequestedBy", "==", getCurrentUser()));
+                    break;
                 default:
                     whereQuery.push(orderBy("date", ">=", Timestamp.fromDate(new Date())));
                     break;
             }
-            console.log("whereQuery", whereQuery);
+            fetchPosts(firebaseQuery(...[...queries, ...whereQuery])).then((r) => {
+                setEvents((prev) => [...prev, ...r.data]);
+                if (r.isEnded !== undefined) setIsEnded(r.isEnded);
+                if (r.lastDoc) setLastDoc(r.lastDoc);
+                setLoading(false);
+            });
+        } else if (keywordSearch) {
+            const whereQuery = [];
+
+            if (startAfterLastDoc && lastDoc) {
+                whereQuery.push(startAfter(lastDoc));
+            }
+
+            whereQuery.push(where("keywords", "==", keywordSearch));
+
             fetchPosts(firebaseQuery(...[...queries, ...whereQuery])).then((r) => {
                 setEvents((prev) => [...prev, ...r.data]);
                 if (r.isEnded !== undefined) setIsEnded(r.isEnded);
@@ -145,46 +186,73 @@ function Events({}) {
     }
 
     return (
-        <Box flexDirection="column" width="100%" display="flex">
-            <Typography
-                width="100%"
-                mb={2}
-                variant="h3"
-                color="secondary"
-                fontWeight={400}
-            >
-                {type ? `${type}s` : ""}
-            </Typography>
-            <Grid boxSizing="border-box" width="100%" container spacing={3}>
-                {(loading ? [...new Array(6)] : events).map((event, index) => (
-                    <Grid
-                        width="100%"
-                        key={loading ? index : event.id}
-                        xs={12}
-                        md={3}
-                        item
-                        boxSizing="border-box"
+        <div>
+            <Container sx={{py: {xs: 2, md: 4}}}>
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    gap={1}
+                >
+                    <Box
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "20px",
+                        }}
                     >
-                        {loading ? (
-                            <Skeleton
-                                variant="rectangular"
-                                height="300px"
-                                width="100%"
-                                sx={{borderRadius: 2}}
-                            />
-                        ) : (
-                            <UpcomingCard event={event}></UpcomingCard>
-                        )}
-                    </Grid>
-                ))}
+                        <IconButton onClick={() => navigate(-1)} size="small" sx={iconStyle}>
+                            <BackButton/>
+                        </IconButton>
+                        <Typography style={{
+                            textTransform: "capitalize",
+                        }} variant="h3">{displayText}</Typography>
+                    </Box>
+                </Stack>
+            </Container>
+            <Box
+                style={{
+                    backgroundColor: "#ffffff",
+                    padding: "40px 80px",
+                }}
+                flexDirection="column" width="100%" display="flex">
+                <Grid boxSizing="border-box" width="100%" container spacing={3}>
+                    {(loading ? [...new Array(6)] : events).map((event, index) => (
+                        <Grid
+                            style={{
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                            width="100%"
+                            key={loading ? index : event.id}
+                            xs={12}
+                            md={6}
+                            item
+                            boxSizing="border-box"
+                        >
+                            {loading ? (
+                                <Skeleton
+                                    variant="rectangular"
+                                    height="300px"
+                                    width="100%"
+                                    sx={{borderRadius: 2}}
+                                />
+                            ) : (
+                                <EventCard event={event}></EventCard>
+                            )}
+                        </Grid>
+                    ))}
 
+
+                </Grid>
                 <div
                     style={{
                         margin: "auto",
                         padding: "10px",
                         width: "100%",
                         maxWidth: "250px",
-                        paddingTop: "30px",
+                        paddingTop: "50px",
                     }}
                 >
                     {isEnded ? (
@@ -197,8 +265,9 @@ function Events({}) {
                         </Button>
                     )}
                 </div>
-            </Grid>
-        </Box>
+            </Box>
+        </div>
+
     );
 }
 
