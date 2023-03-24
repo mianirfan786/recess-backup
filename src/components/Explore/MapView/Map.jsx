@@ -32,17 +32,19 @@ const Map = ({center, events, height}) => {
             zoom={10}
             center={center}
         >
-            {/* Show a marker for the user's current position */}
-            {userPosition && <MarkerF position={userPosition} icon={location}/>}
-
             {/* Show markers for each location in the markers array */}
             <MarkerF
                 position={{lat: events?.latitude, lng: events?.longitude}}
-                icon={events?.icon}
+                icon={events?.photos}
                 onClick={() => {
                     setSelected(events);
                 }}
             />
+
+            {/* Show a marker for the user's current position */}
+            {userPosition && <MarkerF position={userPosition} icon={location}/>}
+
+
 
             {selected ? (
                 <InfoWindow

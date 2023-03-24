@@ -1,10 +1,10 @@
-import {GoogleMap, MarkerF, useLoadScript} from "@react-google-maps/api";
+import {GoogleMap, Marker, useLoadScript} from "@react-google-maps/api";
 import {Box, CircularProgress, Stack, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import {useCreateEventContext} from "../../pages/CreateEvent";
 import {GOOGLE_MAPS_API_KEY} from "../GoogleAutocomplete";
 
-const CustomMap = ({center, height}) => {
+const CustomMap = ({center, height, loadUserLocation}) => {
     const [selected, setSelected] = useState(null);
     const [userPosition, setUserPosition] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -39,10 +39,23 @@ const CustomMap = ({center, height}) => {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                 });
+
+                if (loadUserLocation)
+                    setSelected({
+                        latLng: {
+                            lat: () => position.coords.latitude,
+                            lng: () => position.coords.longitude,
+                        }
+                    })
+
             },
             (error) => console.log(error)
         );
+        if (loadUserLocation) {
+
+        }
     }, []);
+
 
     return (
         <GoogleMap
@@ -55,7 +68,20 @@ const CustomMap = ({center, height}) => {
             zoom={10}
             center={userPosition || center}
         >
-            {selected && <MarkerF position={selected.latLng.toJSON()}/>}
+            {selected && (
+                <Marker
+                    position={{lat: selected.latLng.lat(), lng: selected.latLng.lng()}}
+                    onClick={() => setSelected(null)}
+                />
+            )}
+
+            {/* if not selected */}
+            {userPosition && !selected && loadUserLocation && (
+                <Marker
+                    position={{lat: userPosition.lat, lng: userPosition.lng}}
+                    onClick={() => setSelected(null)}
+                />
+            )}
             {loading && (
                 <Stack
                     left="50%"
@@ -162,10 +188,15 @@ const CustomMap = ({center, height}) => {
     );
 };
 
-const Map = () => {
+const Map = (props) => {
     const {isLoaded, loadError} = useLoadScript({
         googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     });
+
+
+    /* get user latitude and longitude */
+    const [lat, setLat] = useState(23.76);
+    const [lng, setLng] = useState(90.38);
 
     if (loadError) return "Error loading maps";
     if (!isLoaded) {
@@ -178,7 +209,7 @@ const Map = () => {
     if (isLoaded && !loadError) {
         return (
             <Box width="100%">
-                <CustomMap height="600px" center={{lat: 23.76, lng: 90.38}}/>
+                <CustomMap height="600px" loadUserLocation={props.loadUserLocation} center={{lat: lat, lng: lng}}/>
             </Box>
         );
     }
