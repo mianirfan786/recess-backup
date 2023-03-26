@@ -1,7 +1,7 @@
 import {deleteDoc, doc, getDoc, getFirestore, updateDoc,} from "firebase/firestore";
 
 import app from "../../config";
-import {deleteUser, EmailAuthProvider, getAuth, reauthenticateWithCredential, updatePassword} from "firebase/auth";
+import {deleteUser, EmailAuthProvider, getAuth, reauthenticateWithCredential, updatePassword, signInWithPhoneNumber, RecaptchaVerifier} from "firebase/auth";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import {toast} from "react-toastify";
 
@@ -92,31 +92,6 @@ export const ResetPersonalPassword = async (password, newPassword) => {
     }
 
 }
-
-/* update user photo and name :: Start */
-export const UpdateUserPhotoAndNameById = async (id, user) => {
-    // Upload each photo to Firebase Storage With Random Name
-    const photoUrls = await Promise.all(
-        user.photos.map(async (photo) => {
-            console.log(photo.path);
-            const photoRef = ref(storage, `photos/${Math.random().toString(36).substring(2)}`);
-            await uploadBytes(photoRef, photo);
-            return await getDownloadURL(photoRef);
-        })
-    );
-
-    // Add photo URLs to the event object
-    const userWithPhotos = {...user, photos: photoUrls};
-
-    const docRef = doc(db, "users", id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-        return await updateDoc(docRef, userWithPhotos);
-    } else {
-        return null;
-    }
-}
-/* update user photo and name :: End */
 
 export const AddKeywordInUser = async (keyword) => {
     const currentUser = await getCurrentUser();
