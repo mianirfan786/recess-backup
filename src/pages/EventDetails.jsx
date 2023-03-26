@@ -84,7 +84,9 @@ const EventDetails = ({event = _event, markers = _markers}) => {
             setDisplayAddress(data.displayAddress);
             /* change event.date */
             GetUsersByIds(data.joined).then((usersData) => {
-                setUsers(usersData);
+                /* check array for null */
+                const crrData = usersData.filter((user) => user !== null);
+                setUsers(crrData);
             });
         });
         HasUserJoinedEvent(id).then((data) => {
@@ -194,7 +196,6 @@ const EventDetails = ({event = _event, markers = _markers}) => {
                         </Stack>
                         <Button
                             onClick={() => {
-                                console.log("clicked", date);
                                 if (date < new Date()) {
                                     toast("Event has already passed", {type: "error"})
                                 } else {

@@ -4,10 +4,13 @@ import {useModalsContext} from "../../modals/ModalsContext";
 import {MODALS} from "../../modals/modals";
 import {GetAllKeywordsFromUser} from "../../firebase/functions/user";
 import {useEffect, useState} from "react";
+import {ROUTES} from "../../routes";
+import {useNavigate} from "react-router-dom";
 
 const Requested = ({updateKeywords}) => {
     const {setOpenModal} = useModalsContext();
     const [_activities, setActivities] = useState([]);
+    const navigate = useNavigate()
     useEffect(() => {
         GetAllKeywordsFromUser().then((data) => {
             setActivities(data);
@@ -51,6 +54,10 @@ const Requested = ({updateKeywords}) => {
                         </IconButton>
                         {_activities && _activities.map((data) => (
                             <Box
+                                onClick={function (e) {
+                                    e.preventDefault();
+                                    navigate(ROUTES.EVENTS_PAGE + `?keywordSearch=${data}`);
+                                }}
                                 borderRadius="20px"
                                 sx={{
                                     backgroundColor: "white",

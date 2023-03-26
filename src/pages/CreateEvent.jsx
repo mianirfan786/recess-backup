@@ -57,7 +57,7 @@ const CreateEvent = () => {
                     <Stack alignItems="center" gap={4}>
                         <SetPhoto/>
                         <MainDetails/>
-                        <Map/>
+                        <Map loadUserLocation={true} />
                         <Button
                             sx={{
                                 px: 3,

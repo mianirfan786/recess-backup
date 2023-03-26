@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {ROUTES} from "../../../routes";
 import {Timestamp} from "firebase/firestore";
 import {timeTo12HrFormat} from "../../../utils/timeFunctions";
+import {getContrastRatio} from "../../../utils/colors";
 
 const UpcomingCard = ({event}) => {
     try {
@@ -15,18 +16,22 @@ const UpcomingCard = ({event}) => {
     const {id, title, startTime, date, photos, bgColor} = event;
     const navigate = useNavigate();
 
+    /* check if bgColor is bright */
+    const fontColor = getContrastRatio(bgColor, "ffffff") > 0.70 ? "#000000" : "#ffffff";
     return (
         <Box
             className={styles.eventCard}
             sx={{
                 bgcolor: `${bgColor}`,
+                color: `${fontColor}`,
                 p: {xs: 1, md: 1.5},
                 borderRadius: "25px !important",
             }}
         >
             <img id={'imgUpcoming' + id} className={styles.eventThumb} src={photos} alt=""/>
             <Box sx={{my: {xs: 1, md: 2}, px: 1}}>
-                <Typography color="info.main" variant="h4">
+                <Typography
+                    color={fontColor} variant="h4">
                     {title}
                 </Typography>
                 <Stack
@@ -34,8 +39,8 @@ const UpcomingCard = ({event}) => {
                     sx={{my: {xs: 1, md: 2}}}
                     gap={{xs: 0.5, md: 1}}
                 >
-                    <BsCalendarEvent className={styles.calendarIcon}/>
-                    <Typography color="info.main" variant="h6">
+                    <BsCalendarEvent color={fontColor} className={styles.calendarIcon}/>
+                    <Typography color={fontColor} variant="h6">
                         {date.toLocaleDateString('en-US', {
                             weekday: 'short',
                             day: 'numeric',
@@ -43,7 +48,7 @@ const UpcomingCard = ({event}) => {
                             year: 'numeric',
                         })} -
                     </Typography>
-                    <Typography color="info.main" variant="h6">
+                    <Typography color={fontColor} variant="h6">
                         {timeTo12HrFormat(startTime)}
                     </Typography>
                 </Stack>
@@ -66,7 +71,7 @@ const UpcomingCard = ({event}) => {
                 <img key={user.id} src={user.image} alt="" />
               ))}*/}
                         </Box>
-                        <Typography color="info.main" variant="h6">
+                        <Typography color={fontColor} variant="h6">
                             +20
                         </Typography>
                     </Box>
