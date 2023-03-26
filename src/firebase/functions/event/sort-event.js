@@ -2,6 +2,7 @@ import {collection, getDocs, getFirestore, limit, orderBy, query, Timestamp, whe
 
 import app from "../../config";
 import {GetAreaNearUser} from "./index";
+import {toast} from "react-toastify";
 
 
 /* Basic Variables */
@@ -84,7 +85,7 @@ export const SortEventByStartDate = async (maxLimit, minPriceLimit, maxPriceLimi
 }
 
 /* sort event by max players :: Start */
-export const SortEventByMaxPlayers = async (maxPlayers, maxLimit, minPriceLimit, maxPriceLimit) => {
+export const SortEventByMaxPlayers = async (maxLimit, minPriceLimit, maxPriceLimit) => {
     if (minPriceLimit === -1 && maxPriceLimit === -1) {
         var q = query(collection(db, "events"), orderBy("maxParticipants", "desc"), limit(maxLimit));
     } else if (minPriceLimit === 0 && maxPriceLimit === 0) {
@@ -180,4 +181,61 @@ export const SortEventWithCityBySponsor = async (city, maxItems) => {
     return returnEvents.filter((event) => {
         return event.date >= Timestamp.fromDate(new Date()) && event.sponsor === true;
     }).slice(0, maxItems);
+}
+
+
+export const GetExploreEvents = async (maxItems, filters, location) => {
+    const showToast = toast("Getting Events", {type: "info", autoClose: 1500});
+    let events = [];
+    let lowerPrice = -1;
+    let higherPrice = -1;
+    if ((filters !== null)) {
+        switch (filters.selectedSortOption.name) {
+            case "No of Attendees":
+                events = await SortEventByAttendees(maxItems, lowerPrice, higherPrice);
+                break;
+            case "No of Registered":
+                events = await SortEventByParticipantCount(maxItems, lowerPrice, higherPrice);
+                break;
+            case "Date Created":
+                events = await SortEventByTimeStamp(maxItems, lowerPrice, higherPrice);
+                break;
+            case "Start Date":
+                events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
+                break;
+            case "Max No of Players":
+                events = await SortEventByMaxPlayers(maxItems, lowerPrice, higherPrice);
+                break;
+        }
+        if(filters.sponsoredListings){
+            events = events.filter((event) => {
+                return event.sponsored === true;
+            })
+        }
+        if (filters.priceRange === 0) {
+            lowerPrice = 0;
+            higherPrice = 0;
+        } else if (filters.priceRange === 1) {
+            lowerPrice = 1;
+            higherPrice = 5;
+        } else if (filters.priceRange === 2) {
+            lowerPrice = 6;
+            higherPrice = 15;
+        } else if (filters.priceRange === 3) {
+            lowerPrice = 16;
+            higherPrice = 1000;
+        }
+    } else {
+        events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
+    }
+    events = events.filter((event) => {
+        return event.date >= Timestamp.fromDate(new Date()) && event.address.city === location;
+    });
+    if (lowerPrice !== -1 && higherPrice !== -1) {
+        events = events.filter((event) => {
+            return event.cost >= lowerPrice && event.cost <= higherPrice;
+        })
+    }
+    toast.dismiss(showToast);
+    return events;
 }

@@ -64,7 +64,8 @@ export const DeleteUserById = async (password) => {
         }
         await deleteUser(user);
         await deleteDoc(doc(db, "users", currentUser));
-    } catch {
+    } catch(error) {
+        console.log(error);
     }
 }
 

@@ -18,7 +18,7 @@ const sortOptions = [
 
 const priceRange = [0, 1, 2, 3];
 
-const SortAndFilterModal = ({open, onClose, onApply = () => null}) => {
+const SortAndFilterModal = ({open, onClose, onApply}) => {
     const [state, setState] = useState({
         selectedSortOption: null,
         priceRange: null,
@@ -133,7 +133,7 @@ const SortAndFilterModal = ({open, onClose, onApply = () => null}) => {
                     </Typography>
                 </Stack>
                 <Button
-                    onClick={onClose}
+                    onClick={onApplyClick}
                     variant="contained"
                     fullWidth
                     sx={{

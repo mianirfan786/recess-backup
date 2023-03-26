@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {useCreateEventContext} from "../../pages/CreateEvent";
 import {GOOGLE_MAPS_API_KEY} from "../GoogleAutocomplete";
 
-const CustomMap = ({center, height, loadUserLocation}) => {
+const CustomMap = ({height, loadUserLocation}) => {
     const [selected, setSelected] = useState(null);
     const [userPosition, setUserPosition] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -51,9 +51,6 @@ const CustomMap = ({center, height, loadUserLocation}) => {
             },
             (error) => console.log(error)
         );
-        if (loadUserLocation) {
-
-        }
     }, []);
 
 
@@ -66,7 +63,7 @@ const CustomMap = ({center, height, loadUserLocation}) => {
             }}
             onClick={(e) => setSelected(e)}
             zoom={10}
-            center={userPosition || center}
+            center={userPosition}
         >
             {selected && (
                 <Marker
@@ -195,8 +192,8 @@ const Map = (props) => {
 
 
     /* get user latitude and longitude */
-    const [lat, setLat] = useState(23.76);
-    const [lng, setLng] = useState(90.38);
+    const [lat, setLat] = useState();
+    const [lng, setLng] = useState();
 
     if (loadError) return "Error loading maps";
     if (!isLoaded) {
@@ -209,7 +206,7 @@ const Map = (props) => {
     if (isLoaded && !loadError) {
         return (
             <Box width="100%">
-                <CustomMap height="600px" loadUserLocation={props.loadUserLocation} center={{lat: lat, lng: lng}}/>
+                <CustomMap height="600px" loadUserLocation={props.loadUserLocation}/>
             </Box>
         );
     }

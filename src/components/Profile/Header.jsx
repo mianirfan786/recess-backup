@@ -1,8 +1,12 @@
 import {Box, Stack, Typography} from "@mui/material";
 import user from "../../images/user.jpg";
 import PageHeader from "../PageHeader";
+import {useState} from "react";
 
 const Header = () => {
+    const [name, setName] = useState("Andrey Rybin");
+    const [phone, setPhone] = useState("+799 942 912 412");
+
     return (
         <Stack gap={2}>
             <PageHeader title="Profile"/>
@@ -35,10 +39,10 @@ const Header = () => {
                 </Box>
                 <Stack spacing={1} textAlign={{xs: "center", sm: "initial"}}>
                     <Typography variant="h2" fontSize="38px">
-                        Andrey Rybin
+                        {name}
                     </Typography>
                     <Typography sx={{opacity: 0.5}} color="#111315" variant="body1">
-                        +799 942 912 412
+                        {phone}
                     </Typography>
                 </Stack>
             </Stack>
