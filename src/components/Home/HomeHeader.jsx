@@ -12,6 +12,7 @@ const HomeHeader = () => {
     const [userName, setUserName] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [userPhoto, setUserPhoto] = useState("");
     useEffect(
         () => {
             GetCurrentUserDetails().then((data) => {
@@ -19,6 +20,7 @@ const HomeHeader = () => {
                 if (data.displayName.split(" ").length >= 1) {
                     setFirstName(data.displayName.split(" ")[0]);
                     setLastName(data.displayName.split(" ")[1]);
+                    setUserPhoto(data.photoURL);
                 } else {
                     setFirstName(data.displayName);
                 }
@@ -34,7 +36,7 @@ const HomeHeader = () => {
                 gap={1}
             >
                 <Stack className={styles.user} direction="row" gap={{xs: 1, md: 2}}>
-                    <img src={user} alt="user"/>
+                    <img src={userPhoto == "" || userPhoto == undefined ? user : userPhoto} alt="user"/>
                     <Box>
                         <Typography
                             sx={{opacity: 0.6, fontSize: 14}}

@@ -27,3 +27,7 @@ yarn-error.log*
 /.idea/recess-web.iml
 /.idea/vcs.xml
 /.idea/prettier.xml
+/.idea/jsLibraryMappings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/recess-web-main.iml
+/.idea/resess-web.iml
