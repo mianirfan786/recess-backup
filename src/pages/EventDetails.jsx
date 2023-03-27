@@ -20,20 +20,6 @@ import {HasUserJoinedEvent} from "../firebase/functions/event/event-join";
 import {timeTo12HrFormat} from "../utils/timeFunctions";
 import {toast} from "react-toastify";
 
-const _markers = [
-    {
-        lat: 24.37,
-        lng: 90.0,
-        icon: marker3,
-        label: "Marker 3",
-    },
-];
-
-const center = {
-    lat: 24.37,
-    lng: 90.0,
-};
-
 const _event = {
     id: 1,
     title: "Loading...",
@@ -51,7 +37,7 @@ const _event = {
         "Loading...",
 };
 
-const EventDetails = ({event = _event, markers = _markers}) => {
+const EventDetails = ({event = _event, markers}) => {
     const {id} = useParams();
     const [title, setTitle] = useState(event.title);
     const [location, setLocation] = useState(event.location);
@@ -63,7 +49,6 @@ const EventDetails = ({event = _event, markers = _markers}) => {
     const [keywords, setKeywords] = useState(event.keywords);
     const [cost, setCost] = useState(event.cost);
     const [description, setDescription] = useState(event.description);
-    const [coordinates, setCoordinates] = useState(event.coordinates);
     const [address, setAddress] = useState(event.address);
     const [users, setUsers] = useState([]);
     const [IsUserJoined, setIsUserJoined] = useState(false);

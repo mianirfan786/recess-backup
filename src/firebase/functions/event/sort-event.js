@@ -1,7 +1,7 @@
 import {collection, getDocs, getFirestore, limit, orderBy, query, Timestamp, where} from "firebase/firestore";
 
 import app from "../../config";
-import {GetAreaNearUser} from "./index";
+import {GetAreaNearUser, GetLatitudeAndLongitudeOfDistance} from "./index";
 import {toast} from "react-toastify";
 
 
@@ -236,6 +236,65 @@ export const GetExploreEvents = async (maxItems, filters, location) => {
             return event.cost >= lowerPrice && event.cost <= higherPrice;
         })
     }
+    toast.dismiss(showToast);
+    return events;
+}
+
+
+export const GetExploreEventsFromUserLocation = async (maxItems, filters, lat, lng) => {
+    const area = await GetLatitudeAndLongitudeOfDistance(lat,lng, 50);
+    const showToast = toast("Getting Events", {type: "info", autoClose: 1500});
+    let events = [];
+    let lowerPrice = -1;
+    let higherPrice = -1;
+    if ((filters !== null)) {
+        switch (filters.selectedSortOption.name) {
+            case "No of Attendees":
+                events = await SortEventByAttendees(maxItems, lowerPrice, higherPrice);
+                break;
+            case "No of Registered":
+                events = await SortEventByParticipantCount(maxItems, lowerPrice, higherPrice);
+                break;
+            case "Date Created":
+                events = await SortEventByTimeStamp(maxItems, lowerPrice, higherPrice);
+                break;
+            case "Start Date":
+                events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
+                break;
+            case "Max No of Players":
+                events = await SortEventByMaxPlayers(maxItems, lowerPrice, higherPrice);
+                break;
+        }
+        if(filters.sponsoredListings){
+            events = events.filter((event) => {
+                return event.sponsored === true;
+            })
+        }
+        if (filters.priceRange === 0) {
+            lowerPrice = 0;
+            higherPrice = 0;
+        } else if (filters.priceRange === 1) {
+            lowerPrice = 1;
+            higherPrice = 5;
+        } else if (filters.priceRange === 2) {
+            lowerPrice = 6;
+            higherPrice = 15;
+        } else if (filters.priceRange === 3) {
+            lowerPrice = 16;
+            higherPrice = 1000;
+        }
+    } else {
+        events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
+    }
+    events = events.filter((event) => {
+        return event.date >= Timestamp.fromDate(new Date()) && area.lowerLat <= event.latitude && area.greaterLat >= event.latitude && area.lowerLon <= event.longitude && area.greaterLon >= event.longitude
+    });
+    if (lowerPrice !== -1 && higherPrice !== -1) {
+        events = events.filter((event) => {
+            return event.cost >= lowerPrice && event.cost <= higherPrice;
+        })
+    }
+    console.log(events);
     toast.dismiss(showToast);
     return events;
 }

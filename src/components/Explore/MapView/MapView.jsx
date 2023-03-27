@@ -7,50 +7,20 @@ import marker4 from "../../../images/marker-4.png";
 import marker5 from "../../../images/marker-5.png";
 import Map from "./Map";
 import {GOOGLE_MAPS_API_KEY} from "../../GoogleAutocomplete";
+import {useState} from "react";
 
-const _markers = [
-    {
-        lat: 23.84,
-        lng: 90.25,
-        icon: marker1,
-        label: "Marker 1",
-    },
-    {
-        lat: 23.62,
-        lng: 90.47,
-        icon: marker2,
-        label: "Marker 2",
-    },
-    {
-        lat: 24.37,
-        lng: 90.0,
-        icon: marker3,
-        label: "Marker 3",
-    },
-    {
-        lat: 23.86,
-        lng: 90.0,
-        icon: marker4,
-        label: "Marker 4",
-    },
-    {
-        lat: 23.46,
-        lng: 91.18,
-        icon: marker5,
-        label: "Marker 5",
-    },
-    // Add more markers as needed
-];
-
-const _center = {
-    lat: 23.76,
-    lng: 90.38,
-};
-
-const MapView = ({center = _center, markers = _markers, height}) => {
+const MapView = ({markers, height, events, setUserLocation}) => {
+    const [center, setCenter] = useState({});
+    if (events)
+        markers = events
     const {isLoaded, loadError} = useLoadScript({
         googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     });
+
+    const onUserLocationChange = (location) => {
+        setUserLocation(location);
+    }
+
     if (loadError) return "Error loading maps";
     if (!isLoaded) {
         return (
@@ -62,7 +32,7 @@ const MapView = ({center = _center, markers = _markers, height}) => {
     if (isLoaded && !loadError) {
         return (
             <div>
-                <Map center={center} events={markers} height={height}/>
+                <Map onUserLocationChange={onUserLocationChange} center={center} events={markers} height={height}/>
             </div>
         );
     }

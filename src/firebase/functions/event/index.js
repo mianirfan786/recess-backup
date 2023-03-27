@@ -112,7 +112,7 @@ export const ViewEventsCreatedByMe = async (maxLimit) => {
 /* view event created by current loggedIn user :: End */
 
 
-const GetLatitudeAndLongitudeOfDistance = async (latitude, longitude, distance) => {
+export const GetLatitudeAndLongitudeOfDistance = async (latitude, longitude, distance) => {
     let lat = 0.0144927536231884
     let lon = 0.0181818181818182
 

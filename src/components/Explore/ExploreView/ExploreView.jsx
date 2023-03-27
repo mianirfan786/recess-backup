@@ -14,7 +14,7 @@ import frisbee3 from "../../../images/frisbee-3.png";
 import glof from "../../../images/glof.png";
 import LocationIcon from "../../../icons/LocationIcon";
 import GoogleAutocomplete from "../../GoogleAutocomplete";
-import {GetExploreEvents} from "../../../firebase/functions/event/sort-event";
+import {GetExploreEvents, GetExploreEventsFromUserLocation} from "../../../firebase/functions/event/sort-event";
 
 const events = [{
     id: 1,
@@ -54,6 +54,7 @@ const ExploreView = ({filters}) => {
     const [view, setView] = useState("list");
     const [events, setEvents] = useState(null);
     const [city, setCity] = useState(null);
+    const [userLocation, setUserLocation] = useState(null);
     const handleView = (view) => {
         setView(view);
     };
@@ -63,8 +64,29 @@ const ExploreView = ({filters}) => {
             GetExploreEvents(10, filters, city).then((events) => {
                 setEvents(events);
             });
+        } else {
+            let currentUserLocation = null;
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    currentUserLocation = {
+                        Lat: position.coords.latitude,
+                        Lng: position.coords.longitude,
+                    };
+                    let userLat = userLocation.Lat || position.coords.latitude
+                    let userLng = userLocation.Lng || position.coords.longitude
+                    GetExploreEventsFromUserLocation(20, filters, userLat, userLng).then((data) => {
+                        setEvents(data);
+                    });
+                },
+                (error) => console.log(error)
+            );
+
         }
-    }, [view, filters, city]);
+    }, [view, filters, city, userLocation]);
+
+    const updateLocation = (location) => {
+        setUserLocation(location);
+    }
 
 
     return (<Box sx={{bgcolor: "info.main", pt: {xs: 2, md: 4}}}>
@@ -116,7 +138,7 @@ const ExploreView = ({filters}) => {
 
         {/* show based on view */}
         <Box sx={{pt: {xs: 2, md: 4}, pb: 0}}>
-            {view === "list" ? (<ListView events={events}/>) : (<MapView events={events}/>)}
+            {view === "list" ? (<ListView events={events}/>) : (<MapView  setUserLocation={updateLocation} filters={filters} events={events}/>)}
         </Box>
     </Box>);
 };
