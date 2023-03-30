@@ -50,7 +50,10 @@ function Events({}) {
     const keywordSearch = searchParams.get("keywordSearch");
     const navigate = useNavigate();
 
+    /* autorun function that scroll to top */
+
     let displayText = "";
+    document.body.scrollTop = 0;
     if (type) {
         displayText = type.replace(/-/g, " ");
     } else if (keywordSearch) {
