@@ -12,7 +12,7 @@ const ListView = ({events}) => {
                 >
                     {events && events.map((event) => (
                         <Grid item xs={2} sm={4} md={4} key={event.id}>
-                            <EventCard event={event}/>
+                            <EventCard customBg={"#f6faff"} event={event}/>
                         </Grid>
                     ))}
                 </Grid>

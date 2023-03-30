@@ -149,7 +149,7 @@ const Header = () => {
                             borderRadius: "50%",
                             overflow: "hidden",
                         }}
-                        src={user.photoURL ? user.photoURL : userIcon}
+                        src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"}
                         alt="user"
                     />
                     <input

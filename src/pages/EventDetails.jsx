@@ -54,6 +54,10 @@ const EventDetails = ({event = _event, markers}) => {
     const [IsUserJoined, setIsUserJoined] = useState(false);
     const [displayAddress, setDisplayAddress] = useState(event.displayAddress);
 
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    window.scrollTo(0, 0);
+
     useEffect(() => {
         ViewEventById(id).then((data) => {
             setTitle(data.title);

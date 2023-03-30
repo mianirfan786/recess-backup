@@ -50,7 +50,12 @@ function Events({}) {
     const keywordSearch = searchParams.get("keywordSearch");
     const navigate = useNavigate();
 
+    /* autorun function that scroll to top */
+
     let displayText = "";
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    window.scrollTo(0, 0);
     if (type) {
         displayText = type.replace(/-/g, " ");
     } else if (keywordSearch) {
@@ -239,7 +244,7 @@ function Events({}) {
                                     sx={{borderRadius: 2}}
                                 />
                             ) : (
-                                <EventCard event={event}></EventCard>
+                                <EventCard customBg={"#f6faff"} event={event}></EventCard>
                             )}
                         </Grid>
                     ))}

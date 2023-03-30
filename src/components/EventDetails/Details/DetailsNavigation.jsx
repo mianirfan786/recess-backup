@@ -28,7 +28,11 @@ const DetailsNavigation = () => {
                 <BackButton/>
             </IconButton>
             <Box display="flex" alignItems="center" gap={2}>
-                <IconButton size="small" sx={iconStyle}>
+                <IconButton
+                    onClick={() => {
+                        window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href),'facebook-share-dialog','width=626,height=436'); return false;
+                    }}
+                    size="small" sx={iconStyle}>
                     <ShareIcon/>
                 </IconButton>
                 <IconButton

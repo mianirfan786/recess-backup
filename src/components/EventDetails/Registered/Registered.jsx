@@ -20,9 +20,9 @@ const Registered = ({users, maxParticipants}) => {
                 </Typography>
             </Stack>
             <DefaultSwiper>
-                {users.map((user) => (
+                {users.map((user, index) => (
                     <SwiperSlide key={user.uid}>
-                        <UserCard user={user}/>
+                        <UserCard user={user} index={index} />
                     </SwiperSlide>
                 ))}
             </DefaultSwiper>

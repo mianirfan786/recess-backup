@@ -118,6 +118,7 @@ const MainDetails = () => {
                         }
                         type="date"
                         style={{
+                            width: "min-content",
                             border: "none",
                             outline: "none",
                             fontSize: "16px",
@@ -132,6 +133,7 @@ const MainDetails = () => {
                                 setState((prev) => ({...prev, startTime: e.target.value}))
                             }
                             type="time"
+                            step={900}
                             style={{
                                 border: "none",
                                 outline: "none",
@@ -146,6 +148,7 @@ const MainDetails = () => {
                                 setState((prev) => ({...prev, endTime: e.target.value}))
                             }
                             type="time"
+                            step={900}
                             style={{
                                 border: "none",
                                 outline: "none",
@@ -209,6 +212,15 @@ const MainDetails = () => {
                                             !prices.includes(Number(customPrice))
                                         }
                                     >
+                                        <span class="input" style={
+                                            {
+                                                display: "flex",
+                                                position: "absolute",
+                                                transform: "translateX(-22px)",
+                                                pointerEvents: "none",
+                                            }
+                                        }>&#36;
+                                        </span>
                                         <input
                                             value={customPrice}
                                             onChange={(e) => {
@@ -225,6 +237,7 @@ const MainDetails = () => {
                                                 width: "150%",
                                                 border: "none",
                                                 outline: "none",
+                                                paddingLeft: "10px",
                                                 backgroundColor: "transparent",
                                             }}
                                             placeholder="|"

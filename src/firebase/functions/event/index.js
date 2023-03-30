@@ -27,6 +27,7 @@ getCurrentUser();
 export const addEvent = async (event) => {
 
     // Read the first photo from the event object
+    const eventId = Math.random().toString(36).substring(2);
     currentUser = await getCurrentUser();
     const reader = new FileReader();
     reader.onload = function (e) {
@@ -48,7 +49,7 @@ export const addEvent = async (event) => {
 
 
             // Add Event to Firebase with Timestamp and CreatedBy
-            const res = await setDoc(doc(db, "events", Math.random().toString(36).substring(2)), {
+            const res = await setDoc(doc(db, "events", eventId), {
                 ...eventWithPhotos,
                 timeStamp: Timestamp.fromDate(new Date()),
                 CreatedBy: currentUser,
@@ -64,6 +65,7 @@ export const addEvent = async (event) => {
         })
     };
     reader.readAsDataURL(event.photos[0]);
+    return eventId;
 }
 /* add event :: End */
 

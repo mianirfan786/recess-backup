@@ -1,6 +1,6 @@
 import {Box, Stack, Typography} from "@mui/material";
 
-const UserCard = ({user}) => {
+const UserCard = ({user, index}) => {
     const {displayName, image, host} = user;
     const nameParts = displayName.split(" ");
     if (nameParts.length >= 1) {
@@ -17,7 +17,7 @@ const UserCard = ({user}) => {
                 borderRadius="40px"
             >
                 <Box position="relative" overflow="hidden" borderRadius="40px">
-                    {host && (
+                    {index == 0 && (
                         <Box
                             display="flex"
                             alignItems="center"
@@ -36,8 +36,8 @@ const UserCard = ({user}) => {
                         </Box>
                     )}
                     <img
-                        style={{width: "100%", objectFit: "cover"}}
-                        src={image}
+                        style={{width: "100%", aspectRatio: "1/1", objectFit: "cover"}}
+                        src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"}
                         alt={displayName}
                     />
                 </Box>

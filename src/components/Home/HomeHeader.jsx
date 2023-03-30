@@ -6,6 +6,7 @@ import styles from "../../styles/Home.module.scss";
 import {ROUTES} from "../../routes";
 import {useEffect, useState} from "react";
 import {GetCurrentUserDetails} from "../../firebase/functions/user";
+import Avatar from '@mui/material/Avatar';
 
 const HomeHeader = () => {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ const HomeHeader = () => {
     useEffect(
         () => {
             GetCurrentUserDetails().then((data) => {
+                setUserPhoto(data.photoURL)
                 setUserName(data.displayName);
                 if (data.displayName.split(" ").length >= 1) {
                     setFirstName(data.displayName.split(" ")[0]);
@@ -36,7 +38,7 @@ const HomeHeader = () => {
                 gap={1}
             >
                 <Stack className={styles.user} direction="row" gap={{xs: 1, md: 2}}>
-                    <img src={userPhoto == "" || userPhoto == undefined ? user : userPhoto} alt="user"/>
+                    <img src={userPhoto == "" || userPhoto == undefined ? "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png" : userPhoto} alt="user"/>
                     <Box>
                         <Typography
                             sx={{opacity: 0.6, fontSize: 14}}

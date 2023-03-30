@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -28,26 +28,29 @@ function loadScript(src, position, id) {
 
 const autocompleteService = {current: null};
 
-export default function GoogleAutocomplete({onChange}) {
+export default function GoogleAutocomplete({onChange, onReset}) {
     const [value, setValue] = React.useState(null);
     const [inputValue, setInputValue] = React.useState("");
     const [options, setOptions] = React.useState([]);
     const [touched, setTouched] = React.useState(false);
     const loaded = React.useRef(false);
+    const [initLocation, setInitLocation] = useState(null);
 
     const {address} = usePositionContext();
 
     useEffect(() => {
         if (address) {
+            if (initLocation !== null)
+                setInitLocation(address);
             setValue({
-                description: `${address.city}, ${address.principalSubdivision}, ${address.countryName}`,
+                description: `${address.city}, ${address.principalSubdivision}`,
                 structured_formatting: {
                     main_text: address.city,
-                    secondary_text: `${address.principalSubdivision}, ${address.countryName}`,
+                    secondary_text: `${address.principalSubdivision}`,
                 },
             });
         }
-    }, [address]);
+    }, [address, onReset]);
 
     useEffect(() => {
         if (value) {
@@ -95,6 +98,14 @@ export default function GoogleAutocomplete({onChange}) {
         }
 
         fetch({input: inputValue}, (results) => {
+            const newResults = []
+            for(let i = 0; i < results.length; i++) {
+                results[i].description = results[i].description.replace(/, USA/g, "");
+                results[i].structured_formatting.secondary_text = results[i].structured_formatting.secondary_text.replace(/, USA/g, "");
+                newResults.push(results[i]);
+            }
+            console.log(newResults);
+
             if (active) {
                 let newOptions = [];
 
@@ -102,8 +113,8 @@ export default function GoogleAutocomplete({onChange}) {
                     newOptions = [value];
                 }
 
-                if (results) {
-                    newOptions = [...newOptions, ...results];
+                if (newResults) {
+                    newOptions = [...newOptions, ...newResults];
                 }
 
                 setOptions(newOptions);
@@ -132,7 +143,11 @@ export default function GoogleAutocomplete({onChange}) {
             }}
             value={value}
             onChange={(event, newValue) => {
+                console.log(newValue);
                 setOptions(newValue ? [newValue, ...options] : options);
+                /* remove everythin after the last occorance of , */
+                newValue.description = newValue.description.split(",").slice(0, 2).join(",");
+                console.log(newValue);
                 setValue(newValue);
             }}
             onInputChange={(event, newInputValue) => {

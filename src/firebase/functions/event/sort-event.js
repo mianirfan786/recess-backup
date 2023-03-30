@@ -186,28 +186,36 @@ export const SortEventWithCityBySponsor = async (city, maxItems) => {
 
 export const GetExploreEvents = async (maxItems, filters, location) => {
     const showToast = toast("Getting Events", {type: "info", autoClose: 1500});
-    let events = [];
+    console.log(filters);
+    let events = await SortEventByStartDate(maxItems, -1, -1);
     let lowerPrice = -1;
     let higherPrice = -1;
     if ((filters !== null)) {
-        switch (filters.selectedSortOption.name) {
-            case "No of Attendees":
-                events = await SortEventByAttendees(maxItems, lowerPrice, higherPrice);
-                break;
-            case "No of Registered":
-                events = await SortEventByParticipantCount(maxItems, lowerPrice, higherPrice);
-                break;
-            case "Date Created":
-                events = await SortEventByTimeStamp(maxItems, lowerPrice, higherPrice);
-                break;
-            case "Start Date":
-                events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
-                break;
-            case "Max No of Players":
-                events = await SortEventByMaxPlayers(maxItems, lowerPrice, higherPrice);
-                break;
+        try{
+            switch (filters.selectedSortOption.name) {
+                case "No of Attendees":
+                    events = await SortEventByAttendees(maxItems, lowerPrice, higherPrice);
+                    break;
+                case "No of Registered":
+                    events = await SortEventByParticipantCount(maxItems, lowerPrice, higherPrice);
+                    break;
+                case "Date Created":
+                    events = await SortEventByTimeStamp(maxItems, lowerPrice, higherPrice);
+                    break;
+                case "Start Date":
+                    events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
+                    break;
+                case "Max No of Players":
+                    events = await SortEventByMaxPlayers(maxItems, lowerPrice, higherPrice);
+                    break;
+                default:
+                    events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
+                    break;
+            }
+        } catch (e) {
+            console.log(e);
         }
-        if(filters.sponsoredListings){
+        if (filters.sponsoredListings) {
             events = events.filter((event) => {
                 return event.sponsored === true;
             })
@@ -242,30 +250,34 @@ export const GetExploreEvents = async (maxItems, filters, location) => {
 
 
 export const GetExploreEventsFromUserLocation = async (maxItems, filters, lat, lng) => {
-    const area = await GetLatitudeAndLongitudeOfDistance(lat,lng, 50);
+    const area = await GetLatitudeAndLongitudeOfDistance(lat, lng, 50);
     const showToast = toast("Getting Events", {type: "info", autoClose: 1500});
-    let events = [];
+    let events= await SortEventByStartDate(maxItems, -1, -1);
     let lowerPrice = -1;
     let higherPrice = -1;
     if ((filters !== null)) {
-        switch (filters.selectedSortOption.name) {
-            case "No of Attendees":
-                events = await SortEventByAttendees(maxItems, lowerPrice, higherPrice);
-                break;
-            case "No of Registered":
-                events = await SortEventByParticipantCount(maxItems, lowerPrice, higherPrice);
-                break;
-            case "Date Created":
-                events = await SortEventByTimeStamp(maxItems, lowerPrice, higherPrice);
-                break;
-            case "Start Date":
-                events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
-                break;
-            case "Max No of Players":
-                events = await SortEventByMaxPlayers(maxItems, lowerPrice, higherPrice);
-                break;
+        try{
+            switch (filters.selectedSortOption.name) {
+                case "No of Attendees":
+                    events = await SortEventByAttendees(maxItems, lowerPrice, higherPrice);
+                    break;
+                case "No of Registered":
+                    events = await SortEventByParticipantCount(maxItems, lowerPrice, higherPrice);
+                    break;
+                case "Date Created":
+                    events = await SortEventByTimeStamp(maxItems, lowerPrice, higherPrice);
+                    break;
+                case "Start Date":
+                    events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
+                    break;
+                case "Max No of Players":
+                    events = await SortEventByMaxPlayers(maxItems, lowerPrice, higherPrice);
+                    break;
+            }
+        } catch (e) {
+            console.log(e);
         }
-        if(filters.sponsoredListings){
+        if (filters.sponsoredListings) {
             events = events.filter((event) => {
                 return event.sponsored === true;
             })
