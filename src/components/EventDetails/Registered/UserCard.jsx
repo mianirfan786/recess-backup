@@ -36,8 +36,8 @@ const UserCard = ({user}) => {
                         </Box>
                     )}
                     <img
-                        style={{width: "100%", objectFit: "cover"}}
-                        src={image}
+                        style={{width: "100%", aspectRatio: "1/1", objectFit: "cover"}}
+                        src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"}
                         alt={displayName}
                     />
                 </Box>
