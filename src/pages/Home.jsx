@@ -16,6 +16,9 @@ const Home = () => {
     const [currentCity, setCurrentCity] = useState("");
     const [initLoad, setInitLoad] = useState(0);
     const [updateKeywords, setUpdateKeywords] = useState(0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    window.scrollTo(0, 0);
     const HandleUpdate = (city) => {
         if (initLoad !== 0)
             setCurrentCity(city);

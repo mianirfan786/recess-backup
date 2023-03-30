@@ -29,7 +29,7 @@ const Comment = ({comment}) => {
 
     return (
         <Stack flexDirection="row" gap={2}>
-            <Avatar src={mensFace}/>
+            <Avatar src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"}/>
             <Stack gap={1}>
                 <Typography variant="body2" fontWeight="bold">
                     {user.displayName}

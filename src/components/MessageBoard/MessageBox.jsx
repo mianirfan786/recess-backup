@@ -1,7 +1,18 @@
 import {Avatar, InputBase, Stack} from "@mui/material";
 import {AddCommentInEventById} from "../../firebase/functions/event/event-comments";
+import {GetCurrentUserDetails} from "../../firebase/functions/user";
 
 const MessageBox = ({onData, id}) => {
+
+    /* get current user */
+    const [user, setUser] = [{}]
+    GetCurrentUserDetails().then(
+        (data) => {
+            setUser(data);
+        }
+    );
+
+
     const demo = (e) => {
         if (e.key === "Enter") {
             AddCommentInEventById(id, e.target.value);
@@ -20,7 +31,10 @@ const MessageBox = ({onData, id}) => {
             borderRadius="20px"
             sx={{backgroundColor: "#F7FAFF", border: "1px solid #E2EFFF"}}
         >
-            <Avatar sizes="small"/>
+            <img style={{
+                width: "46px",
+                height: "46px",
+            }} src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"} />
             <InputBase
                 onKeyPress={demo}
                 fullWidth

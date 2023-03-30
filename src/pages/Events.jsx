@@ -54,6 +54,8 @@ function Events({}) {
 
     let displayText = "";
     document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    window.scrollTo(0, 0);
     if (type) {
         displayText = type.replace(/-/g, " ");
     } else if (keywordSearch) {

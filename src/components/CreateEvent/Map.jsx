@@ -12,6 +12,10 @@ const CustomMap = ({height, loadUserLocation}) => {
     const {address, setState} = useCreateEventContext();
 
     useEffect(() => {
+        console.log(address);
+    }, [address]);
+
+    useEffect(() => {
         if (!selected) return;
 
         setLoading(true);
@@ -112,7 +116,7 @@ const CustomMap = ({height, loadUserLocation}) => {
                             Address
                         </Typography>
                         <Typography fontWeight={600} variant="body1">
-                            {address.locality}
+                            {address.locality}, {address.principalSubdivision}
                         </Typography>
                     </Stack>
                     <Stack flexDirection="row" gap={2}>
@@ -128,7 +132,7 @@ const CustomMap = ({height, loadUserLocation}) => {
                                 City
                             </Typography>
                             <Typography fontWeight={600} variant="body1">
-                                {address.city || "N/A"}
+                                {address.administrative[1].name || "N/A"}
                             </Typography>
                         </Stack>
                         <Stack
