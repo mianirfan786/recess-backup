@@ -1,6 +1,6 @@
 import {Box, Stack, Typography} from "@mui/material";
 
-const UserCard = ({user}) => {
+const UserCard = ({user, index}) => {
     const {displayName, image, host} = user;
     const nameParts = displayName.split(" ");
     if (nameParts.length >= 1) {
@@ -17,7 +17,7 @@ const UserCard = ({user}) => {
                 borderRadius="40px"
             >
                 <Box position="relative" overflow="hidden" borderRadius="40px">
-                    {host && (
+                    {index == 0 && (
                         <Box
                             display="flex"
                             alignItems="center"
