@@ -46,7 +46,7 @@ const UpcomingCard = ({event}) => {
                             day: 'numeric',
                             month: 'long',
                             year: 'numeric',
-                        })} -
+                        })}
                     </Typography>
                     <Typography color={fontColor} variant="h6">
                         {timeTo12HrFormat(startTime)}

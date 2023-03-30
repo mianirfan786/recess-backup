@@ -6,11 +6,13 @@ import MainDetails from "../components/CreateEvent/MainDetails";
 import Map from "../components/CreateEvent/Map";
 import {toast} from "react-toastify";
 import {addEvent} from "../firebase/functions/event/index.js";
+import {useNavigate} from "react-router-dom";
 
 const CreateEventContext = React.createContext();
 export const useCreateEventContext = () => React.useContext(CreateEventContext);
 
 const CreateEvent = () => {
+    const navigate = useNavigate();
     const [state, setState] = useState({
         photos: [],
         title: "",
@@ -43,7 +45,8 @@ const CreateEvent = () => {
         }
 
         addEvent(state).then(
-            () => {
+            (e) => {
+                navigate(`/event/${e}`);
                 toast("Event created successfully", {type: "success"})
             }
         );
