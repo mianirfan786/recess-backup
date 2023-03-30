@@ -44,6 +44,11 @@ const CreateEvent = () => {
             return;
         }
 
+        if (state.keywords.length > 20 || state.keywords.includes(" ") || state.keywords.includes(",")) {
+            toast("Keywords must be 20 characters or less and cannot contain spaces", {type: "error"})
+            return;
+        }
+
         addEvent(state).then(
             (e) => {
                 navigate(`/event/${e}`);
