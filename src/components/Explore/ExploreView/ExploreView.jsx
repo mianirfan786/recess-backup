@@ -55,9 +55,16 @@ const ExploreView = ({filters}) => {
     const [events, setEvents] = useState(null);
     const [city, setCity] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
+    const [shouldReset, setShouldReset] = useState(false);
     const handleView = (view) => {
         setView(view);
     };
+    const resetGoogleAutocomplete = () => {
+        setShouldReset(true);
+        setTimeout(() => {
+            setShouldReset(false);
+        }, 500);
+    }
 
     useEffect(() => {
         if (view === "list") {
@@ -102,16 +109,17 @@ const ExploreView = ({filters}) => {
                 sx={{backgroundColor: "#ECF5F2"}}
             >
                 <Stack
+                    onClick={resetGoogleAutocomplete}
                     p={2}
                     height="100%"
                     borderRadius="15px"
                     alignItems="center"
                     justifyContent="center"
-                    sx={{backgroundColor: "white"}}
+                    sx={{backgroundColor: "white", cursor:"pointer"}}
                 >
                     <LocationIcon/>
                 </Stack>
-                <GoogleAutocomplete onChange={(e) => setCity(e.structured_formatting.main_text)}/>
+                <GoogleAutocomplete onReset={shouldReset}  onChange={(e) => setCity(e.structured_formatting.main_text)}/>
             </Stack>)}
             <Stack
                 direction="row"

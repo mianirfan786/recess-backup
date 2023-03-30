@@ -16,9 +16,14 @@ const Home = () => {
     const [currentCity, setCurrentCity] = useState("");
     const [initLoad, setInitLoad] = useState(0);
     const [updateKeywords, setUpdateKeywords] = useState(0);
+    const [seedUpcoming, setSeedseedUpcoming] = useState(1);
+    const [seedSponsored, setSeedSponsored] = useState(2);
+    const [seedPopular, setSeedPopular] = useState(3);
+    const [seedRecentlyAdded, setSeedRecentlyAdded] = useState(4);
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     window.scrollTo(0, 0);
+
     const HandleUpdate = (city) => {
         if (initLoad !== 0)
             setCurrentCity(city);

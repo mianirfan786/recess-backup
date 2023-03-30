@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -28,17 +28,20 @@ function loadScript(src, position, id) {
 
 const autocompleteService = {current: null};
 
-export default function GoogleAutocomplete({onChange}) {
+export default function GoogleAutocomplete({onChange, onReset}) {
     const [value, setValue] = React.useState(null);
     const [inputValue, setInputValue] = React.useState("");
     const [options, setOptions] = React.useState([]);
     const [touched, setTouched] = React.useState(false);
     const loaded = React.useRef(false);
+    const [initLocation, setInitLocation] = useState(null);
 
     const {address} = usePositionContext();
 
     useEffect(() => {
         if (address) {
+            if (initLocation !== null)
+                setInitLocation(address);
             setValue({
                 description: `${address.city}, ${address.principalSubdivision}`,
                 structured_formatting: {
@@ -47,7 +50,7 @@ export default function GoogleAutocomplete({onChange}) {
                 },
             });
         }
-    }, [address]);
+    }, [address, onReset]);
 
     useEffect(() => {
         if (value) {
