@@ -244,7 +244,7 @@ function Events({}) {
                                     sx={{borderRadius: 2}}
                                 />
                             ) : (
-                                <EventCard event={event}></EventCard>
+                                <EventCard customBg={"#f6faff"} event={event}></EventCard>
                             )}
                         </Grid>
                     ))}

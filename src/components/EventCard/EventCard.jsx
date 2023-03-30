@@ -8,7 +8,7 @@ import {ROUTES} from "../../routes";
 import {DislikeEventById, IsEventLikedByUser, LikeEventById} from "../../firebase/functions/event/event-likes";
 import {timeTo12HrFormat} from "../../utils/timeFunctions";
 
-const EventCard = ({event}) => {
+const EventCard = ({event, customBg}) => {
     const navigate = useNavigate();
     try {
         event.date = (event.date).toDate();
@@ -47,7 +47,7 @@ const EventCard = ({event}) => {
     return (
         <Box
             sx={{
-                bgcolor: "#CBE8FF",
+                backgroundColor: customBg ? customBg : "#CBE8FF",
                 p: {xs: 1, md: 2},
                 borderRadius: "20px",
             }}
