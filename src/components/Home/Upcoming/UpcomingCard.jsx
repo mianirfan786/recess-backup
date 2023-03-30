@@ -13,6 +13,7 @@ const UpcomingCard = ({event}) => {
     } catch {
         event.date = Timestamp.now().toDate();
     }
+    console.log(event);
     const {id, title, startTime, date, photos, bgColor} = event;
     const navigate = useNavigate();
 
@@ -26,6 +27,10 @@ const UpcomingCard = ({event}) => {
                 color: `${fontColor}`,
                 p: {xs: 1, md: 1.5},
                 borderRadius: "25px !important",
+                minHeight: "400px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
             }}
         >
             <img id={'imgUpcoming' + id} className={styles.eventThumb} src={photos} alt=""/>
@@ -72,7 +77,7 @@ const UpcomingCard = ({event}) => {
               ))}*/}
                         </Box>
                         <Typography color={fontColor} variant="h6">
-                            +20
+                            {event.attendees} joined
                         </Typography>
                     </Box>
                     <Button
