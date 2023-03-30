@@ -43,7 +43,7 @@ export default function GoogleAutocomplete({onChange}) {
                 description: `${address.city}, ${address.principalSubdivision}, ${address.countryName}`,
                 structured_formatting: {
                     main_text: address.city,
-                    secondary_text: `${address.principalSubdivision}, ${address.countryName}`,
+                    secondary_text: `${address.principalSubdivision}`,
                 },
             });
         }
