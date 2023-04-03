@@ -150,7 +150,20 @@ const EventDetails = ({event = _event, markers}) => {
                         <Stack mt={4} gap={2}>
                             <Stack gap={1}>
                                 <Typography variant="h3" fontWeight="bold">
-                                    {title}
+                                    {eventFlagged && (
+                                            <Typography style={{
+                                                background: "red",
+                                                color: "white",
+                                                padding: ".5rem 1rem",
+                                                borderRadius: "20px",
+                                                width: "fit-content",
+                                                marginRight: "1rem",
+                                                display: "inline-block",
+                                            }}>
+                                                Flagged By You
+                                            </Typography>
+                                        )}
+                                        {title}
                                 </Typography>
                                 <Stack gap={1} divider={<span>•</span>} flexDirection="row">
                                     <Typography color="primary" variant="body2">
