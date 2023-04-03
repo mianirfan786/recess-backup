@@ -146,6 +146,7 @@ const Header = () => {
                         style={{
                             objectFit: "cover",
                             width: "96%",
+                            aspectRatio: "1/1",
                             borderRadius: "50%",
                             overflow: "hidden",
                         }}
@@ -161,6 +162,8 @@ const Header = () => {
                             color: "#FFFF",
                             height: "100%",
                             width: "100%",
+                            paddingTop: "60px",
+                            paddingLeft: "30px",
                             position: "absolute",
                             opacity: .7,
                             cursor: "pointer",
