@@ -5,6 +5,7 @@ import InfoIcon from "../../../icons/InfoIcon";
 import {useNavigate} from "react-router-dom";
 import {useModalsContext} from "../../../modals/ModalsContext";
 import {MODALS} from "../../../modals/modals";
+import {toast} from "react-toastify";
 
 const iconStyle = {
     backgroundColor: "white",
@@ -18,7 +19,7 @@ const iconStyle = {
     padding: "7px",
 };
 
-const DetailsNavigation = ({eventFlagged}) => {
+const DetailsNavigation = ({eventFlagged, event}) => {
     const navigate = useNavigate();
     const {setOpenModal} = useModalsContext();
 
@@ -30,7 +31,18 @@ const DetailsNavigation = ({eventFlagged}) => {
             <Box display="flex" alignItems="center" gap={2}>
                 <IconButton
                     onClick={() => {
-                        window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href),'facebook-share-dialog','width=626,height=436'); return false;
+                        if (navigator.share !== undefined) {
+                            navigator
+                                .share({
+                                    title: event?.title,
+                                    text: event?.description,
+                                    url: window.location.href,
+                                })
+                                .then(() => console.log("Shared!"))
+                                .catch(err => console.error(err));
+                        } else {
+                            toast("Password is incorrect", {type: "error"})
+                        }
                     }}
                     size="small" sx={iconStyle}>
                     <ShareIcon/>

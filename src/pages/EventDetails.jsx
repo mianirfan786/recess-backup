@@ -128,7 +128,7 @@ const EventDetails = ({event = _event, markers}) => {
                     }}
                     p={2}
                 >
-                    <DetailsNavigation eventFlagged={eventFlagged} />
+                    <DetailsNavigation event={event} eventFlagged={eventFlagged} />
                     <Box
                         px={2}
                         width="100%"
