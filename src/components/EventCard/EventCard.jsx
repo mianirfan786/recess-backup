@@ -7,9 +7,11 @@ import {useNavigate} from "react-router-dom";
 import {ROUTES} from "../../routes";
 import {DislikeEventById, IsEventLikedByUser, LikeEventById} from "../../firebase/functions/event/event-likes";
 import {timeTo12HrFormat} from "../../utils/timeFunctions";
+import {GetUsersById} from "../../firebase/functions/user";
 
 const EventCard = ({event, customBg}) => {
     const navigate = useNavigate();
+    const [userPhotos, setPhotos] = useState([]);
     try {
         event.date = (event.date).toDate();
     } catch (error) {
@@ -34,6 +36,19 @@ const EventCard = ({event, customBg}) => {
         } catch (error) {
             console.log("-> error ", error);
         }
+
+        event.joined.forEach((user) => {
+            /* get all details of this user and push it to setPhotos */
+            /* only unique values in userPhotos and length 3 */
+            if (userPhotos.length < 3){
+                GetUsersById(user).then((res) => {
+                    setPhotos((userPhotos) => [...userPhotos, res]);
+                });
+            }
+        });
+
+
+
     }, []);
     const handleLike = (id) => {
         if (like.isLike) {
@@ -83,9 +98,17 @@ const EventCard = ({event, customBg}) => {
                         <Typography
                             sx={{fontSize: {xs: 12, md: 14}, mb: {xs: 1, md: 2}}}
                             variant="body1"
-                            color="error"
+
                         >
                             {participant} participants
+                        </Typography>
+                    )}
+                    {event.displayAddress && (
+                        <Typography
+                            sx={{fontSize: {xs: 12, md: 14}}}
+                            variant="body1"
+                        >
+                            {event.displayAddress}
                         </Typography>
                     )}
                     {date && startTime && (
@@ -93,11 +116,17 @@ const EventCard = ({event, customBg}) => {
                             direction="row"
                             sx={{mb: {xs: 1, md: 2}}}
                             gap={{xs: 0.5, md: 1}}
+                            style={{
+                                marginTop: "4px",
+                            }}
                         >
                             <Typography
                                 sx={{fontSize: {xs: 12, md: 14}}}
-                                color="error"
                                 variant="h6"
+                                style={{
+                                    fontWeight: "bold",
+                                    opacity: "0.5"
+                                }}
                             >
                                 {date.toLocaleDateString('en-US', {
                                     weekday: 'short',
@@ -109,29 +138,36 @@ const EventCard = ({event, customBg}) => {
 
                             <Typography
                                 sx={{fontSize: {xs: 12, md: 14}}}
-                                color="error"
                                 variant="h6"
+                                style={{
+                                    fontWeight: "bold",
+                                    opacity: "0.5"
+                                }}
                             >
                                 {timeTo12HrFormat(startTime)}
                             </Typography>
                         </Stack>
                     )}
-                    {eventJoined?.length > 0 && (
+                    {userPhotos && userPhotos?.length > 0 && (
                         <Box
                             sx={{
                                 display: "flex",
+                                marginTop: "100px",
                                 alignItems: "center",
                                 gap: {xs: 0.5, md: 1},
                             }}
                             className={styles.eventJoined}
                         >
                             <Box>
-                                {eventJoined.map((user) => (
-                                    <img key={user.id} src={user.image} alt=""/>
+                                {userPhotos.map((user) => (
+                                    <img style={{
+                                        width: "30px",
+                                        aspectRatio: "1/1",
+                                    }} key={user?.id} src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"} alt=""/>
                                 ))}
                             </Box>
-                            <Typography color="info.main" variant="h6">
-                                +20
+                            <Typography variant="h6">
+                                +{event.attendees} joined
                             </Typography>
                         </Box>
                     )}

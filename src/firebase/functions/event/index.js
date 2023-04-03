@@ -1,4 +1,5 @@
 import {
+    addDoc,
     collection,
     doc,
     getDoc,
@@ -174,4 +175,29 @@ export const GetKeywordsFromAllEvents = async () => {
     const eventsCol = collection(db, "events");  // Get a reference to the "events" collection.
     const eventDocs = await getDocs(eventsCol);  // Retrieve all documents in the "events" collection.
     return eventDocs.docs.map((doc) => doc.data().keywords);   // Return an array of the data objects for each document.
+}
+
+export const FlagEvent = async (eventId, content) => {
+    const docRef = doc(db, "events", eventId);
+    /* add new collection flag */
+    const flagRef = collection(db, "events", eventId, "flags");
+    currentUser = await getCurrentUser();
+    const flagDoc = await addDoc(flagRef, {
+        reason: content,
+        timeStamp: Timestamp.fromDate(new Date()),
+        createdBy: currentUser
+    });
+    return flagDoc.id;
+}
+
+
+export const checkIfEventIsFlaggedByCurrentUser = async (eventId) => {
+    const docRef = collection(db, "events", eventId, "flags");
+    currentUser = await getCurrentUser();
+    console.log(currentUser)
+    const q = query(docRef, where("createdBy", "==", currentUser));
+    const querySnapshot = await getDocs(q);
+    console.log(querySnapshot);
+    const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+    return events.length > 0;
 }

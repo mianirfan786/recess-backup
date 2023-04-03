@@ -13,7 +13,7 @@ import {useModalsContext} from "../modals/ModalsContext";
 import {MODALS} from "../modals/modals";
 import FlagEventModal from "../modals/FlagEventModal";
 import {useParams} from "react-router-dom";
-import {ViewEventById} from "../firebase/functions/event";
+import {checkIfEventIsFlaggedByCurrentUser, ViewEventById} from "../firebase/functions/event";
 import {useEffect, useState} from "react";
 import {GetUsersByIds} from "../firebase/functions/user";
 import {HasUserJoinedEvent} from "../firebase/functions/event/event-join";
@@ -52,13 +52,19 @@ const EventDetails = ({event = _event, markers}) => {
     const [address, setAddress] = useState(event.address);
     const [users, setUsers] = useState([]);
     const [IsUserJoined, setIsUserJoined] = useState(false);
-    const [displayAddress, setDisplayAddress] = useState(event.displayAddress);
+    const [displayAddress, setDisplayAddress] = useState(event.address.displayAddress ? event.address.displayAddress : "");
+    const [eventFlagged, setEventFlagged] = useState(false);
 
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     window.scrollTo(0, 0);
 
+
+
     useEffect(() => {
+        checkIfEventIsFlaggedByCurrentUser(id).then(r =>{
+            setEventFlagged(r)
+        })
         ViewEventById(id).then((data) => {
             setTitle(data.title);
             setmaxParticipants(data.maxParticipants);
@@ -70,7 +76,8 @@ const EventDetails = ({event = _event, markers}) => {
             setCost(event.cost === 0 ? "Free" : data.cost);
             setDescription(data.description);
             setAddress(data.address);
-            setDisplayAddress(data.displayAddress);
+            setLocation(data.address.city + ", " + data.address.principalSubdivision + ", " + data.address.countryCode)
+            setDisplayAddress(data.address.displayAddress ? data.address.displayAddress : event.displayAddress);
             /* change event.date */
             GetUsersByIds(data.joined).then((usersData) => {
                 /* check array for null */
@@ -106,6 +113,7 @@ const EventDetails = ({event = _event, markers}) => {
                 onClose={() => setOpenModal(null)}
             />
             <FlagEventModal
+                id={id}
                 open={openModal === MODALS.EVENT_FLAG}
                 onClose={() => setOpenModal(null)}
             />
@@ -120,7 +128,7 @@ const EventDetails = ({event = _event, markers}) => {
                     }}
                     p={2}
                 >
-                    <DetailsNavigation/>
+                    <DetailsNavigation event={event} eventFlagged={eventFlagged} />
                     <Box
                         px={2}
                         width="100%"
@@ -142,11 +150,24 @@ const EventDetails = ({event = _event, markers}) => {
                         <Stack mt={4} gap={2}>
                             <Stack gap={1}>
                                 <Typography variant="h3" fontWeight="bold">
-                                    {title}
+                                    {eventFlagged && (
+                                            <Typography style={{
+                                                background: "red",
+                                                color: "white",
+                                                padding: ".5rem 1rem",
+                                                borderRadius: "20px",
+                                                width: "fit-content",
+                                                marginRight: "1rem",
+                                                display: "inline-block",
+                                            }}>
+                                                Flagged By You
+                                            </Typography>
+                                        )}
+                                        {title}
                                 </Typography>
                                 <Stack gap={1} divider={<span>•</span>} flexDirection="row">
                                     <Typography color="primary" variant="body2">
-                                        {location}
+                                        {address.city}, {address.principalSubdivision}, {address.countryCode}
                                     </Typography>
                                     <Typography variant="body2">
 

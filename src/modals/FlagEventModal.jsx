@@ -1,14 +1,24 @@
 import DefaultModal from "./DefaultModal";
 import {Button, Stack, TextareaAutosize, Typography} from "@mui/material";
 import {useState} from "react";
+import {FlagEvent} from "../firebase/functions/event";
+import {toast} from "react-toastify";
 
-const FlagEventModal = ({open, onClose}) => {
+const FlagEventModal = ({id, open, onClose}) => {
     const [reason, setReason] = useState("");
 
     const onModalClose = () => {
         setReason("");
         onClose();
     };
+
+    const setEventFlag = async () => {
+        const flaggedEvent = await FlagEvent(id, reason);
+        if (flaggedEvent) {
+            toast.success("Event flagged successfully");
+            onModalClose();
+        }
+    }
 
     return (
         <DefaultModal open={open} onClose={onModalClose}>
@@ -30,7 +40,7 @@ const FlagEventModal = ({open, onClose}) => {
                     minRows={7}
                 />
                 <Button
-                    onClick={onModalClose}
+                    onClick={setEventFlag}
                     variant="contained"
                     fullWidth
                     sx={{
