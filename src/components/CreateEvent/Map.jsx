@@ -3,22 +3,26 @@ import {Box, CircularProgress, Stack, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import {useCreateEventContext} from "../../pages/CreateEvent";
 import {GOOGLE_MAPS_API_KEY} from "../GoogleAutocomplete";
+import axios from "axios";
 
 const CustomMap = ({height, loadUserLocation}) => {
     const [selected, setSelected] = useState(null);
     const [userPosition, setUserPosition] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [displayAddress, setDisplayAddress] = useState(null);
 
     const {address, setState} = useCreateEventContext();
-
-    useEffect(() => {
-        console.log(address);
-    }, [address]);
 
     useEffect(() => {
         if (!selected) return;
 
         setLoading(true);
+
+        const currentLat = selected.latLng.lat();
+        const currentLng = selected.latLng.lng();
+
+        const geocoder = new window.google.maps.Geocoder();
+
 
         fetch(
             "https://api.bigdatacloud.net/data/reverse-geocode-client?" +
@@ -34,6 +38,22 @@ const CustomMap = ({height, loadUserLocation}) => {
             .then((res) => res.json())
             .then((data) => setState((state) => ({...state, address: data})))
             .finally(() => setLoading(false));
+
+        geocoder.geocode({ location: { lat: currentLat, lng: currentLng } }, (results, status) => {
+            if (status === "OK") {
+                if (results[0]) {
+                    setDisplayAddress(results[0].formatted_address);
+                    /* add display address to address */
+                    setState((state) => ({...state, address: {...state.address, displayAddress: results[0].formatted_address}}));
+                    console.log(results[0].formatted_address);
+                } else {
+                    window.alert("No results found");
+                }
+            } else {
+                window.alert("Geocoder failed due to: " + status);
+            }
+        } );
+
     }, [selected]);
 
     useEffect(() => {
@@ -116,7 +136,7 @@ const CustomMap = ({height, loadUserLocation}) => {
                             Address
                         </Typography>
                         <Typography fontWeight={600} variant="body1">
-                            {address.locality}, {address.principalSubdivision}
+                            {displayAddress || "N/A"}
                         </Typography>
                     </Stack>
                     <Stack flexDirection="row" gap={2}>
@@ -132,7 +152,7 @@ const CustomMap = ({height, loadUserLocation}) => {
                                 City
                             </Typography>
                             <Typography fontWeight={600} variant="body1">
-                                {address.administrative[1].name || "N/A"}
+                                {address.city || "N/A"}
                             </Typography>
                         </Stack>
                         <Stack

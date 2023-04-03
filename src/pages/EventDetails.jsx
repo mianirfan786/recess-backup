@@ -52,7 +52,7 @@ const EventDetails = ({event = _event, markers}) => {
     const [address, setAddress] = useState(event.address);
     const [users, setUsers] = useState([]);
     const [IsUserJoined, setIsUserJoined] = useState(false);
-    const [displayAddress, setDisplayAddress] = useState(event.displayAddress);
+    const [displayAddress, setDisplayAddress] = useState(event.address.displayAddress ? event.address.displayAddress : "");
     const [eventFlagged, setEventFlagged] = useState(false);
 
     document.body.scrollTop = 0;
@@ -77,7 +77,7 @@ const EventDetails = ({event = _event, markers}) => {
             setDescription(data.description);
             setAddress(data.address);
             setLocation(data.address.city + ", " + data.address.principalSubdivision + ", " + data.address.countryCode)
-            setDisplayAddress(data.displayAddress);
+            setDisplayAddress(data.address.displayAddress ? data.address.displayAddress : event.displayAddress);
             /* change event.date */
             GetUsersByIds(data.joined).then((usersData) => {
                 /* check array for null */
@@ -167,7 +167,7 @@ const EventDetails = ({event = _event, markers}) => {
                                 </Typography>
                                 <Stack gap={1} divider={<span>•</span>} flexDirection="row">
                                     <Typography color="primary" variant="body2">
-                                        {location}
+                                        {address.city}, {address.principalSubdivision}, {address.countryCode}
                                     </Typography>
                                     <Typography variant="body2">
 
