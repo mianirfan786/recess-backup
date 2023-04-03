@@ -13,7 +13,7 @@ import {useModalsContext} from "../modals/ModalsContext";
 import {MODALS} from "../modals/modals";
 import FlagEventModal from "../modals/FlagEventModal";
 import {useParams} from "react-router-dom";
-import {ViewEventById} from "../firebase/functions/event";
+import {checkIfEventIsFlaggedByCurrentUser, ViewEventById} from "../firebase/functions/event";
 import {useEffect, useState} from "react";
 import {GetUsersByIds} from "../firebase/functions/user";
 import {HasUserJoinedEvent} from "../firebase/functions/event/event-join";
@@ -53,12 +53,18 @@ const EventDetails = ({event = _event, markers}) => {
     const [users, setUsers] = useState([]);
     const [IsUserJoined, setIsUserJoined] = useState(false);
     const [displayAddress, setDisplayAddress] = useState(event.displayAddress);
+    const [eventFlagged, setEventFlagged] = useState(false);
 
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     window.scrollTo(0, 0);
 
+
+
     useEffect(() => {
+        checkIfEventIsFlaggedByCurrentUser(id).then(r =>{
+            setEventFlagged(r)
+        })
         ViewEventById(id).then((data) => {
             setTitle(data.title);
             setmaxParticipants(data.maxParticipants);
@@ -107,6 +113,7 @@ const EventDetails = ({event = _event, markers}) => {
                 onClose={() => setOpenModal(null)}
             />
             <FlagEventModal
+                id={id}
                 open={openModal === MODALS.EVENT_FLAG}
                 onClose={() => setOpenModal(null)}
             />
@@ -121,7 +128,7 @@ const EventDetails = ({event = _event, markers}) => {
                     }}
                     p={2}
                 >
-                    <DetailsNavigation/>
+                    <DetailsNavigation eventFlagged={eventFlagged} />
                     <Box
                         px={2}
                         width="100%"

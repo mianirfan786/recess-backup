@@ -18,7 +18,7 @@ const iconStyle = {
     padding: "7px",
 };
 
-const DetailsNavigation = () => {
+const DetailsNavigation = ({eventFlagged}) => {
     const navigate = useNavigate();
     const {setOpenModal} = useModalsContext();
 
@@ -35,13 +35,15 @@ const DetailsNavigation = () => {
                     size="small" sx={iconStyle}>
                     <ShareIcon/>
                 </IconButton>
-                <IconButton
-                    onClick={() => setOpenModal(MODALS.EVENT_FLAG)}
-                    size="small"
-                    sx={iconStyle}
-                >
-                    <InfoIcon/>
-                </IconButton>
+                {!eventFlagged && (
+                    <IconButton
+                        onClick={() => setOpenModal(MODALS.EVENT_FLAG)}
+                        size="small"
+                        sx={iconStyle}
+                    >
+                        <InfoIcon/>
+                    </IconButton>
+                )}
             </Box>
         </Box>
     );
