@@ -70,6 +70,7 @@ const EventDetails = ({event = _event, markers}) => {
             setCost(event.cost === 0 ? "Free" : data.cost);
             setDescription(data.description);
             setAddress(data.address);
+            setLocation(data.address.city + ", " + data.address.principalSubdivision + ", " + data.address.countryCode)
             setDisplayAddress(data.displayAddress);
             /* change event.date */
             GetUsersByIds(data.joined).then((usersData) => {

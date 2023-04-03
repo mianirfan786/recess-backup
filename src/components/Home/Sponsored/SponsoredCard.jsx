@@ -59,6 +59,7 @@ const SponsoredCard = ({event}) => {
                         fontWeight: 700,
                         textAlign: "center",
                         padding: "2px 8px",
+                        cursor: "pointer",
                     }}
                 >
                     {cost == 0 ? "Free" : "$" + cost}
