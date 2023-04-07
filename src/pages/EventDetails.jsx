@@ -53,6 +53,7 @@ const EventDetails = ({event = _event, markers}) => {
     const [users, setUsers] = useState([]);
     const [IsUserJoined, setIsUserJoined] = useState(false);
     const [displayAddress, setDisplayAddress] = useState(event.address.displayAddress ? event.address.displayAddress : "");
+    const [creator, setCreator] = useState(event.CreatedBy);
     const [eventFlagged, setEventFlagged] = useState(false);
 
     document.body.scrollTop = 0;
@@ -76,6 +77,7 @@ const EventDetails = ({event = _event, markers}) => {
             setCost(event.cost === 0 ? "Free" : data.cost);
             setDescription(data.description);
             setAddress(data.address);
+            setCreator(data.CreatedBy)
             setLocation(data.address.city + ", " + data.address.principalSubdivision + ", " + data.address.countryCode)
             setDisplayAddress(data.address.displayAddress ? data.address.displayAddress : event.displayAddress);
             /* change event.date */
@@ -110,6 +112,7 @@ const EventDetails = ({event = _event, markers}) => {
                 address={address}
                 description={description}
                 event={event}
+                creator={creator}
                 onClose={() => setOpenModal(null)}
             />
             <FlagEventModal

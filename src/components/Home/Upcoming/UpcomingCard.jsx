@@ -13,7 +13,6 @@ const UpcomingCard = ({event}) => {
     } catch {
         event.date = Timestamp.now().toDate();
     }
-    console.log(event);
     const {id, title, startTime, date, photos, bgColor} = event;
     const navigate = useNavigate();
 

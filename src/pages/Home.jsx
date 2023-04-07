@@ -9,17 +9,15 @@ import TagsModal from "../modals/TagsModal";
 import {useModalsContext} from "../modals/ModalsContext";
 import {MODALS} from "../modals/modals";
 import Location from "../components/Home/Location";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {setUserToken} from "../firebase/functions/messaging";
+import {updateUserLocation} from "../firebase/functions/user";
 
 const Home = () => {
     const {openModal, setOpenModal} = useModalsContext();
     const [currentCity, setCurrentCity] = useState("");
     const [initLoad, setInitLoad] = useState(0);
     const [updateKeywords, setUpdateKeywords] = useState(0);
-    const [seedUpcoming, setSeedseedUpcoming] = useState(1);
-    const [seedSponsored, setSeedSponsored] = useState(2);
-    const [seedPopular, setSeedPopular] = useState(3);
-    const [seedRecentlyAdded, setSeedRecentlyAdded] = useState(4);
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     window.scrollTo(0, 0);
@@ -33,6 +31,13 @@ const Home = () => {
     const UpdateKeywords = () => {
         setUpdateKeywords(updateKeywords + 1);
     }
+
+    useEffect(() => {
+        setUserToken();
+        updateUserLocation();
+    }, []);
+
+
     return (
         <div>
             <HomeHeader/>

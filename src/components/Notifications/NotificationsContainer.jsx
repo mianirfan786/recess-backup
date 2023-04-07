@@ -1,27 +1,24 @@
 import {Avatar, Box, Stack, Typography} from "@mui/material";
 import timeSince from "../../utils/timeSince";
+import {getAllNotifications, returnJoinedNotifications} from "../../firebase/functions/messaging/notifications";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 export const notificationTypes = {
-    reminder: "Reminder",
-    update: "Update",
-    new: "New",
-    message: "Message",
-    join: "Join",
+    reminder: "reminder",
+    update: "update",
+    new: "new-event",
+    message: "message",
+    join: "join",
     left: "Left",
 };
-
-const notifications = [...new Array(10)].map((_, i) => ({
-    date: new Date(),
-    id: i,
-    description:
-        "GolfPals begins tomorrow at 5:30am in City, State. Please arrive 15 minutes early.",
-    type: notificationTypes.update,
-    image: "",
-}));
 
 const renderNotificationTitle = (type) => {
     let title = "";
     let color = "";
+
+
+
 
     switch (type) {
         case notificationTypes.reminder:
@@ -64,10 +61,29 @@ const renderNotificationTitle = (type) => {
 };
 
 const NotificationsContainer = () => {
+    const [notifications, setNotifications] = useState([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+        getAllNotifications().then(
+            () => {
+                setNotifications(returnJoinedNotifications());
+            }
+        )
+    }, []);
     return (
         <Stack gap={2}>
-            {notifications.map(({type, date, id, description}) => (
+            {notifications.map(({type, time, title, link, id, description}) => (
                 <Box
+                    onClick={() => {
+                        console.log(link);
+                        if (link) {
+                            const newA = document.createElement("a");
+                            newA.href = link;
+                            newA.target = "_blank";
+                            newA.click();
+                        }
+                    }}
+                    style={{cursor: link ? "pointer" : "default"}}
                     key={id}
                     sx={{backgroundColor: "white"}}
                     p={2}
@@ -77,7 +93,7 @@ const NotificationsContainer = () => {
                         <Avatar/>
                         <Stack gap="4px">
                             {renderNotificationTitle(type)}
-                            <Typography variant="body1">{description}</Typography>
+                            <Typography variant="body1">{title}</Typography>
                         </Stack>
                         <Typography
                             display={{xs: "none", sm: "block"}}
@@ -85,7 +101,7 @@ const NotificationsContainer = () => {
                             variant="body1"
                             sx={{opacity: 0.5}}
                         >
-                            {timeSince(date)}
+                            {timeSince(time)}
                         </Typography>
                     </Stack>
                     <Typography
@@ -95,7 +111,7 @@ const NotificationsContainer = () => {
                         variant="body1"
                         sx={{opacity: 0.5}}
                     >
-                        {timeSince(date)}
+                        {timeSince(time)}
                     </Typography>
                 </Box>
             ))}
