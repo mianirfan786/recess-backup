@@ -159,11 +159,11 @@ const EventCard = ({event, customBg}) => {
                             className={styles.eventJoined}
                         >
                             <Box>
-                                {userPhotos.map((user) => (
+                                {userPhotos.map((user, index) => (
                                     <img style={{
                                         width: "30px",
                                         aspectRatio: "1/1",
-                                    }} key={user?.id} src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"} alt=""/>
+                                    }} key={index} src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"} alt=""/>
                                 ))}
                             </Box>
                             <Typography variant="h6">

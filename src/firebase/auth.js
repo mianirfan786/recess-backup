@@ -107,6 +107,11 @@ export default class FirebaseAuth {
             photoURL: user.photoURL,
             uid: user.uid,
             search: searchVal,
+            notificationControls: {
+                new: true,
+                join: true,
+                reminder: true,
+            }
         });
     }
 }

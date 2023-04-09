@@ -3,6 +3,7 @@ import DefaultModal from "./DefaultModal";
 import CustomDivider from "../components/CustomDivider";
 import {useState} from "react";
 import {JoinEventById} from "../firebase/functions/event/event-join";
+import {sendEventJoinNotification} from "../firebase/functions/messaging";
 
 const EventConfirmationModal = (props) => {
     const {
@@ -15,6 +16,7 @@ const EventConfirmationModal = (props) => {
         date,
         time,
         image,
+        creator,
         description,
         coordinates,
     } = props;
@@ -22,11 +24,15 @@ const EventConfirmationModal = (props) => {
     const [attendees, setAttendees] = useState(0);
 
     const onModalClose = () => {
-
-        JoinEventById(id, attendees);
         setAttendees(0);
         props.onClose();
     };
+
+    const JoinCurrentEvent = () => {
+        JoinEventById(id, attendees);
+        sendEventJoinNotification(title, id, creator);
+        props.onClose();
+    }
 
     return (
         <DefaultModal open={props.open} onClose={onModalClose}>
@@ -161,7 +167,7 @@ const EventConfirmationModal = (props) => {
                     </Typography>
                 </Stack>
                 <Button
-                    onClick={onModalClose}
+                    onClick={JoinCurrentEvent}
                     variant="contained"
                     fullWidth
                     sx={{

@@ -194,10 +194,8 @@ export const FlagEvent = async (eventId, content) => {
 export const checkIfEventIsFlaggedByCurrentUser = async (eventId) => {
     const docRef = collection(db, "events", eventId, "flags");
     currentUser = await getCurrentUser();
-    console.log(currentUser)
     const q = query(docRef, where("createdBy", "==", currentUser));
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot);
     const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
     return events.length > 0;
 }

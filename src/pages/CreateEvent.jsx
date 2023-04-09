@@ -7,6 +7,7 @@ import Map from "../components/CreateEvent/Map";
 import {toast} from "react-toastify";
 import {addEvent} from "../firebase/functions/event/index.js";
 import {useNavigate} from "react-router-dom";
+import {sendNewEventNotification} from "../firebase/functions/messaging";
 
 const CreateEventContext = React.createContext();
 export const useCreateEventContext = () => React.useContext(CreateEventContext);
@@ -51,6 +52,7 @@ const CreateEvent = () => {
 
         addEvent(state).then(
             (e) => {
+                sendNewEventNotification(state).then(r => console.log(r));
                 navigate(`/event/${e}`);
                 toast("Event created successfully", {type: "success"})
             }

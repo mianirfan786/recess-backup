@@ -4,6 +4,7 @@ import app from "../../config";
 import {deleteUser, EmailAuthProvider, getAuth, reauthenticateWithCredential, updatePassword, signInWithPhoneNumber, RecaptchaVerifier} from "firebase/auth";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import {toast} from "react-toastify";
+import {GOOGLE_MAPS_API_KEY} from "../../../components/GoogleAutocomplete";
 
 
 const db = getFirestore(app);
@@ -112,5 +113,60 @@ export const GetAllKeywordsFromUser = async () => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
         return docSnap.data().keywords;
+    }
+}
+
+
+export const updateUserLocation = async () =>{
+    /* get user location */
+    let lat = 0;
+    let lng = 0;
+    let city = "";
+    navigator.geolocation.getCurrentPosition(
+        async (position) => {
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
+
+            /* get city from Google Maps API */
+            const apiKey = GOOGLE_MAPS_API_KEY; // Replace with your Google Maps API key
+            const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.status === "OK") {
+                    const results = data.results;
+                    const cityResult = results.find((result) =>
+                        result.types.includes("locality")
+                    );
+                    if (cityResult) {
+                        city = cityResult.address_components[0].long_name;
+                    } else {
+                        console.log("No city information found.");
+                    }
+                } else {
+                    console.log("Error fetching city information:", data.status);
+                }
+            } catch (error) {
+                console.log("Error fetching city information:", error.message);
+            }
+        },
+        (error) => {
+            console.log("Error fetching user location:", error.message);
+        },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+    const currentUser = await getCurrentUser();
+    const docRef = doc(db, "users", currentUser);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return await updateDoc(docRef, {
+            location: {
+                lat: lat,
+                lng: lng,
+                city: city
+            }
+        });
     }
 }

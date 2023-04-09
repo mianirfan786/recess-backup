@@ -1,7 +1,8 @@
 import {Box, Container, Stack, Switch, Typography} from "@mui/material";
 import PageHeader from "../components/PageHeader";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {notificationTypes} from "../components/Notifications/NotificationsContainer";
+import {getNotificationControls, updateNotificationControls} from "../firebase/functions/messaging";
 
 const settings = [
     {
@@ -10,12 +11,12 @@ const settings = [
         color: "#FFB72D",
         type: notificationTypes.reminder,
     },
-    {
+/*    {
         title: "Event Updates",
         description: "Amet minim mollit non deserunt ullamco.",
         color: "#2DC6FF",
         type: notificationTypes.update,
-    },
+    },*/
     {
         title: "Event Added Near You",
         description: "Amet minim mollit non deserunt ullamco.",
@@ -28,22 +29,28 @@ const settings = [
         color: "#37A8FD",
         type: notificationTypes.join,
     },
-    {
+/*    {
         title: "Left Activity",
         description: "Amet minim mollit non deserunt ullamco.",
         color: "#FF0000",
         type: notificationTypes.left,
-    },
+    },*/
 ];
 
 const NotificationsSettings = () => {
-    const [state, setState] = useState({
-        [notificationTypes.reminder]: false,
-        [notificationTypes.update]: false,
-        [notificationTypes.new]: false,
-        [notificationTypes.join]: false,
-        [notificationTypes.left]: false,
-    });
+    const [state, setState] = useState({});
+
+    useEffect(() => {
+        getNotificationControls().then((controls) => {
+            setState(controls);
+        } );
+    }, []);
+
+    useEffect(() => {
+        updateNotificationControls(state);
+    }, [state]);
+
+
 
     return (
         <Container sx={{mt: 3, mb: 1}}>
