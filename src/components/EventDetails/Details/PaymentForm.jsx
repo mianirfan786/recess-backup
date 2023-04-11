@@ -8,8 +8,10 @@ import {Close} from "@mui/icons-material";
 import DefaultModal from "../../../modals/DefaultModal";
 import axios from 'axios';
 import {saveTransaction} from "../../../firebase/functions/transactions";
+import {JoinEventById} from "../../../firebase/functions/event/event-join";
+import {sendEventJoinNotification} from "../../../firebase/functions/messaging";
 
-function PaymentForm({open, handleClose, cost, currentEvent}) {
+function PaymentForm({open, handleClose, cost, currentEvent, eventTitle, eventId, eventCreator, attendees}) {
     const [error, setError] = useState(null);
     const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -41,12 +43,14 @@ function PaymentForm({open, handleClose, cost, currentEvent}) {
         if (result.paymentIntent.status === "succeeded") {
             console.log("Payment Successful");
             console.log(currentEvent);
+            JoinEventById(eventId, attendees);
+            sendEventJoinNotification(eventTitle, eventId, eventCreator);
             saveTransaction({
                 cost: cost,
                 status: "success",
                 address: currentEvent.address.displayAddress,
                 id: result.paymentIntent.id,
-                description: currentEvent.title,
+                description: eventTitle,
                 image: currentEvent.photos,
             }).then(() => {
                 console.log("Transaction saved");

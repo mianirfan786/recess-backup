@@ -44,14 +44,15 @@ const EventConfirmationModal = (props) => {
     const JoinCurrentEvent = () => {
         if (cost > 0) {
             setOpenPayment(true);
+        }else{
+            JoinEventById(id, attendees);
+            sendEventJoinNotification(title, id, creator);
         }
-        JoinEventById(id, attendees);
-        sendEventJoinNotification(title, id, creator);
     }
 
     return (
         <DefaultModal open={props.open} onClose={onModalClose}>
-            <PaymentForm currentEvent={props.event} open={openPayment} handleClose={closePayment} cost={cost}/>
+            <PaymentForm eventId={id} eventTitle={title} eventCreator={creator} attendees={attendees} currentEvent={props.event} open={openPayment} handleClose={closePayment} cost={cost}/>
             <Stack textAlign="center" gap={3}>
                 <Typography variant="h4">Event Confirmation</Typography>
                 <Typography variant="h3">{title}</Typography>
