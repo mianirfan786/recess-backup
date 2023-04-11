@@ -1,9 +1,10 @@
 import {Button, IconButton, Stack, Typography} from "@mui/material";
 import DefaultModal from "./DefaultModal";
 import CustomDivider from "../components/CustomDivider";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {JoinEventById} from "../firebase/functions/event/event-join";
 import {sendEventJoinNotification} from "../firebase/functions/messaging";
+import PaymentForm from "../components/EventDetails/Details/PaymentForm";
 
 const EventConfirmationModal = (props) => {
     const {
@@ -14,6 +15,7 @@ const EventConfirmationModal = (props) => {
         displayAddress,
         participant,
         date,
+        cost,
         time,
         image,
         creator,
@@ -21,7 +23,18 @@ const EventConfirmationModal = (props) => {
         coordinates,
     } = props;
 
+    const [openPayment, setOpenPayment] = useState(false);
+
+    const closePayment = () => {
+        setOpenPayment(false);
+        onModalClose();
+    }
+
     const [attendees, setAttendees] = useState(0);
+
+    useEffect(() => {
+        console.log("cost", cost);
+    }, [cost]);
 
     const onModalClose = () => {
         setAttendees(0);
@@ -29,13 +42,17 @@ const EventConfirmationModal = (props) => {
     };
 
     const JoinCurrentEvent = () => {
-        JoinEventById(id, attendees);
-        sendEventJoinNotification(title, id, creator);
-        props.onClose();
+        if (cost > 0) {
+            setOpenPayment(true);
+        }else{
+            JoinEventById(id, attendees);
+            sendEventJoinNotification(title, id, creator);
+        }
     }
 
     return (
         <DefaultModal open={props.open} onClose={onModalClose}>
+            <PaymentForm eventId={id} eventTitle={title} eventCreator={creator} attendees={attendees} currentEvent={props.event} open={openPayment} handleClose={closePayment} cost={cost}/>
             <Stack textAlign="center" gap={3}>
                 <Typography variant="h4">Event Confirmation</Typography>
                 <Typography variant="h3">{title}</Typography>

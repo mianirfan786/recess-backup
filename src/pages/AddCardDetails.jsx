@@ -2,6 +2,9 @@ import {Box, Button, Container, Stack, TextField} from "@mui/material";
 import PageHeader from "../components/PageHeader";
 import {useState} from "react";
 import Payments from "../icons/Payments";
+import {addDoc, doc, updateDoc} from "firebase/firestore";
+import {getCurrentUser} from "../firebase/functions/user";
+import {db} from "../firebase/config";
 
 const AddCardDetails = () => {
     const [{cardNumber, expiry, cvv, postcode}, setState] = useState({
@@ -10,6 +13,20 @@ const AddCardDetails = () => {
         cvv: "",
         postcode: "",
     });
+
+    const saveCard = () => {
+        const currentUser = getCurrentUser();
+        /* add to users collections > currentuser */
+        const userRef = doc(db, "users", currentUser);
+        updateDoc(userRef, {
+            cardDetails: {
+                cardNumber,
+                expiry,
+                cvv,
+                postcode,
+            }
+        })
+    }
 
     const onExpiryChange = (e) => {
         const {value} = e.target;
@@ -83,6 +100,7 @@ const AddCardDetails = () => {
                     </Stack>
                 </Stack>
                 <Button
+                    onClick={saveCard}
                     variant="contained"
                     fullWidth
                     sx={{
@@ -97,7 +115,7 @@ const AddCardDetails = () => {
                         },
                     }}
                 >
-                    Next
+                    Save
                 </Button>
             </Stack>
         </Container>
