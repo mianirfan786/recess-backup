@@ -1,19 +1,17 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Box, Container, Stack, Typography} from "@mui/material";
 import PageHeader from "../components/PageHeader";
 import transactionImage from "../images/frisbee-3.png";
+import {getAllTransactions} from "../firebase/functions/transactions";
 
 const Transactions = () => {
-    const [transactions, setTransactions] = useState(
-        [...new Array(10)].map((_, index) => ({
-            id: index,
-            description: "Ultimate Frisbee",
-            address: "Scottsdale, AZ",
-            amount: 19.99,
-            date: new Date(),
-            image: transactionImage,
-        }))
-    );
+    const [transactions, setTransactions] = useState([]);
+
+    useEffect(() => {
+        getAllTransactions().then((data) => {
+            setTransactions(data);
+        })
+    }, []);
 
     return (
         <Container sx={{my: 4}}>
@@ -21,7 +19,7 @@ const Transactions = () => {
                 <PageHeader title="Transactions"/>
                 <Stack gap={1}>
                     {transactions.map(
-                        ({id, date, description, address, amount, image}) => (
+                        ({id, date, description, address, cost, image}) => (
                             <Stack
                                 alignItems="center"
                                 p={2}
@@ -53,17 +51,15 @@ const Transactions = () => {
                                 </Box>
                                 <Stack gap={2}>
                                     <Typography variant="body1" fontWeight="bold">
-                                        {description}
+                                        For {description}
                                     </Typography>
                                     <Typography variant="body2">{address}</Typography>
                                 </Stack>
                                 <Stack ml="auto" gap={2}>
                                     <Typography color="primary" variant="body1" fontWeight="bold">
-                                        USD {amount}
+                                        USD {cost}
                                     </Typography>
-                                    <Typography variant="body2">{`${date.toLocaleString("en-US", {
-                                        month: "long",
-                                    })} ${date.getUTCDate()}`}</Typography>
+                                    <Typography variant="body2"></Typography>
                                 </Stack>
                             </Stack>
                         )

@@ -27,6 +27,7 @@ const EventConfirmationModal = (props) => {
 
     const closePayment = () => {
         setOpenPayment(false);
+        onModalClose();
     }
 
     const [attendees, setAttendees] = useState(0);
@@ -50,7 +51,7 @@ const EventConfirmationModal = (props) => {
 
     return (
         <DefaultModal open={props.open} onClose={onModalClose}>
-            <PaymentForm open={openPayment} handleClose={closePayment} cost={cost}/>
+            <PaymentForm currentEvent={props.event} open={openPayment} handleClose={closePayment} cost={cost}/>
             <Stack textAlign="center" gap={3}>
                 <Typography variant="h4">Event Confirmation</Typography>
                 <Typography variant="h3">{title}</Typography>

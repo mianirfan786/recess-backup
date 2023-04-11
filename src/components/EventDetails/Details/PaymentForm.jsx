@@ -6,7 +6,10 @@ import app from '../../../firebase/config';
 import {Button} from "@mui/material";
 import {Close} from "@mui/icons-material";
 import DefaultModal from "../../../modals/DefaultModal";
-function PaymentForm({open, handleClose, cost}) {
+import axios from 'axios';
+import {saveTransaction} from "../../../firebase/functions/transactions";
+
+function PaymentForm({open, handleClose, cost, currentEvent}) {
     const [error, setError] = useState(null);
     const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -24,9 +27,8 @@ function PaymentForm({open, handleClose, cost}) {
         setProcessing(true);
 
         const functions = getFunctions(app);
-        const createPaymentIntent = httpsCallable(functions, 'createPaymentIntent');
-        const { data: { clientSecret } } = await createPaymentIntent({ amount: cost, currency: 'usd' });
-
+        const url = "https://us-central1-recessmobile-d2ab0.cloudfunctions.net/create_payment"
+        const { data: { clientSecret } } = await axios.post(url, { amount: cost * 100, currency: 'usd' });
         const cardElement = elements.getElement(CardElement);
 
         const result = await stripe.confirmCardPayment(clientSecret, {
@@ -34,6 +36,23 @@ function PaymentForm({open, handleClose, cost}) {
                 card: cardElement,
             },
         });
+
+
+        if (result.paymentIntent.status === "succeeded") {
+            console.log("Payment Successful");
+            console.log(currentEvent);
+            saveTransaction({
+                cost: cost,
+                status: "success",
+                address: currentEvent.address.displayAddress,
+                id: result.paymentIntent.id,
+                description: currentEvent.title,
+                image: currentEvent.photos,
+            }).then(() => {
+                console.log("Transaction saved");
+                handleClose();
+            })
+        }
 
         if (result.error) {
             setError(result.error.message);

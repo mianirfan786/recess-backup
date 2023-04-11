@@ -215,6 +215,7 @@ const EventDetails = ({event = _event, markers}) => {
                                     setOpenModal(MODALS.EVENT_CONFIRMATION)
                                 }
                             }}
+                            disabled={IsUserJoined || date < new Date()}
                             variant="contained"
                             fullWidth
                             sx={{
