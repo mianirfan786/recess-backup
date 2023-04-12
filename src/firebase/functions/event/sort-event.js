@@ -20,9 +20,9 @@ export const SortEventByUpcoming = async (maxItems) => {
 
 /* Implementation Left To Do */
 /* sort event By Popularity :: Start */
-export const SortEventByPopular = async (maxItems) => {
+/*export const SortEventByPopular = async (maxItems) => {
     return SortEventByUpcoming(maxItems);
-}
+}*/
 /* sort event By Popularity :: End */
 
 
