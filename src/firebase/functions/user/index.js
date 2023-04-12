@@ -45,6 +45,7 @@ export const GetUsersById = async (id) => {
 
 export const GetCurrentUserDetails = async () => {
     currentUser = await getCurrentUser();
+    console.log(currentUser);
     return GetUsersById(currentUser);
 }
 

@@ -3,6 +3,9 @@ import EmailIcon from "../icons/EmailIcon";
 import PasswordIcon from "../icons/PasswordIcon";
 import {showToast} from "../utils/toast";
 import FirebaseAuth from "../firebase/auth";
+import {doc, setDoc} from "firebase/firestore";
+import {db} from "../firebase/config";
+
 
 // List of Inputs to be mapped in the form
 const inputsData = [
@@ -71,6 +74,74 @@ export default function useSignIn() {
     const handleGoogleSignIn = async () => {
         try {
             const res = await FirebaseAuth.googleSignIn();
+            await setDoc(
+                doc(db, "users", res.user.uid),
+                {
+                    displayName: res.user.displayName,
+                    email: res.user.email,
+                    groups: [],
+                    photoURL: res.user.photoURL,
+                    uid: res.user.uid,
+                    search: [res.user.email],
+                },
+                {merge: true}
+            );
+            return res;
+        } catch (error) {
+            if ("message" in error) {
+                showToast({
+                    type: "error",
+                    message: error.message.replace("Firebase: ", ""),
+                });
+            } else {
+                showToast({type: "error", message: error});
+            }
+        }
+    };
+
+    const handleFacebookSignIn = async () => {
+        try {
+            const res = await FirebaseAuth.facebookSignIn();
+            await setDoc(
+                doc(db, "users", res.user.uid),
+                {
+                    displayName: res.user.displayName,
+                    email: res.user.email,
+                    groups: [],
+                    photoURL: res.user.photoURL,
+                    uid: res.user.uid,
+                    search: [res.user.email],
+                },
+                {merge: true}
+            );
+            return res;
+        } catch (error) {
+            if ("message" in error) {
+                showToast({
+                    type: "error",
+                    message: error.message.replace("Firebase: ", ""),
+                });
+            } else {
+                showToast({type: "error", message: error});
+            }
+        }
+    };
+
+    const handleAppleSignIn = async () => {
+        try {
+            const res = await FirebaseAuth.appleSignIn();
+            await setDoc(
+                doc(db, "users", res.user.uid),
+                {
+                    displayName: res.user.displayName,
+                    email: res.user.email,
+                    groups: [],
+                    photoURL: res.user.photoURL,
+                    uid: res.user.uid,
+                    search: [res.user.email],
+                },
+                {merge: true}
+            );
             return res;
         } catch (error) {
             if ("message" in error) {
@@ -90,5 +161,7 @@ export default function useSignIn() {
         handleOnChange,
         handleSubmit,
         handleGoogleSignIn,
+        handleAppleSignIn,
+        handleFacebookSignIn,
     };
 }
