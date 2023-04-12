@@ -16,10 +16,6 @@ export const notificationTypes = {
 const renderNotificationTitle = (type) => {
     let title = "";
     let color = "";
-
-
-
-
     switch (type) {
         case notificationTypes.reminder:
             title = "Event Reminder";
