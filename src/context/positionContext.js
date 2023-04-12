@@ -32,7 +32,7 @@ export const PositionProvider = ({children}) => {
                     lng: position.coords.longitude,
                 });
             },
-            (error) => console.log(error)
+            (error) => console.log("error")
         );
     }, []);
 

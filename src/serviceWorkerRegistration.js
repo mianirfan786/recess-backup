@@ -18,11 +18,11 @@ export function register() {
                             }
                         })
                         .catch((err) => {
-                            console.log('An error occurred while retrieving the FCM token. ', err);
+                            console.log("error");
                         });
                 })
-                .catch((registrationError) => {
-                    console.log('Service Worker registration failed: ', registrationError);
+                .catch((error) => {
+                    console.log("error");
                 });
         });
     }

@@ -10,15 +10,16 @@ const EventConfirmationModal = ({id, photos, event, open, cost, creator, date, s
 
     const [openPayment, setOpenPayment] = useState(false);
 
-    const closePayment = () => {
+    const closePayment = (hasJoined) => {
         setOpenPayment(false);
         onModalClose();
+        if (hasJoined)
+            setIsJoined(true);
     }
 
     const [attendees, setAttendees] = useState(0);
 
     useEffect(() => {
-        console.log("cost", cost);
     }, [cost]);
 
     const onModalClose = () => {
@@ -39,7 +40,7 @@ const EventConfirmationModal = ({id, photos, event, open, cost, creator, date, s
 
     return (
         <DefaultModal open={open} onClose={onModalClose}>
-            <PaymentForm eventId={id} eventTitle={title} eventCreator={creator} attendees={attendees} currentEvent={event} open={openPayment} handleClose={closePayment} cost={cost}/>
+            <PaymentForm eventId={id} eventTitle={title} eventCreator={creator} attendees={attendees} currentEvent={event} open={openPayment} handleClose={closePayment} displayAddress={displayAddress} cost={cost}/>
             <Stack textAlign="center" gap={3}>
                 <Typography variant="h4">Event Confirmation</Typography>
                 <Typography variant="h3">{title}</Typography>

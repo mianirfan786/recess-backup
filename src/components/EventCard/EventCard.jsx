@@ -34,7 +34,7 @@ const EventCard = ({event, customBg}) => {
                 setLike({id: id, isLike: res});
             });
         } catch (error) {
-            console.log("-> error ", error);
+            console.log("error");
         }
 
         event.joined?.forEach((user) => {

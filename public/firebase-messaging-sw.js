@@ -26,7 +26,6 @@ messaging.onBackgroundMessage(function (payload) {
         type: payload.data.type || "update",
         link: payload.data.link || null,
     }
-    console.log("Received background message ", payload)
     /* add to sub collection notification in users collection */
     const docCollection = firebase.firestore().collection("users").doc(user).collection("notifications")
     docCollection.add(notification)
