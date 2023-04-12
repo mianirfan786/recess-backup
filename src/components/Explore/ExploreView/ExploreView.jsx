@@ -85,7 +85,7 @@ const ExploreView = ({filters}) => {
                         setEvents(data);
                     });
                 },
-                (error) => console.log(error)
+                (error) => console.log("error")
             );
 
         }

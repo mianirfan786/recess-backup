@@ -100,7 +100,7 @@ export const ViewEventCreatedByUser = async (CreatedBy, maxItems) => {
             return b.date.seconds - a.date.seconds;
         });
     } catch (error) {
-        console.log('Error retrieving events: ', error);
+        console.log("error");
         // Return an empty array or throw an error, depending on your use case
         return [];
     }

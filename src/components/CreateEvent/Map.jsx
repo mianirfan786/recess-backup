@@ -45,7 +45,6 @@ const CustomMap = ({height, loadUserLocation}) => {
                     setDisplayAddress(results[0].formatted_address);
                     /* add display address to address */
                     setState((state) => ({...state, address: {...state.address, displayAddress: results[0].formatted_address}}));
-                    console.log(results[0].formatted_address);
                 } else {
                     window.alert("No results found");
                 }
@@ -73,7 +72,7 @@ const CustomMap = ({height, loadUserLocation}) => {
                     })
 
             },
-            (error) => console.log(error)
+            (error) => console.log("error")
         );
     }, []);
 

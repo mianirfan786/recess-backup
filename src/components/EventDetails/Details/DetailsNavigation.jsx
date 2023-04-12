@@ -38,8 +38,7 @@ const DetailsNavigation = ({eventFlagged, event}) => {
                                     text: event?.description,
                                     url: window.location.href,
                                 })
-                                .then(() => console.log("Shared!"))
-                                .catch(err => console.error(err));
+                                .catch(err => console.error("error"));
                         } else {
                             toast("Password is incorrect", {type: "error"})
                         }

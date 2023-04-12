@@ -40,19 +40,16 @@ function PaymentForm({open, handleClose, cost, currentEvent, eventTitle, eventId
 
 
         if (result.paymentIntent.status === "succeeded") {
-            console.log("Payment Successful");
-            console.log(currentEvent);
             JoinEventById(eventId, attendees);
             sendEventJoinNotification(eventTitle, eventId, eventCreator);
             saveTransaction({
                 cost: cost,
                 status: "success",
-                address: currentEvent.address.displayAddress,
+                address: currentEvent.address.displayAddress || "N/A",
                 id: result.paymentIntent.id,
                 description: eventTitle,
                 image: currentEvent.photos,
             }).then(() => {
-                console.log("Transaction saved");
                 handleClose();
             })
         }

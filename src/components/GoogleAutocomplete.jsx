@@ -104,7 +104,6 @@ export default function GoogleAutocomplete({onChange, onReset}) {
                 results[i].structured_formatting.secondary_text = results[i].structured_formatting.secondary_text.replace(/, USA/g, "");
                 newResults.push(results[i]);
             }
-            console.log(newResults);
 
             if (active) {
                 let newOptions = [];
@@ -143,11 +142,9 @@ export default function GoogleAutocomplete({onChange, onReset}) {
             }}
             value={value}
             onChange={(event, newValue) => {
-                console.log(newValue);
                 setOptions(newValue ? [newValue, ...options] : options);
                 /* remove everythin after the last occorance of , */
                 newValue.description = newValue.description.split(",").slice(0, 2).join(",");
-                console.log(newValue);
                 setValue(newValue);
             }}
             onInputChange={(event, newInputValue) => {

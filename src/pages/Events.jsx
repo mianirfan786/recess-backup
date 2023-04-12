@@ -90,7 +90,7 @@ function Events({}) {
                 isEnded: snapshot.docs.length !== postLimit,
             };
         } catch (error) {
-            console.log(error);
+            console.log("error");
             showToast({type: "error", message: error.message});
             return {data: []};
         }

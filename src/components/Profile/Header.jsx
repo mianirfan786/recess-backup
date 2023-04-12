@@ -116,7 +116,7 @@ const Header = () => {
                 recaptchaContainer.removeChild(recaptchaContainer.firstChild);
             }
         } catch (error) {
-            console.log(error);
+            console.log("error");
             setErrorMessage(error.message);
         }
 

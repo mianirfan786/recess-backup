@@ -18,7 +18,6 @@ const EventConfirmationModal = ({id, photos, event, open, cost, creator, date, s
     const [attendees, setAttendees] = useState(0);
 
     useEffect(() => {
-        console.log("cost", cost);
     }, [cost]);
 
     const onModalClose = () => {

@@ -66,7 +66,7 @@ export const DeleteUserById = async (password) => {
         await deleteUser(user);
         await deleteDoc(doc(db, "users", currentUser));
     } catch(error) {
-        console.log(error);
+        console.log("error");
     }
 }
 
@@ -86,7 +86,7 @@ export const ResetPersonalPassword = async (password, newPassword) => {
         updatePassword(user, newPassword).then(() => {
             toast("Password updated successfully", {type: "success"})
         }).catch((error) => {
-            console.log(error);
+            console.log("error");
         });
 
     } catch {
@@ -142,18 +142,14 @@ export const updateUserLocation = async () =>{
                     );
                     if (cityResult) {
                         city = cityResult.address_components[0].long_name;
-                    } else {
-                        console.log("No city information found.");
                     }
-                } else {
-                    console.log("Error fetching city information:", data.status);
                 }
             } catch (error) {
-                console.log("Error fetching city information:", error.message);
+                console.log("error");
             }
         },
         (error) => {
-            console.log("Error fetching user location:", error.message);
+            console.log("error");
         },
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );

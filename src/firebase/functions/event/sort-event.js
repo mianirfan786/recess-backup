@@ -186,7 +186,6 @@ export const SortEventWithCityBySponsor = async (city, maxItems) => {
 
 export const GetExploreEvents = async (maxItems, filters, location) => {
     const showToast = toast("Getting Events", {type: "info", autoClose: 1500});
-    console.log(filters);
     let events = await SortEventByStartDate(maxItems, -1, -1);
     let lowerPrice = -1;
     let higherPrice = -1;
@@ -213,7 +212,7 @@ export const GetExploreEvents = async (maxItems, filters, location) => {
                     break;
             }
         } catch (e) {
-            console.log(e);
+            console.log("error");
         }
         if (filters.sponsoredListings) {
             events = events.filter((event) => {
@@ -275,7 +274,7 @@ export const GetExploreEventsFromUserLocation = async (maxItems, filters, lat, l
                     break;
             }
         } catch (e) {
-            console.log(e);
+            console.log("error");
         }
         if (filters.sponsoredListings) {
             events = events.filter((event) => {
@@ -306,7 +305,6 @@ export const GetExploreEventsFromUserLocation = async (maxItems, filters, lat, l
             return event.cost >= lowerPrice && event.cost <= higherPrice;
         })
     }
-    console.log(events);
     toast.dismiss(showToast);
     return events;
 }
