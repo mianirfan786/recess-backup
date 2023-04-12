@@ -28,8 +28,7 @@ function PaymentForm({open, handleClose, cost, currentEvent, eventTitle, eventId
 
         setProcessing(true);
 
-        const functions = getFunctions(app);
-        const url = "https://us-central1-recessmobile-d2ab0.cloudfunctions.net/create_payment"
+        const url = process.env.REACT_APP_FIREBASE_DATABASE_URL+"/create_payment"
         const { data: { clientSecret } } = await axios.post(url, { amount: cost * 100, currency: 'usd' });
         const cardElement = elements.getElement(CardElement);
 

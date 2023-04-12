@@ -37,7 +37,7 @@ const EventCard = ({event, customBg}) => {
             console.log("-> error ", error);
         }
 
-        event.joined.forEach((user) => {
+        event.joined?.forEach((user) => {
             /* get all details of this user and push it to setPhotos */
             /* only unique values in userPhotos and length 3 */
             if (userPhotos.length < 3){
