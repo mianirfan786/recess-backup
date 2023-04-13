@@ -6,7 +6,7 @@ import app from "../../config";
 const db = getFirestore(app);
 
 let currentUser = null;
-getCurrentUser();
+// getCurrentUser();
 
 /* is event liked by the user :: Start */
 export const IsEventLikedByUser = async (id) => {

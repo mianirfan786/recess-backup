@@ -67,24 +67,24 @@ const RecentlyAdded = ({currentCity}) => {
                 sx={{
                     py: {xs: 2, md: 4},
                     pr: {xs: 0, md: "inherit"},
-                    pl: {xs: 0.5, md: "inherit"},
+                    pl: {xs: 2, md: "inherit"},
                 }}
             >
                 <Swiper
-                    slidesPerView={1.3}
-                    spaceBetween={20}
+                    slidesPerView={1.4}
+                    spaceBetween={2}
                     breakpoints={{
                         600: {
                             slidesPerView: 2.1,
-                            spaceBetween: 20,
+                            spaceBetween: 2,
                         },
                         768: {
                             slidesPerView: 2.7,
-                            spaceBetween: 20,
+                            spaceBetween: 2,
                         },
                         1024: {
                             slidesPerView: 3.2,
-                            spaceBetween: 20,
+                            spaceBetween: 2,
                         },
                     }}
                     grabCursor={true}

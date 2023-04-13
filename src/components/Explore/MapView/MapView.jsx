@@ -6,7 +6,6 @@ import marker3 from "../../../images/marker-3.png";
 import marker4 from "../../../images/marker-4.png";
 import marker5 from "../../../images/marker-5.png";
 import Map from "./Map";
-import {GOOGLE_MAPS_API_KEY} from "../../GoogleAutocomplete";
 import {useState} from "react";
 
 const MapView = ({markers, height, events, setUserLocation}) => {
@@ -14,7 +13,7 @@ const MapView = ({markers, height, events, setUserLocation}) => {
     if (events)
         markers = events
     const {isLoaded, loadError} = useLoadScript({
-        googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     });
 
     const onUserLocationChange = (location) => {

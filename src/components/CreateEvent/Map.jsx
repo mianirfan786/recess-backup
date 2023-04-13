@@ -2,7 +2,6 @@ import {GoogleMap, Marker, useLoadScript} from "@react-google-maps/api";
 import {Box, CircularProgress, Stack, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import {useCreateEventContext} from "../../pages/CreateEvent";
-import {GOOGLE_MAPS_API_KEY} from "../GoogleAutocomplete";
 import axios from "axios";
 
 const CustomMap = ({height, loadUserLocation}) => {
@@ -45,7 +44,6 @@ const CustomMap = ({height, loadUserLocation}) => {
                     setDisplayAddress(results[0].formatted_address);
                     /* add display address to address */
                     setState((state) => ({...state, address: {...state.address, displayAddress: results[0].formatted_address}}));
-                    console.log(results[0].formatted_address);
                 } else {
                     window.alert("No results found");
                 }
@@ -211,7 +209,7 @@ const CustomMap = ({height, loadUserLocation}) => {
 
 const Map = (props) => {
     const {isLoaded, loadError} = useLoadScript({
-        googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     });
 
 

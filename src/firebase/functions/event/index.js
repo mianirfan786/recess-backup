@@ -22,7 +22,7 @@ import {calculateRGB} from "../../../utils/getAverageRGB";
 const storage = getStorage();
 const db = getFirestore(app);
 let currentUser = null;
-getCurrentUser();
+// getCurrentUser();
 
 /* add event :: Start */
 export const addEvent = async (event) => {
@@ -156,9 +156,8 @@ export const getUserLocationCity = async () => {
 
         const {latitude, longitude} = position.coords;
 
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=locality&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`);
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=locality&key=${"AIzaSyDAXr7GY62OB8KITsDM33BNEdYq7Z6f8aA"}`);
         const data = await response.json();
-
         if (data.results.length > 0) {
             return data.results[0].formatted_address;
         }

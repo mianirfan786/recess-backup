@@ -25,16 +25,16 @@ const Location = ({onData}) => {
                 borderRadius="20px"
                 flexDirection="row"
                 alignItems="center"
-                gap={1}
+                gap={2}
                 sx={{backgroundColor: "white"}}
             >
                 <Stack
                     onClick={() => {
                         resetGoogleAutocomplete();
-                    }}
-                    p={2}
+                    }}  
+                    p={1.25}
                     height="100%"
-                    borderRadius="15px"
+                    borderRadius="12px"
                     alignItems="center"
                     justifyContent="center"
                     sx={{backgroundColor: "#ECF5F2", cursor: "pointer"}}
