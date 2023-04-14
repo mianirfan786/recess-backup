@@ -23,7 +23,7 @@ export const AddCommentInEventById = async (eventId, text) => {
 
 };
 
-export const AddReplyInCommentById = async (eventId, commentId, text) => {
+/*export const AddReplyInCommentById = async (eventId, commentId, text) => {
     currentUser = await getCurrentUser();
     const eventRef = doc(db, "events", eventId);
     const commentRef = doc(eventRef, "comments", commentId);
@@ -37,7 +37,7 @@ export const AddReplyInCommentById = async (eventId, commentId, text) => {
     await updateDoc(commentRef, {
         replies: [...commentRef.replies, newReply]
     });
-}
+}*/
 
 export const GetAllCommentsInEventById = async (eventId) => {
 

@@ -6,22 +6,16 @@ import {JoinEventById} from "../firebase/functions/event/event-join";
 import {sendEventJoinNotification} from "../firebase/functions/messaging";
 import PaymentForm from "../components/EventDetails/Details/PaymentForm";
 
-const EventConfirmationModal = (props) => {
-    const {
-        id,
-        title,
-        location,
-        address,
-        displayAddress,
-        participant,
-        date,
-        cost,
-        time,
-        image,
-        creator,
-        description,
-        coordinates,
-    } = props;
+const EventConfirmationModal = ({id, photos, event, open, cost, creator, date, startTime, endTime, keywords, onClose, title, address, displayAddress, setIsJoined, maxParticipants, description}) => {
+
+    const [openPayment, setOpenPayment] = useState(false);
+
+    const closePayment = (hasJoined) => {
+        setOpenPayment(false);
+        onModalClose();
+        if (hasJoined)
+            setIsJoined(true);
+    }
 
     const [openPayment, setOpenPayment] = useState(false);
 
@@ -33,12 +27,11 @@ const EventConfirmationModal = (props) => {
     const [attendees, setAttendees] = useState(0);
 
     useEffect(() => {
-        console.log("cost", cost);
     }, [cost]);
 
     const onModalClose = () => {
         setAttendees(0);
-        props.onClose();
+        onClose();
     };
 
     const JoinCurrentEvent = () => {
@@ -47,12 +40,14 @@ const EventConfirmationModal = (props) => {
         }else{
             JoinEventById(id, attendees);
             sendEventJoinNotification(title, id, creator);
+            onModalClose();
+            setIsJoined(true);
         }
     }
 
     return (
-        <DefaultModal open={props.open} onClose={onModalClose}>
-            <PaymentForm eventId={id} eventTitle={title} eventCreator={creator} attendees={attendees} currentEvent={props.event} open={openPayment} handleClose={closePayment} cost={cost}/>
+        <DefaultModal open={open} onClose={onModalClose}>
+            <PaymentForm eventId={id} eventTitle={title} eventCreator={creator} attendees={attendees} currentEvent={event} open={openPayment} handleClose={closePayment} displayAddress={displayAddress} cost={cost}/>
             <Stack textAlign="center" gap={3}>
                 <Typography variant="h4">Event Confirmation</Typography>
                 <Typography variant="h3">{title}</Typography>
@@ -64,7 +59,7 @@ const EventConfirmationModal = (props) => {
                     >
                         <Typography variant="body1">City</Typography>
                         <Typography color="primary" variant="body1" fontWeight="bold">
-                            {location}
+                            {event.address?.displayAddress || "N/A"}
                         </Typography>
                     </Stack>
                     <Stack
@@ -89,7 +84,7 @@ const EventConfirmationModal = (props) => {
                     >
                         <Typography variant="body1">Time</Typography>
                         <Typography variant="body1" fontWeight="bold">
-                            {props.startTime} - {props.endTime}
+                            {startTime} - {endTime}
                         </Typography>
                     </Stack>
                     <Stack
@@ -109,7 +104,7 @@ const EventConfirmationModal = (props) => {
                     >
                         <Typography variant="body1">Keyword</Typography>
                         <Typography variant="body1" fontWeight="bold">
-                            {props.keywords}
+                            {keywords}
                         </Typography>
                     </Stack>
                     <Stack
@@ -119,7 +114,7 @@ const EventConfirmationModal = (props) => {
                     >
                         <Typography variant="body1">Max Players</Typography>
                         <Typography variant="body1" fontWeight="bold">
-                            {props.maxParticipants}
+                            {maxParticipants}
                         </Typography>
                     </Stack>
                     <Stack
@@ -180,7 +175,7 @@ const EventConfirmationModal = (props) => {
                 >
                     <Typography variant="body1">Participation Cost</Typography>
                     <Typography variant="body1" fontWeight="bold">
-                        {props.cost ? `$${props.cost}` : "Free"}
+                        {cost ? `$${cost}` : "Free"}
                     </Typography>
                 </Stack>
                 <Button

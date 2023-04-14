@@ -16,10 +16,6 @@ export const notificationTypes = {
 const renderNotificationTitle = (type) => {
     let title = "";
     let color = "";
-
-
-
-
     switch (type) {
         case notificationTypes.reminder:
             title = "Event Reminder";
@@ -75,7 +71,6 @@ const NotificationsContainer = () => {
             {notifications.map(({type, time, title, link, id, description}) => (
                 <Box
                     onClick={() => {
-                        console.log(link);
                         if (link) {
                             const newA = document.createElement("a");
                             newA.href = link;

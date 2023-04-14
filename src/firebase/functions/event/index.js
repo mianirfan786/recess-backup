@@ -100,7 +100,7 @@ export const ViewEventCreatedByUser = async (CreatedBy, maxItems) => {
             return b.date.seconds - a.date.seconds;
         });
     } catch (error) {
-        console.log('Error retrieving events: ', error);
+        console.log("error");
         // Return an empty array or throw an error, depending on your use case
         return [];
     }
@@ -148,7 +148,7 @@ export const GetAreaNearUser = async (distance) => {
     return GetLatitudeAndLongitudeOfDistance(userLocation.coords.latitude, userLocation.coords.longitude, distance);
 }
 
-export const getUserLocationCity = async () => {
+/*export const getUserLocationCity = async () => {
     try {
         const position = await new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -168,7 +168,7 @@ export const getUserLocationCity = async () => {
         console.error(error);
         return null;
     }
-}
+}*/
 
 
 export const GetKeywordsFromAllEvents = async () => {

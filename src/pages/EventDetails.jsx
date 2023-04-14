@@ -92,12 +92,17 @@ const EventDetails = ({event = _event, markers}) => {
         })
     }, []);
 
+    const setIsJoined = (value) => {
+        setIsUserJoined(value);
+    };
+
 
     const {openModal, setOpenModal} = useModalsContext();
 
     return (
         <>
             <EventConfirmationModal
+                setIsJoined={setIsJoined}
                 open={openModal === MODALS.EVENT_CONFIRMATION}
                 id={id}
                 title={title}

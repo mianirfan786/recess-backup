@@ -18,7 +18,7 @@ export const setUserToken = async () => {
             }).then((currentToken) => {
                 updateUserToken(currentToken);
             }).catch((err) => {
-                console.log("An error occurred while retrieving token. ", err);
+                console.log("error");
             })
         } else {
             console.log("No permission to send notifications");
@@ -75,21 +75,16 @@ export const sendNewEventNotification = async (event) => {
             if (userCity === eventCity) {
                 users.push(user);
             }
-            console.log(eventCity);
-            if (userCity)
-                console.log(userCity);
         } catch {
             console.log("error");
         }
 
     });
 
-    console.log(users);
     for (const user of users) {
         sendEventScheduleNotification(event, user).then((res) => {
-            console.log(res);
         }).catch((err) => {
-            console.log(err);
+            console.log("error");
         });
         if (user.notificationControls.new-event === true) {
             const userToken = user.token;
@@ -112,7 +107,6 @@ export const sendNewEventNotification = async (event) => {
                 'Content-Type': 'text/plain'
             }
             const res = await axios.post(url, JSON.stringify(data), {headers: headers});
-            console.log(res);
         }
     }
 };
@@ -121,9 +115,7 @@ export const sendEventJoinNotification = async (title, eventId, creatorId) => {
     const user = await getCurrentUser();
     const receiverRef = await getDoc(doc(db, "users", user));
     const receiverUser = receiverRef.data();
-    console.log("receiver: ", receiverUser);
     const eventCreatedBy = creatorId;
-    console.log("creator: ", eventCreatedBy);
     const userRef = doc(db, "users", eventCreatedBy);
     const userDoc = await getDoc(userRef);
     const userToken = userDoc.data().token;
@@ -148,7 +140,6 @@ export const sendEventJoinNotification = async (title, eventId, creatorId) => {
             'Content-Type': 'text/plain'
         }
         const res = await axios.post(url, JSON.stringify(data), {headers: headers});
-        console.log(res);
     }
 }
 
@@ -176,7 +167,6 @@ export const sendEventScheduleNotification = async (event, user) => {
             'Content-Type': 'text/plain'
         }
         const res = await axios.post(url, JSON.stringify(data), {headers: headers});
-        console.log(res);
     }
 }
 

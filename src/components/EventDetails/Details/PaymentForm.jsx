@@ -11,7 +11,7 @@ import {saveTransaction} from "../../../firebase/functions/transactions";
 import {JoinEventById} from "../../../firebase/functions/event/event-join";
 import {sendEventJoinNotification} from "../../../firebase/functions/messaging";
 
-function PaymentForm({open, handleClose, cost, currentEvent, eventTitle, eventId, eventCreator, attendees}) {
+function PaymentForm({open, handleClose, displayAddress, cost, currentEvent, eventTitle, eventId, eventCreator, attendees}) {
     const [error, setError] = useState(null);
     const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -28,8 +28,7 @@ function PaymentForm({open, handleClose, cost, currentEvent, eventTitle, eventId
 
         setProcessing(true);
 
-        const functions = getFunctions(app);
-        const url = "https://us-central1-recessmobile-d2ab0.cloudfunctions.net/create_payment"
+        const url = process.env.REACT_APP_FIREBASE_DATABASE_URL+"/create_payment"
         const { data: { clientSecret } } = await axios.post(url, { amount: cost * 100, currency: 'usd' });
         const cardElement = elements.getElement(CardElement);
 
@@ -41,20 +40,17 @@ function PaymentForm({open, handleClose, cost, currentEvent, eventTitle, eventId
 
 
         if (result.paymentIntent.status === "succeeded") {
-            console.log("Payment Successful");
-            console.log(currentEvent);
             JoinEventById(eventId, attendees);
             sendEventJoinNotification(eventTitle, eventId, eventCreator);
             saveTransaction({
                 cost: cost,
                 status: "success",
-                address: currentEvent.address.displayAddress,
+                address: displayAddress || "N/A",
                 id: result.paymentIntent.id,
                 description: eventTitle,
                 image: currentEvent.photos,
             }).then(() => {
-                console.log("Transaction saved");
-                handleClose();
+                handleClose(true);
             })
         }
 

@@ -52,7 +52,7 @@ const Actions = () => {
             await DeleteUserById();
             handleDeleteAccountClose();
         } catch (error) {
-            console.log(error);
+            console.log("error");
         }
     };
 
