@@ -17,13 +17,6 @@ const EventConfirmationModal = ({id, photos, event, open, cost, creator, date, s
             setIsJoined(true);
     }
 
-    const [openPayment, setOpenPayment] = useState(false);
-
-    const closePayment = () => {
-        setOpenPayment(false);
-        onModalClose();
-    }
-
     const [attendees, setAttendees] = useState(0);
 
     useEffect(() => {
