@@ -30,7 +30,7 @@ const HomeHeader = () => {
         }, [])
 
     return (
-        <Container sx={{py: {xs: 2, md: 4}}}>
+        <Container sx={{py: {xs: 3.5, md: 4}}} >
             <Stack
                 direction="row"
                 justifyContent="space-between"
@@ -39,9 +39,9 @@ const HomeHeader = () => {
             >
                 <Stack className={styles.user} direction="row" gap={{xs: 1, md: 2}}>
                     <img src={userPhoto == "" || userPhoto == undefined ? "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png" : userPhoto} alt="user"/>
-                    <Box>
+                    <Box style={{marginLeft:"6px"}}>
                         <Typography
-                            sx={{opacity: 0.6, fontSize: 14}}
+                            sx={{opacity: 0.6, fontSize: 14, mt:0.5,mb:0,}}
                             variant="subtitle1"
                             gutterBottom
                         >
@@ -65,15 +65,15 @@ const HomeHeader = () => {
                             color: "info.main",
                             fontSize: {xs: 24, md: 30},
                             borderRadius: "50%",
-                            width: {xs: "50px", sm: "60px"},
-                            height: {xs: "50px", sm: "60px"},
+                            width: {xs: "42px", sm: "60px"},
+                            height: {xs: "42px", sm: "60px"},
                             minWidth: "unset",
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
                             textAlign: "center",
                             cursor: "pointer",
-                            boxShadow: 1,
+                            boxShadow: 0,
                             p: 0,
                         }}
                         variant="contained"

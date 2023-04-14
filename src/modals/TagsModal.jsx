@@ -12,10 +12,21 @@ const tags = [...new Array(20)].map((_, i) => ({
 }));
 
 const TagsModal = ({open, onClose, onData}) => {
-    const [_tags, setTags] = useState(tags);
+    const [_tags, setTags] = useState({});
     useEffect(() => {
         GetKeywordsFromAllEvents().then((data) => {
-            setTags(data);
+             let list = {   };
+            for (let i = 0; i < data.length; i++) {
+                const element = data[i].toLowerCase();
+                if(element in list){
+                    list[element] += 1; 
+                }else{
+                    list[element] = 1;
+                }
+                
+               
+            }
+            setTags(list);
         });
     }, []);
 
@@ -43,7 +54,7 @@ const TagsModal = ({open, onClose, onData}) => {
                     overflow="auto"
                     flexDirection="row"
                 >
-                    {_tags.map((tag) => {
+                    {Object.keys(_tags).map((tag) => {
                         return (
                             <Box
                                 onClick={() => onTagClick(tag)}
@@ -57,7 +68,7 @@ const TagsModal = ({open, onClose, onData}) => {
                                 }}
                                 p="10px"
                             >
-                                <b> + </b> {tag}
+                                <b> + </b> {tag} {_tags[tag]>1?<span style={{marginLeft: "3px"}}>({_tags[tag]})</span>:<></>}
                             </Box>
                         );
                     })}

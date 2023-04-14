@@ -6,8 +6,13 @@ import {ROUTES} from "../../../routes";
 import {Timestamp} from "firebase/firestore";
 import {timeTo12HrFormat} from "../../../utils/timeFunctions";
 import {getContrastRatio} from "../../../utils/colors";
+import { useEffect, useState } from "react";
+import { GetUsersById } from "../../../firebase/functions/user";
+import eventStyles from "../../../styles/Event.module.scss";
+
 
 const UpcomingCard = ({event}) => {
+    const [userPhotos, setPhotos] = useState([])
     try {
         event.date = (event.date).toDate();
     } catch {
@@ -15,6 +20,19 @@ const UpcomingCard = ({event}) => {
     }
     const {id, title, startTime, date, photos, bgColor} = event;
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        event.joined.forEach((user) => {
+            /* get all details of this user and push it to setPhotos */
+            /* only unique values in userPhotos and length 3 */
+            if (userPhotos.length < 3){
+                GetUsersById(user).then((res) => {
+                    console.log(user);
+                    setPhotos((userPhotos) => [...userPhotos, res]);
+                });
+            }
+        });
+    },[])
 
     /* check if bgColor is bright */
     const fontColor = getContrastRatio(bgColor, "ffffff") > 0.70 ? "#000000" : "#ffffff";
@@ -62,7 +80,7 @@ const UpcomingCard = ({event}) => {
                     alignItems="center"
                     gap={1}
                 >
-                    <Box
+                    {/* <Box
                         sx={{
                             display: "flex",
                             alignItems: "center",
@@ -71,14 +89,39 @@ const UpcomingCard = ({event}) => {
                         className={styles.eventJoined}
                     >
                         <Box>
-                            {/*              {eventJoined.map((user) => (
+                                         {eventJoined.map((user) => (
                 <img key={user.id} src={user.image} alt="" />
-              ))}*/}
+              ))}
                         </Box>
                         <Typography color={fontColor} variant="h6">
                             {event.attendees} joined
                         </Typography>
-                    </Box>
+                    </Box> */}
+                       {userPhotos && userPhotos?.length > 0 && (
+                        <Box
+                            sx={{
+                                display: "flex",
+                                marginTop: "10px",
+                                alignItems: "center",
+                                gap: {xs: 0.5, md: 1},
+                            }}
+                            className={eventStyles.eventJoined}
+                        >
+                            <Box>
+                                {userPhotos.map((user, index) => {
+                                    console.log(userPhotos);
+                                    return (
+                                    <img style={{
+                                        width: "30px",
+                                        aspectRatio: "1/1",
+                                    }} key={index} src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"} alt=""/>
+                                )})}
+                            </Box>
+                            <Typography variant="h6">
+                                +{event.attendees} 
+                            </Typography>
+                        </Box>
+                    )}
                     <Button
                         onClick={function (e) {
                             e.preventDefault();

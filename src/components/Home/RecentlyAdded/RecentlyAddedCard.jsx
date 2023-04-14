@@ -17,10 +17,11 @@ const RecentlyAddedCard = ({event}) => {
 
     return (
         <Box
-            sx={{
+            sx={{   
                 background: `url(${photos}) no-repeat center center `,
                 backgroundSize: "cover",
-                height: 350,
+                height: 290,
+                width: 195,
                 borderRadius: "25px",
                 p: 3,
                 display: "flex",

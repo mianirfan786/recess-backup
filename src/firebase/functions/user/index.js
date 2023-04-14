@@ -4,7 +4,6 @@ import app from "../../config";
 import {deleteUser, EmailAuthProvider, getAuth, reauthenticateWithCredential, updatePassword, signInWithPhoneNumber, RecaptchaVerifier} from "firebase/auth";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import {toast} from "react-toastify";
-import {GOOGLE_MAPS_API_KEY} from "../../../components/GoogleAutocomplete";
 
 
 const db = getFirestore(app);
@@ -128,7 +127,7 @@ export const updateUserLocation = async () =>{
             lng = position.coords.longitude;
 
             /* get city from Google Maps API */
-            const apiKey = GOOGLE_MAPS_API_KEY; // Replace with your Google Maps API key
+            const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; // Replace with your Google Maps API key
             const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
 
             try {

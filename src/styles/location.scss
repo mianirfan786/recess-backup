@@ -1,0 +1,21 @@
+.css-1dejl2x-MuiInputBase-root-MuiInput-root:before{
+    border-bottom: 0px !important;
+    content: none;
+  }
+  .css-1dejl2x-MuiInputBase-root-MuiInput-root:after{
+    border-bottom: 0px !important;
+    content: none;
+  
+  }
+  .location_input{
+    // border: 2px solid red;
+    margin-left: 6px;
+  }
+
+  .css-1q60rmi-MuiAutocomplete-endAdornment {
+    top: calc(50% - 20px) !important;
+  }
+
+  label+.css-1dejl2x-MuiInputBase-root-MuiInput-root{
+   margin-top: 12px !important; 
+  }

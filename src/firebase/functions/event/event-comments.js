@@ -5,7 +5,7 @@ import {getCurrentUser} from "../user";
 
 const db = getFirestore(app);
 let currentUser = null;
-getCurrentUser();
+// getCurrentUser();
 
 export const AddCommentInEventById = async (eventId, text) => {
     currentUser = await getCurrentUser();

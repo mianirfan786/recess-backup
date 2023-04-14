@@ -9,10 +9,8 @@ import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import {usePositionContext} from "../context/positionContext";
-
-// This key was created specifically for the demo in mui.com.
-// You need to create a new one for your application.
-export const GOOGLE_MAPS_API_KEY = "AIzaSyDAXr7GY62OB8KITsDM33BNEdYq7Z6f8aA";
+import "../styles/location.scss"
+import { getUserLocationCity } from "../firebase/functions/event";
 
 function loadScript(src, position, id) {
     if (!position) {
@@ -37,19 +35,37 @@ export default function GoogleAutocomplete({onChange, onReset}) {
     const [initLocation, setInitLocation] = useState(null);
 
     const {address} = usePositionContext();
-
     useEffect(() => {
-        if (address) {
-            if (initLocation !== null)
-                setInitLocation(address);
-            setValue({
-                description: `${address.city}, ${address.principalSubdivision}`,
-                structured_formatting: {
-                    main_text: address.city,
-                    secondary_text: `${address.principalSubdivision}`,
-                },
-            });
+        console.log(address);
+        if(address)
+        {
+            getUserLocationCity().then((userAddress)=>{
+                console.log(userAddress);
+                let city = userAddress.split(",")[0]       
+                let state = address.principalSubdivisionCode.split("-")[1]
+                setValue({
+                    description: `${city}, ${state}`,
+                    structured_formatting: {
+                        main_text: city,
+                        secondary_text: `${state}`,
+                    },
+                });
+                
+             })
         }
+     
+
+        // if (address) {
+        //     if (initLocation !== null)
+        //         setInitLocation(address);
+        //     setValue({
+        //         description: `${address.city}, ${address.principalSubdivision}`,
+        //         structured_formatting: {
+        //             main_text: address.city,
+        //             secondary_text: `${address.principalSubdivision}`,
+        //         },
+        //     });
+        // }
     }, [address, onReset]);
 
     useEffect(() => {
@@ -61,7 +77,7 @@ export default function GoogleAutocomplete({onChange, onReset}) {
     if (typeof window !== "undefined" && !loaded.current) {
         if (!document.querySelector("#google-maps")) {
             loadScript(
-                `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
+                `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`,
                 document.querySelector("head"),
                 "google-maps"
             );
@@ -69,7 +85,20 @@ export default function GoogleAutocomplete({onChange, onReset}) {
 
         loaded.current = true;
     }
-
+    const styles = {
+        input: {
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              border: 'none',
+            },
+          },
+        },
+        div: {
+            '& .label+.css-1dejl2x-MuiInputBase-root-MuiInput-root':{
+                marginTop: "14px",
+            },
+        },
+      }
     const fetch = React.useMemo(
         () =>
             throttle((request, callback) => {
@@ -125,6 +154,7 @@ export default function GoogleAutocomplete({onChange, onReset}) {
         };
     }, [value, inputValue, fetch]);
 
+
     return (
         <Autocomplete
             fullWidth
@@ -151,7 +181,7 @@ export default function GoogleAutocomplete({onChange, onReset}) {
                 setInputValue(newInputValue);
             }}
             renderInput={(params) => (
-                <TextField name="address" {...params} label="Location" fullWidth/>
+                <TextField name="address"  InputProps={{style: styles}}  variant="standard" {...params} label="Location" fullWidth/>
             )}
             renderOption={(props, option) => {
                 const matches =

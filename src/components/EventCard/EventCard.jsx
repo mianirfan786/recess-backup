@@ -75,9 +75,9 @@ const EventCard = ({event, customBg}) => {
                 <Box>
                     <img className={styles.eventImage} src={photos} alt=""/>
                 </Box>
-                <Box>
+                <Box marginTop={"15px"}>
                     <Typography
-                        sx={{fontSize: {xs: 17, md: 20}}}
+                        sx={{fontSize: {xs: 17, md: 20}, fontWeight:"600"}}
                         variant="h5"
                         gutterBottom
                     >
@@ -121,7 +121,7 @@ const EventCard = ({event, customBg}) => {
                             }}
                         >
                             <Typography
-                                sx={{fontSize: {xs: 12, md: 14}}}
+                                sx={{fontSize: {xs: 10, md: 14}}}
                                 variant="h6"
                                 style={{
                                     fontWeight: "bold",
@@ -137,7 +137,7 @@ const EventCard = ({event, customBg}) => {
                             </Typography>
 
                             <Typography
-                                sx={{fontSize: {xs: 12, md: 14}}}
+                                sx={{fontSize: {xs: 10, md: 14}}}
                                 variant="h6"
                                 style={{
                                     fontWeight: "bold",
@@ -152,7 +152,7 @@ const EventCard = ({event, customBg}) => {
                         <Box
                             sx={{
                                 display: "flex",
-                                marginTop: "100px",
+                                marginTop: "50px",
                                 alignItems: "center",
                                 gap: {xs: 0.5, md: 1},
                             }}
@@ -167,7 +167,7 @@ const EventCard = ({event, customBg}) => {
                                 ))}
                             </Box>
                             <Typography variant="h6">
-                                +{event.attendees} joined
+                                +{event.attendees} 
                             </Typography>
                         </Box>
                     )}
@@ -176,7 +176,7 @@ const EventCard = ({event, customBg}) => {
                         direction="row"
                         gap={2}
                         alignItems="center"
-                        sx={{display: {xs: "flex", lg: "none"}, my: 1}}
+                        sx={{display: {xs: "none", lg: "none"}, my: 1}}
                     >
                         <Box
                             onClick={() => handleLike(id)}
@@ -230,16 +230,16 @@ const EventCard = ({event, customBg}) => {
                     </Stack>
                 </Box>
                 {/* on desktop screen, join and like */}
-                <Stack
+                <Stack marginTop={"15px"}
                     direction="column"
                     gap={2}
                     justifyContent="space-between"
                     alignItems="center"
-                    sx={{display: {xs: "none", lg: "flex"}}}
+                    sx={{display: {xs: "flex", lg: "flex"}}}
                 >
                     <Box
                         onClick={() => handleLike(id)}
-                        sx={{
+                        lg={{
                             fontSize: 24,
                             bgcolor: "info.main",
                             color:
@@ -251,11 +251,25 @@ const EventCard = ({event, customBg}) => {
                             borderRadius: "50%",
                             cursor: "pointer",
                         }}
+                        sx={{
+                            fontSize: 16,
+                            bgcolor: "info.main",
+                            color:
+                                like.isLike && like.id === id
+                                    ? "error.main"
+                                    : "text.secondary",
+                            width: 32,
+                            height: 32,
+                            lineHeight: "48px",
+                            textAlign: "center",
+                            borderRadius: "50%",
+                            cursor: "pointer",
+                        }}
                     >
                         {like.isLike && like.id === id ? (
-                            <AiFillHeart/>
+                            <AiFillHeart className={styles.heartIcon} />
                         ) : (
-                            <AiOutlineHeart/>
+                            <AiOutlineHeart className={styles.heartIcon} />
                         )}
                     </Box>
                     <Button

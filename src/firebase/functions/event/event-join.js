@@ -6,7 +6,7 @@ import {getCurrentUser} from "../user";
 const db = getFirestore(app);
 
 let currentUser = null;
-getCurrentUser();
+// getCurrentUser();
 
 /* join event :: Start */
 export const JoinEventById = async (id, noOfAttendees) => {

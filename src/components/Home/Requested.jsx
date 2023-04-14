@@ -6,20 +6,42 @@ import {GetAllKeywordsFromUser} from "../../firebase/functions/user";
 import {useEffect, useState} from "react";
 import {ROUTES} from "../../routes";
 import {useNavigate} from "react-router-dom";
+import { GetKeywordsFromAllEvents } from "../../firebase/functions/event";
 
 const Requested = ({updateKeywords}) => {
     const {setOpenModal} = useModalsContext();
     const [_activities, setActivities] = useState([]);
     const navigate = useNavigate()
-    useEffect(() => {
+
+    const setEventKeywords = async() => {
+        const eventKeywords = await GetKeywordsFromAllEvents()
         GetAllKeywordsFromUser().then((data) => {
-            setActivities(data);
-        });
-        setTimeout(() => {
-            GetAllKeywordsFromUser().then((data) => {
-                setActivities(data);
+            let dt = {}
+            let list = {};
+            for (let i = 0; i < eventKeywords.length; i++) {
+                const element = eventKeywords[i].toLowerCase();
+                if(element in list){
+                    list[element] += 1; 
+                }else{
+                    list[element] = 1;
+                }
+            }
+            data.forEach(element => {
+                const keyword = element.toLowerCase()
+                if(keyword in list){
+                    dt[keyword] = list[keyword]
+                }
             });
-        }, 1000);
+            setActivities(dt);
+        });
+    }
+    useEffect( () => {
+       
+       setEventKeywords()
+        // setTimeout(() => {
+        //     setEventKeywords()
+        //     console.log("working");
+        // }, 1000);
     }, [updateKeywords]);
 
     return (
@@ -52,7 +74,7 @@ const Requested = ({updateKeywords}) => {
                         >
                             <AiOutlinePlus/>
                         </IconButton>
-                        {_activities && _activities.map((data) => (
+                        {Object.keys(_activities).length!==0 && Object.keys(_activities).map((data) => (
                             <Box
                                 onClick={function (e) {
                                     e.preventDefault();
@@ -67,7 +89,7 @@ const Requested = ({updateKeywords}) => {
                                 p="10px"
                                 key={Math.random().toString(36).substring(2)}
                             >
-                                {data}
+                                {data} {_activities[data]>1?<span style={{marginLeft: "3px"}}>({_activities[data]})</span>:<></>}
                             </Box>
                         ))}
                     </Stack>
