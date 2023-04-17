@@ -82,7 +82,6 @@ export default function useSignUp() {
                 formData.email,
                 formData.password
             );
-
             await setDoc(
                 doc(db, "users", res.user.uid),
                 {

@@ -1,8 +1,10 @@
 import {
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
+    FacebookAuthProvider,
     sendPasswordResetEmail,
     signInWithEmailAndPassword,
+    OAuthProvider,
     signInWithPopup,
     signOut,
     updateEmail,
@@ -22,6 +24,16 @@ export default class FirebaseAuth {
     static googleSignIn() {
         const googleAuthProvider = new GoogleAuthProvider();
         return signInWithPopup(auth, googleAuthProvider);
+    }
+
+    static facebookSignIn() {
+        const facebookAuthProvider = new FacebookAuthProvider();
+        return signInWithPopup(auth, facebookAuthProvider);
+    }
+
+    static appleSignIn() {
+        const appleAuthProvider = new OAuthProvider();
+        return signInWithPopup(auth, appleAuthProvider);
     }
 
     static passwordReset(email) {
