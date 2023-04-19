@@ -89,7 +89,7 @@ const ExploreView = ({filters}) => {
                     };
                     let userLat = userLocation.Lat || position.coords.latitude
                     let userLng = userLocation.Lng || position.coords.longitude
-                    GetExploreEventsFromUserLocation(20, filters, userLat, userLng).then((data) => {
+                    GetExploreEventsFromUserLocation(20, filters, userLat, userLng, tags).then((data) => {
                         setEvents(data);
                     });
                 },
