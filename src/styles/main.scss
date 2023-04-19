@@ -29,3 +29,22 @@ body {
   position: relative;
   overflow: hidden;
 }
+
+.borders{
+  border-radius: 40px 40px 0px 0px;
+} 
+.icon-16{
+  width: 1em;
+  height: 1em;
+}
+
+.iconWhite path{
+  stroke: white !important;
+}
+
+@media (max-width: 600px) {
+  .icon-16{
+    width: 20px;
+  height: 1em;
+  }
+}

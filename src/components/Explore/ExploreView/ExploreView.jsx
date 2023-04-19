@@ -4,7 +4,7 @@ import {BsGrid} from "react-icons/bs";
 import ExploreFilter from "../ExploreHeader/ExploreFilter";
 import ListView from "../ListView/ListView";
 import MapView from "../MapView/MapView";
-
+import {MODALS} from "../../../modals/modals";
 import evenUser1 from "../../../images/even-user-1.png";
 import evenUser2 from "../../../images/even-user-2.png";
 import evenUser3 from "../../../images/even-user-3.png";
@@ -15,6 +15,11 @@ import glof from "../../../images/glof.png";
 import LocationIcon from "../../../icons/LocationIcon";
 import GoogleAutocomplete from "../../GoogleAutocomplete";
 import {GetExploreEvents, GetExploreEventsFromUserLocation} from "../../../firebase/functions/event/sort-event";
+import { useModalsContext } from "../../../modals/ModalsContext";
+import { useSelector, useDispatch } from "react-redux"
+import { setOpenTagModel } from "../../../store/ModelSlice";
+
+
 
 const events = [{
     id: 1,
@@ -51,6 +56,9 @@ const events = [{
 },];
 
 const ExploreView = ({filters}) => {
+    const dispatch = useDispatch()
+    const tags = useSelector( state => state.ModelReducer.tags )
+
     const [view, setView] = useState("list");
     const [events, setEvents] = useState(null);
     const [city, setCity] = useState(null);
@@ -68,7 +76,7 @@ const ExploreView = ({filters}) => {
 
     useEffect(() => {
         if (view === "list") {
-            GetExploreEvents(10, filters, city).then((events) => {
+            GetExploreEvents(20, filters, city, tags).then((events) => {
                 setEvents(events);
             });
         } else {
@@ -89,14 +97,14 @@ const ExploreView = ({filters}) => {
             );
 
         }
-    }, [view, filters, city, userLocation]);
+    }, [view, filters, city, userLocation,tags]);
 
     const updateLocation = (location) => {
         setUserLocation(location);
     }
 
 
-    return (<Box sx={{bgcolor: "info.main", pt: {xs: 2, md: 4}}}>
+    return (<Box className="borders" sx={{bgcolor: "info.main", pt: {xs: 2, md: 4}}}>
         <Container>
             {view === "list" && (<Stack
                 mb={{xs: 2, md: 4}}
@@ -117,7 +125,7 @@ const ExploreView = ({filters}) => {
                     justifyContent="center"
                     sx={{backgroundColor: "white", cursor:"pointer"}}
                 >
-                    <LocationIcon/>
+                    <LocationIcon  />
                 </Stack>
                 <GoogleAutocomplete onReset={shouldReset}  onChange={(e) => setCity(e.structured_formatting.main_text)}/>
             </Stack>)}
@@ -129,12 +137,15 @@ const ExploreView = ({filters}) => {
             >
                 <Button
                     sx={{
-                        borderRadius: 8, py: 1, px: 3, borderColor: "#CED1DC80", color: "text.secondary",
+                        borderRadius: 8, py: 1, px: 3, borderColor: tags.length?"#2DC6FF":"#CED1DC80", color: "text.secondary",
                     }}
                     startIcon={<BsGrid/>}
                     variant="outlined"
+                    onClick={()=>dispatch(setOpenTagModel(true))}
                 >
-                    All Categories
+                    Tags {
+                        tags.length?`(${tags.length})`:""
+                    }
                 </Button>
                 <ExploreFilter
                     view={view}

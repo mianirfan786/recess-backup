@@ -1,6 +1,7 @@
 import {Box, Button} from "@mui/material";
 import {BsViewList} from "react-icons/bs";
 import {IoMapOutline} from "react-icons/io5";
+import Mapicon from "../../../icons/Mapicon";
 
 const ExploreFilter = ({view, setView, handleView}) => {
     return (
@@ -9,14 +10,17 @@ const ExploreFilter = ({view, setView, handleView}) => {
                 sx={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 1,
+                    gap: {lg: 1, xs:0},
                     border: "1.5px solid #CED1DC80",
                     borderRadius: 8,
                 }}
+               
+
             >
                 <Button
-                    onClick={() => handleView("list")}
+                    onClick={() => setView("list")}
                     sx={{
+                        minWidth:"unset",
                         fontSize: 30,
                         borderRadius: 8,
                         bgcolor: view === "list" ? "text.primary" : "transparent",
@@ -30,11 +34,12 @@ const ExploreFilter = ({view, setView, handleView}) => {
                     }}
                     variant={view === "list" ? "contained" : "outlined"}
                 >
-                    <BsViewList/>
+                    <BsViewList className="icon-16" />
                 </Button>
                 <Button
-                    onClick={() => handleView("map")}
+                    onClick={() => setView("map")}
                     sx={{
+                        minWidth:"unset",
                         fontSize: 30,
                         borderRadius: 8,
                         bgcolor: view === "map" ? "text.primary" : "transparent",
@@ -48,7 +53,7 @@ const ExploreFilter = ({view, setView, handleView}) => {
                     }}
                     variant={view === "map" ? "contained" : "outlined"}
                 >
-                    <IoMapOutline/>
+                    <Mapicon data={view === "map" ? "iconWhite icon-16" : "icon-16"}  />
                 </Button>
             </Box>
         </div>
