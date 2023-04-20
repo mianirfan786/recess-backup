@@ -63,7 +63,7 @@ const Sponsored = ({currentCity}) => {
                 sx={{
                     py: {xs: 2, md: 4},
                     pr: {xs: 0, md: "inherit"},
-                    pl: {xs: 0.5, md: "inherit"},
+                    pl: {xs: 2, md: "inherit"},
                 }}
             >
                 <Swiper

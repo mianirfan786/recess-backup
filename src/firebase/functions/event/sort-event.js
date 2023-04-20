@@ -32,11 +32,11 @@ export const SortEventByUpcoming = async (maxItems) => {
 /* sort event by no. of attendees :: Start */
 export const SortEventByAttendees = async (maxLimit, minPriceLimit, maxPriceLimit) => {
     if (minPriceLimit === -1 && maxPriceLimit === -1) {
-        var q = query(collection(db, "events"), orderBy("attendees", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), orderBy("attendees", "desc"));
     } else if (minPriceLimit === 0 && maxPriceLimit === 0) {
-        var q = query(collection(db, "events"), where("cost", "==", 0), orderBy("attendees", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), where("cost", "==", 0), orderBy("attendees", "desc"));
     } else {
-        var q = query(collection(db, "events"), where("cost", ">=", minPriceLimit), where("cost", "<=", maxPriceLimit), orderBy("attendees", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), where("cost", ">=", minPriceLimit), where("cost", "<=", maxPriceLimit), orderBy("attendees", "desc"));
     }
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
@@ -46,11 +46,11 @@ export const SortEventByAttendees = async (maxLimit, minPriceLimit, maxPriceLimi
 /* sort event by No of participants :: Start */
 export const SortEventByParticipantCount = async (maxLimit, minPriceLimit, maxPriceLimit) => {
     if (minPriceLimit === -1 && maxPriceLimit === -1) {
-        var q = query(collection(db, "events"), orderBy("participantCount", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), orderBy("participantCount", "desc"));
     } else if (minPriceLimit === 0 && maxPriceLimit === 0) {
-        var q = query(collection(db, "events"), where("cost", "==", 0), orderBy("participantCount", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), where("cost", "==", 0), orderBy("participantCount", "desc"));
     } else {
-        var q = query(collection(db, "events"), where("cost", ">=", minPriceLimit), where("cost", "<=", maxPriceLimit), orderBy("participantCount", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), where("cost", ">=", minPriceLimit), where("cost", "<=", maxPriceLimit), orderBy("participantCount", "desc"));
     }
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
@@ -60,11 +60,11 @@ export const SortEventByParticipantCount = async (maxLimit, minPriceLimit, maxPr
 /* sort event by time creation :: Start */
 export const SortEventByTimeStamp = async (maxLimit, minPriceLimit, maxPriceLimit) => {
     if (minPriceLimit === -1 && maxPriceLimit === -1) {
-        var q = query(collection(db, "events"), orderBy("timeStamp", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), orderBy("timeStamp", "desc"));
     } else if (minPriceLimit === 0 && maxPriceLimit === 0) {
-        var q = query(collection(db, "events"), where("cost", "==", 0), orderBy("timeStamp", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), where("cost", "==", 0), orderBy("timeStamp", "desc"));
     } else {
-        var q = query(collection(db, "events"), where("cost", ">=", minPriceLimit), where("cost", "<=", maxPriceLimit), orderBy("timeStamp", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), where("cost", ">=", minPriceLimit), where("cost", "<=", maxPriceLimit), orderBy("timeStamp", "desc"));
     }
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
@@ -74,11 +74,11 @@ export const SortEventByTimeStamp = async (maxLimit, minPriceLimit, maxPriceLimi
 /* sort event by start date :: Start */
 export const SortEventByStartDate = async (maxLimit, minPriceLimit, maxPriceLimit) => {
     if (minPriceLimit === -1 && maxPriceLimit === -1) {
-        var q = query(collection(db, "events"), orderBy("date", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), orderBy("date", "desc"));
     } else if (minPriceLimit === 0 && maxPriceLimit === 0) {
-        var q = query(collection(db, "events"), where("cost", "==", 0), orderBy("date", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), where("cost", "==", 0), orderBy("date", "desc"));
     } else {
-        var q = query(collection(db, "events"), where("cost", ">=", minPriceLimit), where("cost", "<=", maxPriceLimit), orderBy("date", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), where("cost", ">=", minPriceLimit), where("cost", "<=", maxPriceLimit), orderBy("date", "desc"));
     }
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
@@ -87,11 +87,11 @@ export const SortEventByStartDate = async (maxLimit, minPriceLimit, maxPriceLimi
 /* sort event by max players :: Start */
 export const SortEventByMaxPlayers = async (maxLimit, minPriceLimit, maxPriceLimit) => {
     if (minPriceLimit === -1 && maxPriceLimit === -1) {
-        var q = query(collection(db, "events"), orderBy("maxParticipants", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), orderBy("maxParticipants", "desc"));
     } else if (minPriceLimit === 0 && maxPriceLimit === 0) {
-        var q = query(collection(db, "events"), where("cost", "==", 0), orderBy("maxParticipants", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), where("cost", "==", 0), orderBy("maxParticipants", "desc"));
     } else {
-        var q = query(collection(db, "events"), where("cost", ">=", minPriceLimit), where("cost", "<=", maxPriceLimit), orderBy("maxParticipants", "desc"), limit(maxLimit));
+        var q = query(collection(db, "events"), where("cost", ">=", minPriceLimit), where("cost", "<=", maxPriceLimit), orderBy("maxParticipants", "desc"));
     }
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
@@ -183,8 +183,20 @@ export const SortEventWithCityBySponsor = async (city, maxItems) => {
     }).slice(0, maxItems);
 }
 
+export const filterEventsByTags = async ( maxItems, tags) => {
+    let q = query(collection(db, "events"), where("keywords", "in", tags));
+    const querySnapshot = await getDocs(q);
+    const events = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+    const returnEvents = events.sort((a, b) => {
+        return b.timeStamp - a.timeStamp;
+    });
+    return returnEvents.filter((event) => {
+        return event.date >= Timestamp.fromDate(new Date())
+    });
+}
 
-export const GetExploreEvents = async (maxItems, filters, location) => {
+
+export const GetExploreEvents = async (maxItems, filters, location, tags) => {
     const showToast = toast("Getting Events", {type: "info", autoClose: 1500});
     let events = await SortEventByStartDate(maxItems, -1, -1);
     let lowerPrice = -1;
@@ -232,9 +244,21 @@ export const GetExploreEvents = async (maxItems, filters, location) => {
             lowerPrice = 16;
             higherPrice = 1000;
         }
-    } else {
-        events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
+    } else if(tags.length) {
+        try{
+            events = await filterEventsByTags(10, tags);
+        }
+        catch(e){
+            console.log(e);
+        }
+       
+
     }
+    else {
+        events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
+
+    }
+
     events = events.filter((event) => {
         return event.date >= Timestamp.fromDate(new Date()) && event.address.city === location;
     });
@@ -248,7 +272,7 @@ export const GetExploreEvents = async (maxItems, filters, location) => {
 }
 
 
-export const GetExploreEventsFromUserLocation = async (maxItems, filters, lat, lng) => {
+export const GetExploreEventsFromUserLocation = async (maxItems, filters, lat, lng,tags) => {
     const area = await GetLatitudeAndLongitudeOfDistance(lat, lng, 50);
     const showToast = toast("Getting Events", {type: "info", autoClose: 1500});
     let events= await SortEventByStartDate(maxItems, -1, -1);
@@ -294,6 +318,16 @@ export const GetExploreEventsFromUserLocation = async (maxItems, filters, lat, l
             lowerPrice = 16;
             higherPrice = 1000;
         }
+    } 
+    else if(tags.length) {
+        try{
+            events = await filterEventsByTags(10, tags);
+        }
+        catch(e){
+            console.log(e);
+        }
+       
+
     } else {
         events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
     }

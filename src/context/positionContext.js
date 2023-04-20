@@ -5,9 +5,10 @@ const PositionContext = React.createContext();
 export const PositionProvider = ({children}) => {
     const [position, setPosition] = useState(null);
     const [address, setAddress] = useState(null);
-
+console.log({address});
     useEffect(() => {
         if (!position) return;
+        console.log(position);
 
         fetch(
             "https://api.bigdatacloud.net/data/reverse-geocode-client?" +
@@ -22,9 +23,21 @@ export const PositionProvider = ({children}) => {
         )
             .then((res) => res.json())
             .then((data) => setAddress(data));
+
+            
     }, [position]);
 
     useEffect(() => {
+        fetch(
+            `https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places` ,
+            {
+                method: "GET",
+            }
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                console.log({data});
+            });
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 setPosition({
@@ -32,7 +45,7 @@ export const PositionProvider = ({children}) => {
                     lng: position.coords.longitude,
                 });
             },
-            (error) => console.log("error")
+            (error) => console.log("error",error)
         );
     }, []);
 
