@@ -6,6 +6,7 @@ import UserIcon from "../icons/UserIcon";
 import FirebaseAuth from "../firebase/auth";
 import {showToast} from "../utils/toast";
 import {db} from "../firebase/config";
+import PhoneIcon from "../icons/PhoneIcon";
 
 // List of Inputs to be mapped in the form
 const inputsData = [
@@ -22,6 +23,13 @@ const inputsData = [
         name: "email",
         required: true,
         InputProps: {endAdornment: <EmailIcon/>},
+    },
+    {
+        label: "Phone Number",
+        type: "tel",
+        name: "phone",
+        required: true,
+        InputProps: {endAdornment: <PhoneIcon/>},
     },
     {
         label: "Password",
@@ -43,6 +51,7 @@ export default function useSignUp() {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
+        phone: "",
         password: "",
         confirmPassword: "",
         termAndConditions: false,
@@ -51,6 +60,7 @@ export default function useSignUp() {
     // handle input change
     const handleOnChange = (e) => {
         const {name, value, checked} = e.target;
+        console.log(formData);
 
         setFormData((formValues) => ({
             ...formValues,
@@ -87,6 +97,7 @@ export default function useSignUp() {
                 {
                     displayName: formData.name,
                     email: res.user.email,
+                    phone: formData.phoneNo,
                     groups: [],
                     photoURL: "",
                     uid: res.user.uid,
@@ -100,6 +111,7 @@ export default function useSignUp() {
                 message: "Account created successfully!",
             });
         } catch (error) {
+            console.error(error);
             if ("message" in error) {
                 showToast({
                     type: "error",
