@@ -4,6 +4,8 @@ import location from "../../../images/location.png";
 import {ROUTES} from "../../../routes";
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import { mapStyle } from "./mapStyle";
+
 
 const mapContainerStyle = {
     width: "100%",
@@ -51,6 +53,7 @@ const Map = ({center, events, height, onUserLocationChange}) => {
         <GoogleMap
             mapContainerStyle={{...mapContainerStyle, height: height || "100vh"}}
             zoom={10}
+            options={{styles: mapStyle}}
             center={center}
             onClick={(e) => {
                 setSelected(null);
