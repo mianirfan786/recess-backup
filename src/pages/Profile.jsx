@@ -5,13 +5,16 @@ import Footer from "../components/Profile/Footer";
 
 const Profile = () => {
     return (
-        <Container sx={{flex: 1, display: "flex", my: 2}}>
-            <Stack flex={1} spacing={4}>
+        // <Container sx={{flex: 1, display: "flex", my: 2}}>
+        //     <Stack flex={1} spacing={4}>
+        <div>
                 <Header/>
                 <Actions/>
                 <Footer/>
-            </Stack>
-        </Container>
+        </div>
+                
+        //     </Stack>
+        // </Container>
     );
 };
 

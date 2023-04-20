@@ -1,4 +1,4 @@
-import {Box, Button, Stack} from "@mui/material";
+import {Box, Button, Stack, Container} from "@mui/material";
 import userIcon from "../../images/user.jpg";
 import PageHeader from "../PageHeader";
 import {useEffect, useState} from "react";
@@ -123,7 +123,14 @@ const Header = () => {
     };
 
     return (
-        <Stack gap={2}>
+        <Container sx={{py: {xs: 3.5, md: 4}}} >
+            <Stack
+                direction="column"
+                justifyContent="space-between"
+                alignItems=""
+                gap={2}
+            >
+        
             <PageHeader title="Profile"/>
             <Stack
                 alignItems="center"
@@ -135,6 +142,7 @@ const Header = () => {
                     maxWidth="150px"
                     sx={{aspectRatio: "1/1", border: "3px solid #2DC6FF"}}
                     borderRadius="50%"
+                    width={"100%"}
                     overflow="hidden"
                     backgroundColor="#FFFF"
                     display="flex"
@@ -167,10 +175,12 @@ const Header = () => {
                             position: "absolute",
                             opacity: .7,
                             cursor: "pointer",
+                            width: "100%",
+                            textAlign: "center",
                         }}
                     />
                 </Box>
-                <Stack spacing={1} textAlign={{xs: "center", sm: "initial"}}>
+                <Stack spacing={1}  alignItems={"center"} textAlign={{xs: "center", sm: "initial"}}>
                     <input
                         type="text"
                         readOnly={!isUpdating}
@@ -181,6 +191,8 @@ const Header = () => {
                             boxShadow: isUpdating ? "0 0 50px 1px rgba(0,0,0,.1)" : "none",
                             borderRadius: "5px",
                             backgroundColor: isUpdating ? "#FFFF" : "transparent",
+                            width: "100%",
+                            textAlign: "center",
                         }}
                         onChange={e => setName(e.target.value)}
                         value={name}
@@ -195,7 +207,10 @@ const Header = () => {
                             boxShadow: isUpdating ? "0 0 50px 1px rgba(0,0,0,.1)" : "none",
                             borderRadius: "5px",
                             backgroundColor: isUpdating ? "#FFFF" : "transparent",
-                            padding: isUpdating ? "10px" : "0"
+                            padding: isUpdating ? "10px" : "0",
+                            display: isUpdating?"block":"none",
+                            width: "100%",
+                            textAlign: "center",
 
                         }}
                         onChange={e => setPhone(e.target.value)}
@@ -232,12 +247,15 @@ const Header = () => {
                             color: "#FFFF",
                             maxWidth: "120px"
                         }}
+                        background= {"#2DC6FF"}
+
                     >
                         {isUpdating ? "Save" : "Edit"}
                     </Button>
                 </Stack>
             </Stack>
         </Stack>
+        </Container>
     );
 };
 
