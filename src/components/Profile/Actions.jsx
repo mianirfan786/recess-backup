@@ -57,11 +57,12 @@ const Actions = () => {
     };
 
     return (
-        <Stack flex={1} gap={1}>
+        <Stack  gap={1} alignItems={"center"}  margin={"0px 24px"}
+        >
             {actions.map(({icon, title, link}) => (
                 <Stack
                     onClick={() => navigate(link)}
-                    sx={{cursor: "pointer"}}
+                    sx={{cursor: "pointer", width: {xs:"100%",md: "50%", lg: "50%"}}}
                     flexDirection="row"
                     justifyContent="space-between"
                     alignItems="center"
@@ -79,7 +80,7 @@ const Actions = () => {
             ))}
             <Stack
                 onClick={handleDeleteAccountClickOpen}
-                sx={{cursor: "pointer"}}
+                sx={{cursor: "pointer", width: {xs:"100%",md: "50%", lg: "50%"}}}
                 flexDirection="row"
                 justifyContent="space-between"
                 alignItems="center"
@@ -87,6 +88,7 @@ const Actions = () => {
                 p={2}
                 bgcolor="#ECF5F2"
                 key="Delete Account"
+
             >
                 {DeleteAccount()}
                 <Typography variant="body1" fontWeight="bold">
