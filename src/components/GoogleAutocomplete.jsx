@@ -36,11 +36,9 @@ export default function GoogleAutocomplete({onChange, onReset}) {
 
     const {address} = usePositionContext();
     useEffect(() => {
-        console.log(address);
         if(address)
         {
             getUserLocationCity().then((userAddress)=>{
-                console.log(userAddress);
                 let city = userAddress.split(",")[0]       
                 let state = address.principalSubdivisionCode.split("-")[1]
                 setValue({

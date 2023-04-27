@@ -60,8 +60,6 @@ export default function useSignUp() {
     // handle input change
     const handleOnChange = (e) => {
         const {name, value, checked} = e.target;
-        console.log(formData);
-
         setFormData((formValues) => ({
             ...formValues,
             [name]: name === "termAndConditions" ? checked : value,
@@ -97,7 +95,7 @@ export default function useSignUp() {
                 {
                     displayName: formData.name,
                     email: res.user.email,
-                    phone: formData.phoneNo,
+                    phone: formData.phone,
                     groups: [],
                     photoURL: "",
                     uid: res.user.uid,

@@ -3,7 +3,7 @@ import ExploreView from "../components/Explore/ExploreView/ExploreView";
 import {useModalsContext} from "../modals/ModalsContext";
 import SortAndFilterModal from "../modals/SortAndFilterModal";
 import {MODALS} from "../modals/modals";
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import TagModelExplore from "../modals/TagModelExplore";
 
 const Explore = () => {
@@ -13,10 +13,8 @@ const Explore = () => {
     const FiltersChanged = (filters) => {
         setAppliedFilters(filters);
     }
-    useEffect(()=>{},[setTags])
-     console.log({tags});
     return (
-        <div>
+        <div >
             <SortAndFilterModal
                 onApply={FiltersChanged}
                 open={openModal === MODALS.SORT_FILTER}

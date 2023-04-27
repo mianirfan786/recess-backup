@@ -10,8 +10,6 @@ const db = getFirestore(app);
 
 /* export add event */
 export const addEvent = async (event) => {
-    console.log("addEvent", event);
-
     // Upload each photo to Firebase Storage
     const photoUrls = await Promise.all(
         event.photos.map(async (photo) => {

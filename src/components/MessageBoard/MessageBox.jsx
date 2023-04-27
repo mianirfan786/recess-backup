@@ -2,16 +2,20 @@ import {Avatar, InputBase, Stack} from "@mui/material";
 import {AddCommentInEventById} from "../../firebase/functions/event/event-comments";
 import {GetCurrentUserDetails} from "../../firebase/functions/user";
 import {useState} from "react";
+import { useEffect } from "react";
 
 const MessageBox = ({onData, id}) => {
 
     /* get current user */
     const [user, setUser] = useState({});
-    GetCurrentUserDetails().then(
-        (data) => {
-            setUser(data);
-        }
-    );
+    useEffect(()=>{
+        GetCurrentUserDetails().then(
+            (data) => {
+                setUser(data);
+            }
+        );
+    },[])
+        
 
 
     const demo = (e) => {

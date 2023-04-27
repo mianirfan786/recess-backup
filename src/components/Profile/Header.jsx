@@ -23,6 +23,7 @@ const Header = () => {
 
     useEffect(() => {
         GetCurrentUserDetails().then(r => {
+            console.log(r);
             setUser(r);
             setName(r.displayName);
             setPhone(r.phone ? r.phone : "");
@@ -207,8 +208,8 @@ const Header = () => {
                             boxShadow: isUpdating ? "0 0 50px 1px rgba(0,0,0,.1)" : "none",
                             borderRadius: "5px",
                             backgroundColor: isUpdating ? "#FFFF" : "transparent",
-                            padding: isUpdating ? "10px" : "0",
-                            display: isUpdating?"block":"none",
+                            height: isUpdating ? "3rem" : "unset",
+                            color:"#111315",
                             width: "100%",
                             textAlign: "center",
 
@@ -245,7 +246,10 @@ const Header = () => {
                             display: "block",
                             background: "#2DC6FF",
                             color: "#FFFF",
-                            maxWidth: "120px"
+                            maxWidth: "120px",
+                            '&:hover': {
+                                background: '#2DC6FF',
+                            },
                         }}
                         background= {"#2DC6FF"}
 

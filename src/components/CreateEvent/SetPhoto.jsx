@@ -4,6 +4,7 @@ import {Box, Button, Stack, Typography} from "@mui/material";
 const SetPhoto = () => {
     const {photos, setState} = useCreateEventContext();
 
+
     return (
         <Stack textAlign="center">
             <Box mb={3}>
@@ -34,11 +35,14 @@ const SetPhoto = () => {
                         multiple
                         accept="image/*"
                         type="file"
-                        onChange={(e) =>
+                        onChange={(e) => {
+                            
                             setState((prev) => ({
                                 ...prev,
                                 photos: [...e.target.files, ...prev.photos].slice(0, 3),
+                                marker: [...e.target.files, ...prev.photos].slice(0, 1)
                             }))
+                        }
                         }
                         hidden
                     />

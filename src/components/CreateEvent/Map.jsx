@@ -3,6 +3,7 @@ import {Box, CircularProgress, Stack, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import {useCreateEventContext} from "../../pages/CreateEvent";
 import axios from "axios";
+import { mapStyle } from "../Explore/MapView/mapStyle";
 
 const CustomMap = ({height, loadUserLocation}) => {
     const [selected, setSelected] = useState(null);
@@ -85,6 +86,7 @@ const CustomMap = ({height, loadUserLocation}) => {
             }}
             onClick={(e) => setSelected(e)}
             zoom={10}
+            options={{styles: mapStyle}}
             center={userPosition}
         >
             {selected && (
@@ -182,7 +184,7 @@ const CustomMap = ({height, loadUserLocation}) => {
                                 Latitude
                             </Typography>
                             <Typography fontWeight={600} variant="body1">
-                                {address.latitude.toFixed(2)}
+                                {address.latitude?.toFixed(2)}
                             </Typography>
                         </Stack>
                         <Stack
@@ -197,7 +199,7 @@ const CustomMap = ({height, loadUserLocation}) => {
                                 Longitude
                             </Typography>
                             <Typography fontWeight={600} variant="body1">
-                                {address.longitude.toFixed(2)}
+                                {address.longitude?.toFixed(2)}
                             </Typography>
                         </Stack>
                     </Stack>

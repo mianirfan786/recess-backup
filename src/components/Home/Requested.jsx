@@ -36,12 +36,7 @@ const Requested = ({updateKeywords}) => {
         });
     }
     useEffect( () => {
-       
        setEventKeywords()
-        // setTimeout(() => {
-        //     setEventKeywords()
-        //     console.log("working");
-        // }, 1000);
     }, [updateKeywords]);
 
     return (

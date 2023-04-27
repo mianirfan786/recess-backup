@@ -2,6 +2,7 @@ import {Box, Button} from "@mui/material";
 import {BsViewList} from "react-icons/bs";
 import {IoMapOutline} from "react-icons/io5";
 import Mapicon from "../../../icons/Mapicon";
+import "../../../styles/main.scss"
 
 const ExploreFilter = ({view, setView, handleView}) => {
     return (
@@ -38,6 +39,7 @@ const ExploreFilter = ({view, setView, handleView}) => {
                 </Button>
                 <Button
                     onClick={() => setView("map")}
+                    id={"iconHover"}
                     sx={{
                         minWidth:"unset",
                         fontSize: 30,

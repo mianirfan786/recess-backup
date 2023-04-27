@@ -19,6 +19,7 @@ const CreateEvent = () => {
         title: "",
         description: "",
         date: "",
+        marker: [],
         startTime: "",
         endTime: "",
         selected: "",
@@ -28,11 +29,10 @@ const CreateEvent = () => {
         displayAddress: "",
         address: null
     });
-
-    function handleSubmit(event) {
+    const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (state.photos === null || state.title === "" || state.description === "" || state.keywords === "" || state.maxParticipants === 0 || state.address === null) {
+        if (state.photos === null  || state.title === "" || state.description === "" || state.keywords === "" || state.maxParticipants === 0 || state.address === null) {
             toast("All fields must be filled", {type: "error"})
             return;
         }
@@ -52,6 +52,7 @@ const CreateEvent = () => {
 
         addEvent(state).then(
             (e) => {
+                console.log(e);
                 sendNewEventNotification(state);
                 navigate(`/event/${e}`);
                 toast("Event created successfully", {type: "success"})
@@ -69,6 +70,7 @@ const CreateEvent = () => {
                         <MainDetails/>
                         <Map loadUserLocation={true} />
                         <Button
+                        onClick={handleSubmit}
                             sx={{
                                 px: 3,
                                 borderRadius: 50,

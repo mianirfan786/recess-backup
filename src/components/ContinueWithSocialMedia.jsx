@@ -128,7 +128,7 @@ const AppleIcon = () => (
 );
 
 const ContinueWithSocialMedia = ({sx}) => {
-    const {handleGoogleSignIn,handleFacebookSignIn} = useSignIn();
+    const {handleGoogleSignIn,handleFacebookSignIn,handleAppleSignIn} = useSignIn();
 
     return (
         <Stack sx={{pt: 6, pb: 8}} spacing={2}>
@@ -155,7 +155,7 @@ const ContinueWithSocialMedia = ({sx}) => {
                 <IconButton onClick={handleGoogleSignIn}>
                     <GoogleIcon/>
                 </IconButton>
-                <IconButton onClick={handleGoogleSignIn}>
+                <IconButton onClick={handleAppleSignIn}>
                     <AppleIcon />
                 </IconButton>
             </Stack>

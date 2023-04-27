@@ -42,6 +42,10 @@ body {
   stroke: white !important;
 }
 
+#iconHover:hover .icon-16 path{
+  stroke: white !important;
+}
+
 @media (max-width: 600px) {
   .icon-16{
     width: 20px;

@@ -32,7 +32,7 @@ const ExploreHeader = () => {
                             alignItems: "center",
                             textAlign: "center",
                             cursor: "pointer",
-                            boxShadow: 1,
+                            boxShadow: "none",
                         }}
                         variant="contained"
                     >

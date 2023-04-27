@@ -16,6 +16,7 @@ import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import app from "../../config";
 import {getCurrentUser} from "../user";
 import {calculateRGB} from "../../../utils/getAverageRGB";
+import { CustomMarker } from "../../../components/Explore/MapView/customMarker";
 
 
 /* Basic Variables */
@@ -26,7 +27,7 @@ let currentUser = null;
 
 /* add event :: Start */
 export const addEvent = async (event) => {
-
+    const { createMarker } = CustomMarker()
     // Read the first photo from the event object
     const eventId = Math.random().toString(36).substring(2);
     currentUser = await getCurrentUser();
@@ -44,11 +45,18 @@ export const addEvent = async (event) => {
                     return await getDownloadURL(photoRef);
                 })
             );
+            
+            const markerUrls = await Promise.all(
+                event.marker.map(async (photo) => {
+                    const url = await createMarker(photo);
+                    return url
+                })
+            );
+            
 
             // Add photo URLs to the event object
-            const eventWithPhotos = {...event, photos: photoUrls};
-
-
+            const eventWithPhotos = {...event, photos: photoUrls, marker: markerUrls};
+                
             // Add Event to Firebase with Timestamp and CreatedBy
             const res = await setDoc(doc(db, "events", eventId), {
                 ...eventWithPhotos,

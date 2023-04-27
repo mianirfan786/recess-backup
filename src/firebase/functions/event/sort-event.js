@@ -262,6 +262,7 @@ export const GetExploreEvents = async (maxItems, filters, location, tags) => {
     events = events.filter((event) => {
         return event.date >= Timestamp.fromDate(new Date()) && event.address.city === location;
     });
+
     if (lowerPrice !== -1 && higherPrice !== -1) {
         events = events.filter((event) => {
             return event.cost >= lowerPrice && event.cost <= higherPrice;
@@ -331,9 +332,11 @@ export const GetExploreEventsFromUserLocation = async (maxItems, filters, lat, l
     } else {
         events = await SortEventByStartDate(maxItems, lowerPrice, higherPrice);
     }
+
     events = events.filter((event) => {
         return event.date >= Timestamp.fromDate(new Date()) && area.lowerLat <= event.latitude && area.greaterLat >= event.latitude && area.lowerLon <= event.longitude && area.greaterLon >= event.longitude
     });
+
     if (lowerPrice !== -1 && higherPrice !== -1) {
         events = events.filter((event) => {
             return event.cost >= lowerPrice && event.cost <= higherPrice;

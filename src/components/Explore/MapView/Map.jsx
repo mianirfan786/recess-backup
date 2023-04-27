@@ -5,6 +5,9 @@ import {ROUTES} from "../../../routes";
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import { mapStyle } from "./mapStyle";
+import { CustomMarker } from "./customMarker";
+import { EventRepeat } from "@mui/icons-material";
+
 
 
 const mapContainerStyle = {
@@ -15,6 +18,7 @@ const Map = ({center, events, height, onUserLocationChange}) => {
     const [selected, setSelected] = useState(null);
     const [userPosition, setUserPosition] = useState(null);
     let isEventsArray = false;
+    const {URL, createMarker} = CustomMarker();
     const navigate = useNavigate()
     /* convert events to array of an object */
     /* check if events is an array */
@@ -48,8 +52,14 @@ const Map = ({center, events, height, onUserLocationChange}) => {
             onUserLocationChange(userPosition);
         }
     } , [userPosition]);
+    useEffect(()=>{
+        if(events.length){
+            console.log(events)
+        }
+    },[events])
 
     return (
+        <>
         <GoogleMap
             mapContainerStyle={{...mapContainerStyle, height: height || "100vh"}}
             zoom={10}
@@ -70,7 +80,13 @@ const Map = ({center, events, height, onUserLocationChange}) => {
             {events && isEventsArray && events.map((event) => (
                 <MarkerF
                     title={event?.title}
-                    icon={event?.photos}
+                    // icon={{
+                    //     url: event?.marker?.length?event.marker[0]:"", // URL of the marker icon
+                    //     scaledSize: new window.google.maps.Size(50, 50), // Scaled size of the marker icon
+                    //     origin: new window.google.maps.Point(0, 0), // Origin of the marker icon
+                    //     anchor: new window.google.maps.Point(0, 0) // Anchor point of the marker icon
+                    // }}
+                    // icon={event?createMarker(event.photos[0]).svg:""}
                     key={event?.id}
                     position={{lat: event?.latitude, lng: event?.longitude}}
                     onClick={() => {
@@ -142,6 +158,7 @@ const Map = ({center, events, height, onUserLocationChange}) => {
                 </InfoWindow>
             ) : null}
         </GoogleMap>
+        </>
     );
 };
 

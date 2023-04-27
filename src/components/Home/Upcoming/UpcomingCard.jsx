@@ -27,7 +27,6 @@ const UpcomingCard = ({event}) => {
             /* only unique values in userPhotos and length 3 */
             if (userPhotos.length < 3){
                 GetUsersById(user).then((res) => {
-                    console.log(user);
                     setPhotos((userPhotos) => [...userPhotos, res]);
                 });
             }
@@ -109,7 +108,6 @@ const UpcomingCard = ({event}) => {
                         >
                             <Box>
                                 {userPhotos.map((user, index) => {
-                                    console.log(userPhotos);
                                     return (
                                     <img style={{
                                         width: "30px",
