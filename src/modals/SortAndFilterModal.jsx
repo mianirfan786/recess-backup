@@ -7,6 +7,8 @@ import DateCreatedIcon from "../icons/DateCreatedIcon";
 import StartDateIcon from "../icons/StartDateIcon";
 import PlayerIcon from "../icons/PlayerIcon";
 import CheckIcon from "../icons/CheckIcon";
+import { setAppliedFilter } from "../store/ModelSlice";
+import {useDispatch} from "react-redux"
 
 const sortOptions = [
     {name: "No of Attendees", icon: PeopleIcon()},
@@ -19,6 +21,7 @@ const sortOptions = [
 const priceRange = [0, 1, 2, 3];
 
 const SortAndFilterModal = ({open, onClose, onApply}) => {
+    const dispatch = useDispatch()
     const [state, setState] = useState({
         selectedSortOption: null,
         priceRange: null,
@@ -26,7 +29,17 @@ const SortAndFilterModal = ({open, onClose, onApply}) => {
     });
 
     const onApplyClick = () => {
-        onApply(state);
+        onApply(state);    
+        let i=0;        
+        Object.values(state).map((item)=>{
+                if(item===null || item===false){
+                }
+                else{
+                    i++;
+
+                }
+            })
+            dispatch(setAppliedFilter(i))
         onClose();
     };
 

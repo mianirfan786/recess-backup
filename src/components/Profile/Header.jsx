@@ -23,7 +23,6 @@ const Header = () => {
 
     useEffect(() => {
         GetCurrentUserDetails().then(r => {
-            console.log(r);
             setUser(r);
             setName(r.displayName);
             setPhone(r.phone ? r.phone : "");

@@ -75,10 +75,13 @@ const ExploreView = ({filters}) => {
     }
 
     useEffect(() => {
-        if (view === "list") {
-            GetExploreEvents(20, filters, city, tags).then((events) => {
-                setEvents(events);
-            });
+        if (view === "list" ) {
+            if(city!==null){
+                GetExploreEvents(20, filters, city, tags).then((events) => {
+                    setEvents(events);
+                });
+            }
+            
         } else {
             let currentUserLocation = null;
             navigator.geolocation.getCurrentPosition(

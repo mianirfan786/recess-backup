@@ -268,7 +268,7 @@ export const GetExploreEvents = async (maxItems, filters, location, tags) => {
             return event.cost >= lowerPrice && event.cost <= higherPrice;
         })
     }
-    toast.dismiss(showToast);
+    // toast.dismiss(showToast);
     return events;
 }
 
@@ -342,6 +342,6 @@ export const GetExploreEventsFromUserLocation = async (maxItems, filters, lat, l
             return event.cost >= lowerPrice && event.cost <= higherPrice;
         })
     }
-    toast.dismiss(showToast);
+    // toast.dismiss(showToast);
     return events;
 }

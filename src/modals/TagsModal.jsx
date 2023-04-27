@@ -4,6 +4,7 @@ import basketballTag from "../images/basketball-tag.png";
 import {useEffect, useState} from "react";
 import {GetKeywordsFromAllEvents} from "../firebase/functions/event";
 import {AddKeywordInUser} from "../firebase/functions/user";
+import AddKeywordModal from "./AddKeywordModal";
 
 const tags = [...new Array(20)].map((_, i) => ({
     title: "Basketball",
@@ -13,6 +14,8 @@ const tags = [...new Array(20)].map((_, i) => ({
 
 const TagsModal = ({open, onClose, onData}) => {
     const [_tags, setTags] = useState({});
+    const [keyword, setKeyword] = useState("");
+    const [openKeyModel, setOpenKeyModel] = useState(false);
     useEffect(() => {
         GetKeywordsFromAllEvents().then((data) => {
              let list = {   };
@@ -37,11 +40,13 @@ const TagsModal = ({open, onClose, onData}) => {
     };
 
     const AddKeyword = (e) => {
-        if (e.key === "Enter") {
-            AddKeywordInUser(e.target.value);
+        if(keyword!==""){
+            setOpenKeyModel(false)
+            AddKeywordInUser(keyword)
             onData()
-            onClose();
+            onClose()
         }
+        
     }
 
     return (
@@ -74,9 +79,11 @@ const TagsModal = ({open, onClose, onData}) => {
                     })}
                     <Box>
                         <input
-                            onKeyPress={AddKeyword}
+                            // onKeyPress={AddKeyword}
+                            onClick={()=>{setOpenKeyModel(true)}}
                             type="text"
                             placeholder="Add your own tag"
+                            readOnly
                             style={{
                                 borderRadius: "20px",
                                 outline: "none",
@@ -88,6 +95,7 @@ const TagsModal = ({open, onClose, onData}) => {
                             }}
                             />
                     </Box>
+                    <AddKeywordModal open={openKeyModel} onClose={()=>AddKeyword()} keyword={keyword} setKeyword={setKeyword} />
                 </Stack>
             </Stack>
         </DefaultModal>

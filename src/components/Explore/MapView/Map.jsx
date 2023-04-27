@@ -52,11 +52,7 @@ const Map = ({center, events, height, onUserLocationChange}) => {
             onUserLocationChange(userPosition);
         }
     } , [userPosition]);
-    useEffect(()=>{
-        if(events.length){
-            console.log(events)
-        }
-    },[events])
+
 
     return (
         <>

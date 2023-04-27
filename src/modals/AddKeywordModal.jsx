@@ -2,8 +2,8 @@ import DefaultModal from "./DefaultModal";
 import {Button, Stack, Typography} from "@mui/material";
 import React, {useState} from "react";
 
-const AddKeywordModal = ({open, onClose}) => {
-    const [keyword, setKeyword] = useState("");
+const AddKeywordModal = ({open, onClose, setKeyword, keyword}) => {
+    
 
     return (
         <DefaultModal open={open} onClose={onClose}>
@@ -19,13 +19,15 @@ const AddKeywordModal = ({open, onClose}) => {
                         Keyword
                     </Typography>
                     <input
-                        value={keyword}
-                        onChange={(e) => setKeyword(e.target.value)}
+                        // value={keyword}
+                        onChange={(e) => {setKeyword(e.target.value)}}
                         type="text"
                         style={{
                             border: "none",
                             outline: "none",
                             fontSize: "16px",
+                            backgroundColor: "#F2F4F9",
+
                         }}
                     />
                 </Stack>

@@ -28,10 +28,15 @@ const Requested = ({updateKeywords}) => {
             }
             data.forEach(element => {
                 const keyword = element.toLowerCase()
+
                 if(keyword in list){
                     dt[keyword] = list[keyword]
                 }
+                else{
+                    dt[keyword] = 0
+                }
             });
+
             setActivities(dt);
         });
     }
@@ -84,7 +89,7 @@ const Requested = ({updateKeywords}) => {
                                 p="10px"
                                 key={Math.random().toString(36).substring(2)}
                             >
-                                {data} {_activities[data]>1?<span style={{marginLeft: "3px"}}>({_activities[data]})</span>:<></>}
+                                {data} {_activities[data]>-1?<span style={{marginLeft: "3px"}}>({_activities[data]})</span>:<></>}
                             </Box>
                         ))}
                     </Stack>
