@@ -1,7 +1,7 @@
 import {Box, Button} from "@mui/material";
 import {BsViewList} from "react-icons/bs";
 import {IoMapOutline} from "react-icons/io5";
-import Mapicon from "../../../icons/Mapicon";
+import MapiconSVG from "../../../icons/MapiconSVG";
 import "../../../styles/main.scss"
 
 const ExploreFilter = ({view, setView, handleView}) => {
@@ -55,7 +55,7 @@ const ExploreFilter = ({view, setView, handleView}) => {
                     }}
                     variant={view === "map" ? "contained" : "outlined"}
                 >
-                    <Mapicon data={view === "map" ? "iconWhite icon-16" : "icon-16"}  />
+                    <MapiconSVG data={view === "map" ? "iconWhite icon-16" : "icon-16"}  />
                 </Button>
             </Box>
         </div>
