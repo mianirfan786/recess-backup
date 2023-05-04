@@ -17,13 +17,13 @@ const EventConfirmationModal = ({id, photos, event, open, cost, creator, date, s
             setIsJoined(true);
     }
 
-    const [attendees, setAttendees] = useState(0);
+    const [attendees, setAttendees] = useState(1);
 
     useEffect(() => {
     }, [cost]);
 
     const onModalClose = () => {
-        setAttendees(0);
+        setAttendees(1);
         onClose();
     };
 
@@ -167,9 +167,21 @@ const EventConfirmationModal = ({id, photos, event, open, cost, creator, date, s
                     justifyContent="space-between"
                 >
                     <Typography variant="body1">Participation Cost</Typography>
-                    <Typography variant="body1" fontWeight="bold">
-                        {cost ? `$${cost}` : "Free"}
+                    <div style={{display:"flex", alignItems:"center"}}>
+                    {cost?<div style={{display:"flex", alignItems:"center"}}>
+                        <Typography variant="body1" fontWeight="bold" fontSize={"1.8em"} >
+                        {cost ? `${cost}` : "Free"}
+                    </Typography><Typography variant="body1" fontWeight="bold" color={"#808080"} position="relative" top={"-8px"} >
+                         &nbsp;x{attendees}
                     </Typography>
+                    <Typography variant="body1" fontWeight="bold" fontSize={"1.8em"} margin={"0px 6px"}>
+                        =
+                    </Typography>
+                    </div>:<></>}
+                    <Typography variant="body1" fontWeight="bold" fontSize={"1.8em"} color={"#8BCD37"}>
+                        {cost ? `${cost*attendees}` : "Free"}
+                    </Typography>
+                    </div>
                 </Stack>
                 <Button
                     onClick={JoinCurrentEvent}

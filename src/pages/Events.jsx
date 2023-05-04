@@ -191,7 +191,7 @@ function Events({}) {
     }
 
     return (
-        <div>
+        < >
             <Container sx={{py: {xs: 2, md: 4}}}>
                 <Stack
                     direction="row"
@@ -219,10 +219,21 @@ function Events({}) {
             <Box
                 style={{
                     backgroundColor: "#ffffff",
-                    padding: "40px 80px",
+                        alignItems:"center",
+                        justifyContent:"center",
+                        padding: "40px 0px"
+                    
                 }}
+                // sx={
+                //     {padding:{xs:"4px 8px", md: "40px 80px"}}
+                // }
                 flexDirection="column" width="100%" display="flex">
-                <Grid boxSizing="border-box" width="100%" container spacing={3}>
+                <Grid boxSizing="border-box" width="100%" container spacing={3}
+                 style={{
+                    alignItems:"center",
+                    justifyContent:"center"
+                }}
+                >
                     {(loading ? [...new Array(6)] : events).map((event, index) => (
                         <Grid
                             style={{
@@ -235,6 +246,7 @@ function Events({}) {
                             md={6}
                             item
                             boxSizing="border-box"
+                           
                         >
                             {loading ? (
                                 <Skeleton
@@ -271,7 +283,7 @@ function Events({}) {
                     )}
                 </div>
             </Box>
-        </div>
+        </>
 
     );
 }

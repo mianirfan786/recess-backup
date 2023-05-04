@@ -12,7 +12,6 @@ const ExploreHeader = () => {
     // const [filter, setFilter] = useState(0)
     // useEffect(()=>{
     // },[appliedFilters])
-    console.log(appliedFilters);
 
     return (
         <Container sx={{py: {xs: 2, md: 4}}}>

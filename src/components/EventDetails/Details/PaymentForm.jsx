@@ -75,7 +75,7 @@ function PaymentForm({open, handleClose, displayAddress, cost, currentEvent, eve
                 <Typography id="modal-modal-title" variant="h4" component="h2" sx={{
                     marginBottom: 2,
                 }}>
-                    Pay ${cost}
+                    Pay ${cost*attendees}
                 </Typography>
                 <Close onClick={handleClose} sx={{
                     position: "absolute",

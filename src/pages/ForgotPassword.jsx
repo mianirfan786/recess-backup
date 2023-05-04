@@ -6,7 +6,9 @@ import useForgotPassword from "../hooks/useForgotPassword";
 import BackButton from "../icons/BackIcon";
 import {useState} from "react";
 import phoneIcon from "../images/phone-icon.svg";
+import phone from "../images/blackphone.svg";
 import emailIcon from "../images/email-icon.svg";
+import email from "../images/blackmessage.svg";
 import styled from "@emotion/styled";
 
 const StyledSwitch = styled(Switch)({
@@ -19,6 +21,7 @@ const StyledSwitch = styled(Switch)({
         transform: "translateX(4px)",
         "& + .MuiSwitch-track": {
             borderRadius: "40px",
+            border: " 1px solid #DFE0E6",
             opacity: 1,
             backgroundColor: "white !important",
         },
@@ -51,6 +54,7 @@ const StyledSwitch = styled(Switch)({
         },
     },
 });
+
 
 const Header = () => {
     const navigate = useNavigate();
