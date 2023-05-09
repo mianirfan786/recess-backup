@@ -16,7 +16,8 @@ import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 import app from "../../config";
 import {getCurrentUser} from "../user";
 import {calculateRGB} from "../../../utils/getAverageRGB";
-import { CustomMarker } from "../../../components/Explore/MapView/customMarker";
+
+import store from "../../../store/store";
 
 
 /* Basic Variables */
@@ -26,9 +27,7 @@ let currentUser = null;
 // getCurrentUser();
 
 /* add event :: Start */
-export const addEvent = async (event) => {
-    const { createMarker } = CustomMarker()
-    // Read the first photo from the event object
+export const addEvent = async (event) =>{
     const eventId = Math.random().toString(36).substring(2);
     currentUser = await getCurrentUser();
     const reader = new FileReader();
@@ -46,16 +45,9 @@ export const addEvent = async (event) => {
                 })
             );
             
-            const markerUrls = await Promise.all(
-                event.marker.map(async (photo) => {
-                    const url = await createMarker(photo);
-                    return url
-                })
-            );
-            
 
             // Add photo URLs to the event object
-            const eventWithPhotos = {...event, photos: photoUrls, marker: markerUrls};
+            const eventWithPhotos = {...event, photos: photoUrls};
                 
             // Add Event to Firebase with Timestamp and CreatedBy
             const res = await setDoc(doc(db, "events", eventId), {
@@ -136,35 +128,31 @@ export const GetLatitudeAndLongitudeOfDistance = async (latitude, longitude, dis
     return {lowerLat, lowerLon, greaterLat, greaterLon}
 }
 
-const GetUserLocation = async () => {
-    return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            resolve(position);
-            /* console it */
-            return {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-            }
-        }, function (error) {
-            reject(error);
-        });
-    });
-}
+// const GetUserLocation = async () => {
+//     return new Promise((resolve, reject) => {
+//         navigator.geolocation.getCurrentPosition(function (position) {
+//             resolve(position);
+//             /* console it */
+//             return {
+//                 latitude: position.coords.latitude,
+//                 longitude: position.coords.longitude
+//             }
+//         }, function (error) {
+//             reject(error);
+//         });
+//     });
+// }
 
 export const GetAreaNearUser = async (distance) => {
-    const userLocation = await GetUserLocation();
-    return GetLatitudeAndLongitudeOfDistance(userLocation.coords.latitude, userLocation.coords.longitude, distance);
+    const {LocationReducer:{location}} = store.getState()
+    // const userLocation = await GetUserLocation();
+    return GetLatitudeAndLongitudeOfDistance(location.latitude, location.longitude, distance);
 }
 
 export const getUserLocationCity = async () => {
     try {
-        const position = await new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject);
-        });
-
-        const {latitude, longitude} = position.coords;
-
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=locality&key=${"AIzaSyDAXr7GY62OB8KITsDM33BNEdYq7Z6f8aA"}`);
+        const {LocationReducer:{location}} = store.getState()
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&result_type=locality&key=${"AIzaSyDAXr7GY62OB8KITsDM33BNEdYq7Z6f8aA"}`);
         const data = await response.json();
         if (data.results.length > 0) {
             return data.results[0].formatted_address;

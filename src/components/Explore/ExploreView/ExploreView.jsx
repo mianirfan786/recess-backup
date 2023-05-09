@@ -18,6 +18,7 @@ import {GetExploreEvents, GetExploreEventsFromUserLocation} from "../../../fireb
 import { useModalsContext } from "../../../modals/ModalsContext";
 import { useSelector, useDispatch } from "react-redux"
 import { setOpenTagModel } from "../../../store/ModelSlice";
+import LocationHook from "../../../hooks/useLocationHook";
 
 
 
@@ -57,7 +58,10 @@ const events = [{
 
 const ExploreView = ({filters}) => {
     const dispatch = useDispatch()
+    const location = useSelector(state=> state.LocationReducer.location)
+    const positionPoints = useSelector(state=> state.LocationReducer.positionPoints)
     const tags = useSelector( state => state.ModelReducer.tags )
+    const {setCurrentLocationPoints} = LocationHook()
 
     const [view, setView] = useState("list");
     const [events, setEvents] = useState(null);
@@ -68,6 +72,7 @@ const ExploreView = ({filters}) => {
         setView(view);
     };
     const resetGoogleAutocomplete = () => {
+        setCurrentLocationPoints()
         setShouldReset(true);
         setTimeout(() => {
             setShouldReset(false);
@@ -76,31 +81,18 @@ const ExploreView = ({filters}) => {
 
     useEffect(() => {
         if (view === "list" ) {
-            if(city!==null){
-                GetExploreEvents(20, filters, city, tags).then((events) => {
+            if(location.structured_formatting.main_text!==""){
+                GetExploreEvents(20, filters, location.structured_formatting.main_text, tags).then((events) => {
                     setEvents(events);
                 });
             }
             
         } else {
-            let currentUserLocation = null;
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    currentUserLocation = {
-                        Lat: position.coords.latitude,
-                        Lng: position.coords.longitude,
-                    };
-                    let userLat = userLocation.Lat || position.coords.latitude
-                    let userLng = userLocation.Lng || position.coords.longitude
-                    GetExploreEventsFromUserLocation(20, filters, userLat, userLng, tags).then((data) => {
+             GetExploreEventsFromUserLocation(20, filters, positionPoints.lat, positionPoints.lng, tags).then((data) => {
                         setEvents(data);
                     });
-                },
-                (error) => console.log("error")
-            );
-
-        }
-    }, [view, filters, city, userLocation,tags]);
+                }
+    },[view, filters, location,tags]);
 
     const updateLocation = (location) => {
         setUserLocation(location);

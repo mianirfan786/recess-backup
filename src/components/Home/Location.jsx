@@ -3,11 +3,15 @@ import GoogleAutocomplete from "../GoogleAutocomplete";
 import {Stack} from "@mui/system";
 import LocationIcon from "../../icons/LocationIcon";
 import {useState} from "react";
+import LocationHook from "../../hooks/useLocationHook";
 
 const Location = ({onData}) => {
+    const {setCurrentLocationPoints} = LocationHook()
 
     const [shouldReset, setShouldReset] = useState(false);
     const resetGoogleAutocomplete = () => {
+        setCurrentLocationPoints()
+
         setShouldReset(true);
         setTimeout(() => {
             setShouldReset(false);

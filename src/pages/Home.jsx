@@ -37,7 +37,6 @@ const Home = () => {
         updateUserLocation();
     }, []);
 
-
     return (
         <div>
             <HomeHeader/>

@@ -52,7 +52,6 @@ const CreateEvent = () => {
 
         addEvent(state).then(
             (e) => {
-                console.log(e);
                 sendNewEventNotification(state);
                 navigate(`/event/${e}`);
                 toast("Event created successfully", {type: "success"})

@@ -1,12 +1,12 @@
 import {GoogleMap, InfoWindow, MarkerF} from "@react-google-maps/api";
 import {useEffect, useState} from "react";
-import location from "../../../images/location.png";
+import locationIcon from "../../../images/location.png";
 import {ROUTES} from "../../../routes";
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import { mapStyle } from "./mapStyle";
-import { CustomMarker } from "./customMarker";
-import { EventRepeat } from "@mui/icons-material";
+
+import { useSelector } from "react-redux";
 
 
 
@@ -17,8 +17,8 @@ const mapContainerStyle = {
 const Map = ({center, events, height, onUserLocationChange}) => {
     const [selected, setSelected] = useState(null);
     const [userPosition, setUserPosition] = useState(null);
+    const location = useSelector(state => state.LocationReducer.location)
     let isEventsArray = false;
-    const {URL, createMarker} = CustomMarker();
     const navigate = useNavigate()
     /* convert events to array of an object */
     /* check if events is an array */
@@ -39,8 +39,8 @@ const Map = ({center, events, height, onUserLocationChange}) => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 setUserPosition({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
+                    lat: location.latitude,
+                    lng: location.longitude,
                 });
             },
             (error) => console.log("error")
@@ -101,7 +101,7 @@ const Map = ({center, events, height, onUserLocationChange}) => {
             )}
 
             {/* Show a marker for the user's current position */}
-            {userPosition && <MarkerF position={userPosition} icon={location}/>}
+            {userPosition && <MarkerF position={userPosition} icon={locationIcon}/>}
 
 
             {selected ? (

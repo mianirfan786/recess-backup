@@ -11,6 +11,9 @@ import throttle from "lodash/throttle";
 import {usePositionContext} from "../context/positionContext";
 import "../styles/location.scss"
 import { getUserLocationCity } from "../firebase/functions/event";
+import LocationHook from "../hooks/useLocationHook";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoaded, setLocation, setPositionPoints,setPlaceID, setplaceID } from "../store/LocationSlice";
 
 function loadScript(src, position, id) {
     if (!position) {
@@ -23,66 +26,40 @@ function loadScript(src, position, id) {
     script.src = src;
     position.appendChild(script);
 }
+const serviceOptions = {
+    // componentRestrictions: { country: "ng" },
+    fields: ["address_components", "geometry", "icon", "name"],
+   };
 
 const autocompleteService = {current: null};
+const geocoder = new window.google.maps.Geocoder();
 
 export default function GoogleAutocomplete({onChange, onReset}) {
-    const [value, setValue] = React.useState(null);
+    const location = useSelector(state => state.LocationReducer.location)
+    const placeID = useSelector(state => state.LocationReducer.placeID)
+    const loaded = useSelector(state => state.LocationReducer.loaded)
     const [inputValue, setInputValue] = React.useState("");
     const [options, setOptions] = React.useState([]);
     const [touched, setTouched] = React.useState(false);
-    const loaded = React.useRef(false);
     const [initLocation, setInitLocation] = useState(null);
+    const {setPoints,setCurrentLocationPoints} = LocationHook()
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        if(loaded){
+            setCurrentLocationPoints()
+        }
+        dispatch(setLoaded(false))
+    },[loaded])
 
     const {address} = usePositionContext();
+    
     useEffect(() => {
-        if(address)
-        {
-            getUserLocationCity().then((userAddress)=>{
-                let city = userAddress.split(",")[0]       
-                let state = address.principalSubdivisionCode.split("-")[1]
-                setValue({
-                    description: `${city}, ${state}`,
-                    structured_formatting: {
-                        main_text: city,
-                        secondary_text: `${state}`,
-                    },
-                });
-                
-             })
+        if (location) {
+            onChange(location);
         }
-     
+    }, [location]);
 
-        // if (address) {
-        //     if (initLocation !== null)
-        //         setInitLocation(address);
-        //     setValue({
-        //         description: `${address.city}, ${address.principalSubdivision}`,
-        //         structured_formatting: {
-        //             main_text: address.city,
-        //             secondary_text: `${address.principalSubdivision}`,
-        //         },
-        //     });
-        // }
-    }, [address, onReset]);
-
-    useEffect(() => {
-        if (value) {
-            onChange(value);
-        }
-    }, [value]);
-
-    if (typeof window !== "undefined" && !loaded.current) {
-        if (!document.querySelector("#google-maps")) {
-            loadScript(
-                `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`,
-                document.querySelector("head"),
-                "google-maps"
-            );
-        }
-
-        loaded.current = true;
-    }
     const styles = {
         input: {
           '& .MuiOutlinedInput-root': {
@@ -97,12 +74,12 @@ export default function GoogleAutocomplete({onChange, onReset}) {
             },
         },
       }
-    const fetch = React.useMemo(
+    const onFetch = React.useMemo(
         () =>
             throttle((request, callback) => {
                 autocompleteService.current.getPlacePredictions(
-                    {...request, componentRestrictions: {country: "us"}},
-                    callback
+                    {...request,componentRestrictions: {country: "us"}},
+                    callback,
                 );
             }, 200),
         []
@@ -120,38 +97,75 @@ export default function GoogleAutocomplete({onChange, onReset}) {
         }
 
         if (inputValue === "") {
-            setOptions(value ? [value] : []);
+            setOptions(location ? [location] : []);
             return undefined;
         }
-
-        fetch({input: inputValue}, (results) => {
+        onFetch({input: inputValue}, async (results) => {
             const newResults = []
             for(let i = 0; i < results.length; i++) {
                 results[i].description = results[i].description.replace(/, USA/g, "");
                 results[i].structured_formatting.secondary_text = results[i].structured_formatting.secondary_text.replace(/, USA/g, "");
                 newResults.push(results[i]);
             }
-
+          
             if (active) {
                 let newOptions = [];
 
-                if (value) {
-                    newOptions = [value];
-                }
+                // if (location) {
+                //     newOptions = [location];
+                // }
 
                 if (newResults) {
                     newOptions = [...newOptions, ...newResults];
                 }
-
                 setOptions(newOptions);
             }
+            
+           
         });
 
         return () => {
             active = false;
         };
-    }, [value, inputValue, fetch]);
+    }, [inputValue, onFetch]);
 
+    useEffect(()=>{
+        const onPlaceID = async ()=>{        
+            if(placeID!=="")
+           { await geocoder.geocode({ placeId: placeID,  }, (results_geo, status) => {
+                if (status === "OK") {
+                    const result = results_geo[0];
+                    const { lat, lng } = result.geometry.location;
+                    const stateCode = result.address_components.find(component => component.types.includes("administrative_area_level_1")).short_name;
+                    const cityCode = result.address_components.find(component => component.types.includes("locality")).short_name;  
+
+                    const latitude = lat();
+                    const longitude = lng()
+                      dispatch(setLocation({
+                        description: `${cityCode}, ${stateCode}`,
+                        structured_formatting: {
+                            main_text: cityCode,
+                            secondary_text: stateCode,
+                        }
+                    }))
+                    
+                    dispatch(setPositionPoints({
+                        lat: latitude,
+                        lng: longitude,
+                      }))
+                    setPoints({
+                      lat: latitude,
+                      lng: longitude,
+                    })
+                    setOptions([])
+
+                } else {
+                  console.error(`Geocoding failed: ${status}`);
+                }
+              });}
+        }
+        onPlaceID()
+    },[placeID])
 
     return (
         <Autocomplete
@@ -163,17 +177,24 @@ export default function GoogleAutocomplete({onChange, onReset}) {
             options={options}
             includeInputInList
             filterSelectedOptions
+            fetchDetails={true}
             onClick={() => {
                 if (!touched) {
                     setTouched(true);
                 }
             }}
-            value={value}
+            isOptionEqualToValue={(option, value) =>
+                option.description === value.description &&
+                option.structured_formatting.main_text ===
+                  value.structured_formatting.main_text &&
+                option.structured_formatting.secondary_text ===
+                  value.structured_formatting.secondary_text
+              }
+            value={location}
             onChange={(event, newValue) => {
                 setOptions(newValue ? [newValue, ...options] : options);
                 /* remove everythin after the last occorance of , */
-                newValue.description = newValue.description.split(",").slice(0, 2).join(",");
-                setValue(newValue);
+                dispatch(setplaceID(newValue.place_id))
             }}
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
@@ -197,6 +218,7 @@ export default function GoogleAutocomplete({onChange, onReset}) {
                                 <Box
                                     component={LocationOnIcon}
                                     sx={{color: "text.secondary", mr: 2}}
+                                    onClick={()=>console.log("location")}
                                 />
                             </Grid>
                             <Grid item xs>
