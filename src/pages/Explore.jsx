@@ -23,7 +23,6 @@ const Explore = () => {
             <ExploreHeader/>
             <ExploreView
                 filters={appliedFilters}
-                tags={tags}
             />
             <TagModelExplore 
             tags={tags}

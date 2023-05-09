@@ -37,7 +37,7 @@ const _event = {
         "Loading...",
 };
 
-const EventDetails = ({event = _event, markers}) => {
+const EventDetails = ({event = _event}) => {
     const {id} = useParams();
     const [title, setTitle] = useState(event.title);
     const [location, setLocation] = useState(event.location);
@@ -201,7 +201,7 @@ const EventDetails = ({event = _event, markers}) => {
                                 Map
                             </Typography>
                             <Box borderRadius={3} overflow="hidden">
-                                <MapView height="500px" markers={address} center={address}/>
+                                <MapView height="500px" markers={event} center={address}/>
                             </Box>
                         </Stack>
                         <Stack gap={1}>

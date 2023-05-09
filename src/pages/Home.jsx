@@ -12,10 +12,12 @@ import Location from "../components/Home/Location";
 import {useEffect, useState} from "react";
 import {setUserToken} from "../firebase/functions/messaging";
 import {updateUserLocation} from "../firebase/functions/user";
+import { useSelector } from "react-redux";
 
 const Home = () => {
     const {openModal, setOpenModal} = useModalsContext();
-    const [currentCity, setCurrentCity] = useState("");
+    const location = useSelector(state=>state.LocationReducer.location)
+    const [currentCity, setCurrentCity] = useState(location.structured_formatting.main_text);
     const [initLoad, setInitLoad] = useState(0);
     const [updateKeywords, setUpdateKeywords] = useState(0);
     document.body.scrollTop = 0;

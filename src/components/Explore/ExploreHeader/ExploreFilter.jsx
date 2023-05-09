@@ -1,5 +1,6 @@
 import {Box, Button} from "@mui/material";
 import {BsViewList} from "react-icons/bs";
+import {IoMapOutline} from "react-icons/io5";
 import MapiconSVG from "../../../icons/MapiconSVG";
 import "../../../styles/main.scss"
 

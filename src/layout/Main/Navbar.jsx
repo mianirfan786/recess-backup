@@ -72,7 +72,7 @@ const Navbar = () => {
                                 px: 4,
                                 mt: 1,
                                 borderRadius: "25px",
-                                boxShadow: 1,
+                                // boxShadow: 1,
                             }}
                         >
                             <Box sx={{display: {xs: "none", sm: "block"}}}>
