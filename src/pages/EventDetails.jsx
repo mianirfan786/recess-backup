@@ -33,12 +33,12 @@ const _event = {
     endTime: "Loading...",
     cost: "Loading...",
     photos: golf,
-    description:
-        "Loading...",
+    description:"Loading...",
 };
 
 const EventDetails = ({event = _event}) => {
     const {id} = useParams();
+    const [marker, setMarker] = useState(event)
     const [title, setTitle] = useState(event.title);
     const [location, setLocation] = useState(event.location);
     const [maxParticipants, setmaxParticipants] = useState(event.maxParticipants);
@@ -52,7 +52,7 @@ const EventDetails = ({event = _event}) => {
     const [address, setAddress] = useState(event.address);
     const [users, setUsers] = useState([]);
     const [IsUserJoined, setIsUserJoined] = useState(false);
-    const [displayAddress, setDisplayAddress] = useState(event.address.displayAddress ? event.address.displayAddress : "");
+    const [displayAddress, setDisplayAddress] = useState(event.displayAddress ? event.displayAddress : "");
     const [creator, setCreator] = useState(event.CreatedBy);
     const [eventFlagged, setEventFlagged] = useState(false);
 
@@ -60,13 +60,12 @@ const EventDetails = ({event = _event}) => {
     document.documentElement.scrollTop = 0;
     window.scrollTo(0, 0);
 
-
-
     useEffect(() => {
         checkIfEventIsFlaggedByCurrentUser(id).then(r =>{
             setEventFlagged(r)
         })
         ViewEventById(id).then((data) => {
+            setMarker(data);
             setTitle(data.title);
             setmaxParticipants(data.maxParticipants);
             setStartTime(timeTo12HrFormat(data.startTime));
@@ -201,7 +200,7 @@ const EventDetails = ({event = _event}) => {
                                 Map
                             </Typography>
                             <Box borderRadius={3} overflow="hidden">
-                                <MapView height="500px" markers={event} center={address}/>
+                                {marker.CreatedBy?<MapView height="500px" markers={marker} center={address}/>:<></>}
                             </Box>
                         </Stack>
                         <Stack gap={1}>

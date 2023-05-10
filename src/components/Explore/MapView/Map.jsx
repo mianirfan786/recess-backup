@@ -52,13 +52,12 @@ const MapBox = ({  events, height, onUserLocationChange }) => {
      })
   }
 }
-
   return (
     <div style={{width: "100%", height: "100vh"}}>
     <Map
       initialViewState={{
-        latitude: events?.coordinates?events.coordinates.lat:positionPoints.lat,
-        longitude: events?.coordinates?events.coordinates.lng:positionPoints.lng,
+        latitude: events?events.latitude:positionPoints.lat,
+        longitude: events?events.longitude:positionPoints.lng,
         zoom: 12,
       }}
       mapboxAccessToken={"pk.eyJ1IjoiYXItcmVobWFuMTM1IiwiYSI6ImNsZTJmYjl5djAwdnAzd28yczFnemNtZGEifQ.riw8y9JzuIU59NDfoe0NcA"}
@@ -82,14 +81,11 @@ const MapBox = ({  events, height, onUserLocationChange }) => {
                 
                     <Marker
                       key={events?.id}
-                      latitude={events?.coordinates.lat}
-                      longitude={events?.coordinates.lng}
+                      latitude={events?.latitude}
+                      longitude={events?.longitude}
                       anchor="top"
-                      onClick={()=>{
-                        setSelected(events);
-                      }}
                     >
-                        <CustomMarker photo={events.photos}   event={events} setSelected={setSelected}/>
+                        <CustomMarker photo={events.photos[0]}  event={events} setSelected={setSelected}/>
                     </Marker>)}
 
         {/* Show a marker for the user's current position */}
@@ -101,8 +97,8 @@ const MapBox = ({  events, height, onUserLocationChange }) => {
 
              {selected ? (
                  <Popup
-                 longitude={selected.coordinates?selected.coordinates.lng:selected.longitude}
-                 latitude={selected.coordinates?selected.coordinates.lat:selected.latitude}
+                 longitude={selected?.longitude}
+                 latitude={selected?.latitude}
                  closeButton={true}
                  closeOnClick={false}
                  anchor="top"
