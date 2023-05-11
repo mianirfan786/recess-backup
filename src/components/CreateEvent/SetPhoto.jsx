@@ -40,7 +40,6 @@ const SetPhoto = () => {
                             setState((prev) => ({
                                 ...prev,
                                 photos: [...e.target.files, ...prev.photos].slice(0, 3),
-                                marker: [...e.target.files, ...prev.photos].slice(0, 1)
                             }))
                         }
                         }

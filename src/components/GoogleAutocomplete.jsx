@@ -14,6 +14,8 @@ import { getUserLocationCity } from "../firebase/functions/event";
 import LocationHook from "../hooks/useLocationHook";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoaded, setLocation, setPositionPoints,setPlaceID, setplaceID } from "../store/LocationSlice";
+import { GetCurrentUserDetails } from "../firebase/functions/user";
+import { setUserInfo } from "../store/UserSlice";
 
 function loadScript(src, position, id) {
     if (!position) {
@@ -48,6 +50,9 @@ export default function GoogleAutocomplete({onChange, onReset}) {
     useEffect(()=>{
         if(loaded){
             setCurrentLocationPoints()
+            GetCurrentUserDetails().then((data) => {
+                dispatch(setUserInfo(data))
+            })
         }
         dispatch(setLoaded(false))
     },[loaded])
@@ -218,7 +223,6 @@ export default function GoogleAutocomplete({onChange, onReset}) {
                                 <Box
                                     component={LocationOnIcon}
                                     sx={{color: "text.secondary", mr: 2}}
-                                    onClick={()=>console.log("location")}
                                 />
                             </Grid>
                             <Grid item xs>

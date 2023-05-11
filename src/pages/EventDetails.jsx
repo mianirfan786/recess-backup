@@ -21,6 +21,7 @@ import {timeTo12HrFormat} from "../utils/timeFunctions";
 import {toast} from "react-toastify";
 
 const _event = {
+    CreatedBy:"",
     id: 1,
     title: "Loading...",
     location: "Loading...",
@@ -200,7 +201,7 @@ const EventDetails = ({event = _event}) => {
                                 Map
                             </Typography>
                             <Box borderRadius={3} overflow="hidden">
-                                {marker.CreatedBy?<MapView height="500px" markers={marker} center={address}/>:<></>}
+                                {marker?.CreatedBy !=="" ?<MapView height="500px" markers={marker} center={address}/>:<></>}
                             </Box>
                         </Stack>
                         <Stack gap={1}>

@@ -1,22 +1,11 @@
 import {Avatar, InputBase, Stack} from "@mui/material";
 import {AddCommentInEventById} from "../../firebase/functions/event/event-comments";
-import {GetCurrentUserDetails} from "../../firebase/functions/user";
 import {useState} from "react";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const MessageBox = ({onData, id}) => {
-
-    /* get current user */
-    const [user, setUser] = useState({});
-    useEffect(()=>{
-        GetCurrentUserDetails().then(
-            (data) => {
-                setUser(data);
-            }
-        );
-    },[])
-        
-
+    const userInfo = useSelector(state => state.UserReducer.userInfo)
 
     const demo = (e) => {
         if (e.key === "Enter") {
@@ -39,7 +28,7 @@ const MessageBox = ({onData, id}) => {
             <img style={{
                 width: "46px",
                 height: "46px",
-            }} src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"} />
+            }} src={userInfo?.photoURL ? userInfo.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"} />
             <InputBase
                 onKeyPress={demo}
                 fullWidth

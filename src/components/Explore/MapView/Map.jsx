@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Map, { Marker, Popup} from 'react-map-gl';
-// import location from "../../../images/location.png";
 import { ReactComponent as Location  } from "../../../images/location.svg";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-// import { mapStyle } from "./mapStyle";
 import { CustomMarker } from "./customMarker";
-// import { EventRepeat } from "@mui/icons-material";
 import { ROUTES } from "../../../routes";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useSelector } from "react-redux";
 let center = {}
 
-const MapBox = ({  events, height, onUserLocationChange }) => {
+const MapBox = ({  events, height }) => {
   const positionPoints = useSelector(state => state.LocationReducer.positionPoints)
   
   const [selected, setSelected] = useState(null);
@@ -35,13 +32,6 @@ const MapBox = ({  events, height, onUserLocationChange }) => {
     isEventsArray = true;
   }
 
-  useEffect(() => {
-    if (isEventsArray) {
-      onUserLocationChange(userPosition);
-    }
-  }, [userPosition]);
-
-
   const handleClickedMap = (e) => {
        setSelected(null);
        /* set userPosition where i have clicked */
@@ -56,8 +46,8 @@ const MapBox = ({  events, height, onUserLocationChange }) => {
     <div style={{width: "100%", height: "100vh"}}>
     <Map
       initialViewState={{
-        latitude: events?events.latitude:positionPoints.lat,
-        longitude: events?events.longitude:positionPoints.lng,
+        latitude: events.latitude ?? positionPoints.lat,
+        longitude:events.longitude ?? positionPoints.lng,
         zoom: 12,
       }}
       mapboxAccessToken={"pk.eyJ1IjoiYXItcmVobWFuMTM1IiwiYSI6ImNsZTJmYjl5djAwdnAzd28yczFnemNtZGEifQ.riw8y9JzuIU59NDfoe0NcA"}

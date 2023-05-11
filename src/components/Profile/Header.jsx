@@ -8,26 +8,20 @@ import {doc, getFirestore, updateDoc} from "firebase/firestore";
 import app from "../../firebase/config";
 import {toast} from "react-toastify";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { setUserInfo } from "../../store/UserSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const Header = () => {
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
+    const dispatch = useDispatch()
+    const userInfo = useSelector(state => state.UserReducer.userInfo)
+    const [name, setName] = useState(userInfo.displayName);
+    const [phone, setPhone] = useState(userInfo.phone?userInfo.phone:"");
     const [oldPhone, setOldPhone] = useState("");
     const [isPhoneVerified, setIsPhoneVerified] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [user, setUser] = useState({});
     const [tempPhotoURL, setTempPhotoURL] = useState(null);
-
     const [isUpdating, setIsUpdating] = useState(false)
-
-    useEffect(() => {
-        GetCurrentUserDetails().then(r => {
-            setUser(r);
-            setName(r.displayName);
-            setPhone(r.phone ? r.phone : "");
-        });
-    }, []);
 
     useEffect(() => {
         toast(errorMessage, {type: "error"})
@@ -45,11 +39,11 @@ const Header = () => {
         if (name === "") {
             toast("Name cannot be empty!", {type: "error"});
         }
-        else if (name === user.displayName) {
+        else if (name === userInfo.displayName) {
             toast("Name is same as before!", {type: "error"});
         }
         else{
-            await updateDoc(doc(db, "users", user.uid), {
+            await updateDoc(doc(db, "users", userInfo.uid), {
                 displayName: name
             });
             toast("Name updated!", {type: "success"});
@@ -67,14 +61,14 @@ const Header = () => {
                 const downloadURL = await getDownloadURL(storageRef);
 
                 // Update the user document in Firestore with the download URL
-                const userRef = doc(db, 'users', user.uid);
+                const userRef = doc(db, 'users', userInfo.uid);
                 await updateDoc(userRef, { photoURL: downloadURL });
 
                 // Update the local state with the new photo URL
-                setUser({
-                    ...user,
+                dispatch(setUserInfo({
+                    ...userInfo,
                     photoURL: downloadURL,
-                });
+                }));
             } catch (error) {
                 console.error(error);
             }
@@ -104,7 +98,7 @@ const Header = () => {
                 if (res.user) {
                     setIsPhoneVerified(true);
                     setOldPhone(phone);
-                    updateDoc(doc(db, "users", user.uid), {
+                    updateDoc(doc(db, "users", userInfo.uid), {
                         phone: phone,
                         isPhoneVerified: true
                     });
@@ -158,7 +152,7 @@ const Header = () => {
                             borderRadius: "50%",
                             overflow: "hidden",
                         }}
-                        src={user?.photoURL ? user.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"}
+                        src={userInfo?.photoURL ? userInfo.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"}
                         alt="user"
                     />
                     <input

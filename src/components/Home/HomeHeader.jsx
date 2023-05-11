@@ -7,27 +7,29 @@ import {ROUTES} from "../../routes";
 import {useEffect, useState} from "react";
 import {GetCurrentUserDetails} from "../../firebase/functions/user";
 import Avatar from '@mui/material/Avatar';
+import { setUserInfo } from "../../store/UserSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomeHeader = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const userInfo = useSelector(state => state.UserReducer.userInfo)
     const [userName, setUserName] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [userPhoto, setUserPhoto] = useState("");
     useEffect(
         () => {
-            GetCurrentUserDetails().then((data) => {
-                setUserPhoto(data.photoURL)
-                setUserName(data.displayName);
-                if (data.displayName.split(" ").length >= 1) {
-                    setFirstName(data.displayName.split(" ")[0]);
-                    setLastName(data.displayName.split(" ")[1]);
-                    setUserPhoto(data.photoURL);
+                setUserPhoto(userInfo.photoURL)
+                setUserName(userInfo.displayName);
+                if (userInfo.displayName.split(" ").length >= 1) {
+                    setFirstName(userInfo.displayName.split(" ")[0]);
+                    setLastName(userInfo.displayName.split(" ")[1]);
+                    setUserPhoto(userInfo.photoURL);
                 } else {
-                    setFirstName(data.displayName);
+                    setFirstName(userInfo.displayName);
                 }
-            });
-        }, [])
+        }, [userInfo])
 
     return (
         <Container sx={{py: {xs: 3.5, md: 4}}} >

@@ -94,9 +94,9 @@ const ExploreView = ({filters}) => {
                 }
     },[view, filters, location,tags]);
 
-    const updateLocation = (location) => {
-        setUserLocation(location);
-    }
+    // const updateLocation = (location) => {
+    //     setUserLocation(location);
+    // }
 
 
     return (<Box className="borders" sx={{bgcolor: "info.main", pt: {xs: 2, md: 4}}}>
@@ -152,7 +152,7 @@ const ExploreView = ({filters}) => {
 
         {/* show based on view */}
         <Box sx={{pt: {xs: 2, md: 4}, pb: 0}}>
-            {view === "list" ? (<ListView events={events}/>) : (<MapView  setUserLocation={updateLocation} filters={filters} events={events}/>)}
+            {view === "list" ? (<ListView events={events}/>) : (<MapView   filters={filters} events={events}/>)}
         </Box>
     </Box>);
 };

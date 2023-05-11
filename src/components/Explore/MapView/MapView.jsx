@@ -8,7 +8,7 @@ import marker5 from "../../../images/marker-5.png";
 import Map from "./Map";
 import {useState} from "react";
 
-const MapView = ({markers, height, events, setUserLocation}) => {
+const MapView = ({markers, height, events}) => {
     const [center, setCenter] = useState({});
     if (events)
         markers = events
@@ -16,9 +16,9 @@ const MapView = ({markers, height, events, setUserLocation}) => {
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     });
 
-    const onUserLocationChange = (location) => {
-        setUserLocation(location);
-    }
+    // const onUserLocationChange = (location) => {
+    //     setUserLocation(location);
+    // }
 
     if (loadError) return "Error loading maps";
     if (!isLoaded) {
@@ -31,7 +31,7 @@ const MapView = ({markers, height, events, setUserLocation}) => {
     if (isLoaded && !loadError) {
         return (
             <div>
-                <Map onUserLocationChange={onUserLocationChange} center={center} events={markers} height={height}/>
+                <Map  center={center} events={markers} height={height}/>
             </div>
         );
     }

@@ -1,17 +1,19 @@
-import {Box, IconButton, Stack, Typography} from "@mui/material";
+import {Avatar, Box, IconButton, Stack, Typography} from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import user from "../../images/user.jpg";
 import {useNavigate} from "react-router-dom";
 import {ROUTES} from "../../routes";
+import { useSelector } from "react-redux";
 
 const Header = () => {
     const navigate = useNavigate();
+    const userInfo = useSelector(state => state.UserReducer.userInfo)
 
     return (
-        <Stack position="relative" flexDirection="row">
+        <Stack position="relative" flexDirection="row" marginTop={"1rem"}>
             <Box sx={{transform: "translateY(-50%)"}} top="50%" position="absolute">
-                <Box
-                    maxWidth={{xs: "70px", sm: "100px"}}
+                {/* <Box
+                    maxWidth={{xs: "100px", sm: "100px"}}
                     sx={{aspectRatio: "1/1"}}
                     borderRadius="50%"
                     overflow="hidden"
@@ -19,16 +21,9 @@ const Header = () => {
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
-                >
-                    <img
-                        style={{
-                            objectFit: "cover",
-                            width: "100%",
-                        }}
-                        src={user}
-                        alt="user"
-                    />
-                </Box>
+                > */}
+                    <Avatar sx={{width:"58px", height:"58px"}} src={userInfo.photoURL ? userInfo.photoURL : "https://cdn1.iconfinder.com/data/icons/messenger-and-society/16/user_person_avatar_unisex-512.png"}/>
+                {/* </Box> */}
             </Box>
             <Typography
                 width="100%"

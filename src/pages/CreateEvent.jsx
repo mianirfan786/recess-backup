@@ -19,7 +19,6 @@ const CreateEvent = () => {
         title: "",
         description: "",
         date: "",
-        marker: [],
         startTime: "",
         endTime: "",
         selected: "",
@@ -50,13 +49,17 @@ const CreateEvent = () => {
             return;
         }
 
-        addEvent(state).then(
-            (e) => {
-                sendNewEventNotification(state);
-                navigate(`/event/${e}`);
-                toast("Event created successfully", {type: "success"})
-            }
-        );
+        try {
+            addEvent(state).then(
+                (e) => {
+                    sendNewEventNotification(state);
+                    navigate(`/event/${e}`);
+                    toast("Event created successfully", {type: "success"})
+                }
+            );
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
