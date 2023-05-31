@@ -10,12 +10,14 @@ let currentUser = null;
 
 /* join event :: Start */
 export const JoinEventById = async (id, noOfAttendees) => {
-
+    debugger
     currentUser = await getCurrentUser();
     const eventRef = doc(db, "events", id);
     const event = await getDoc(eventRef);
+    debugger
     if (event.exists) {
         const data = event.data();
+        debugger
         if (event.data().joined === undefined) {
             return updateDoc(eventRef, {
                 joined: [currentUser]
@@ -34,13 +36,15 @@ export const JoinEventById = async (id, noOfAttendees) => {
 /* join event :: End */
 
 export const HasUserJoinedEvent = async (id) => {
+    debugger
     currentUser = await getCurrentUser();
     const eventRef = doc(db, "events", id);
     const event = await getDoc(eventRef);
-    if (event.exists) {
-        const data = event.data();
-        if (data.joined !== undefined)
-            return data.joined.includes(currentUser);
+    debugger
+    if (event.exists()) {
+        const data = event?.data();
+        if (data?.joined !== undefined)
+            return data?.joined.includes(currentUser);
         else
             return false;
     }

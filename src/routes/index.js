@@ -22,6 +22,7 @@ export const ROUTES = {
     PAYMENT_DETAILS: "/payment-details",
     NOTIFICATIONS_SETTINGS: "/notifications-settings",
     CREATE_EVENT: "/create-event",
+    PAYMENT_WITHDRAW: "/payment-withdraw",
 };
 
 export const isRouteProtected = (route) => {

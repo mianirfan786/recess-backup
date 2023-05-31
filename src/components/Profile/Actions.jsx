@@ -28,6 +28,11 @@ const actions = [
         link: ROUTES.PRIVACY_POLICY,
     },
     {
+        icon: PrivacyPolicy(),
+        title: "Payment Withdraw",
+        link: ROUTES.PAYMENT_WITHDRAW,
+    },
+    {
         icon: ResetPassword(),
         title: "Reset Password",
         link: ROUTES.RESET_ACCOUNT_PASSWORD,

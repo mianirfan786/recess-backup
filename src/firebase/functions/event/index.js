@@ -28,6 +28,7 @@ let currentUser = null;
 
 /* add event :: Start */
 export const addEvent = async (event) =>{
+    debugger
     const eventId = Math.random().toString(36).substring(2);
     currentUser = await getCurrentUser();
     const reader = new FileReader();
@@ -45,7 +46,7 @@ export const addEvent = async (event) =>{
                 })
             );
             
-
+            debugger
             // Add photo URLs to the event object
             const eventWithPhotos = {...event, photos: photoUrls};
                 
@@ -62,6 +63,7 @@ export const addEvent = async (event) =>{
                 longitude: event.address.longitude,
                 comments: [],
             });
+            debugger
             /* after Doc is set */
         })
     };
@@ -72,8 +74,10 @@ export const addEvent = async (event) =>{
 
 /* view event by id :: Start */
 export const ViewEventById = async (id) => {
+    debugger
     const docRef = doc(db, "events", id);
     const docSnap = await getDoc(docRef);
+    debugger
     if (docSnap.exists()) {
         return docSnap.data();
     } else {

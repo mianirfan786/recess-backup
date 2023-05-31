@@ -22,6 +22,7 @@ import AddCardDetails from "../pages/AddCardDetails";
 import CreateEvent from "../pages/CreateEvent";
 import ResetPassword from "../pages/ResetPassword";
 import Events from "../pages/Events";
+import PaymentWithdraw from "../pages/PaymentWithdraw";
 
 const routes = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const routes = createBrowserRouter([
             {
                 path: ROUTES.PROFILE,
                 element: <Profile/>,
+            },
+            {
+                path: ROUTES.PAYMENT_WITHDRAW,
+                element: <PaymentWithdraw/>,
             },
             {
                 path: ROUTES.LOGIN,

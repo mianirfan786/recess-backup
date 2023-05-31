@@ -62,32 +62,35 @@ const EventDetails = ({event = _event}) => {
     window.scrollTo(0, 0);
 
     useEffect(() => {
+        debugger
         checkIfEventIsFlaggedByCurrentUser(id).then(r =>{
             setEventFlagged(r)
         })
         ViewEventById(id).then((data) => {
+            debugger
             setMarker(data);
-            setTitle(data.title);
-            setmaxParticipants(data.maxParticipants);
-            setStartTime(timeTo12HrFormat(data.startTime));
-            setEndTime(timeTo12HrFormat(data.endTime));
-            setDate((data.date).toDate());
-            setPhotos(data.photos);
-            setKeywords(data.keywords);
-            setCost(event.cost === 0 ? "Free" : data.cost);
-            setDescription(data.description);
-            setAddress(data.address);
-            setCreator(data.CreatedBy)
-            setLocation(data.address.city + ", " + data.address.principalSubdivision + ", " + data.address.countryCode)
-            setDisplayAddress(data.address.displayAddress ? data.address.displayAddress : event.displayAddress);
+            setTitle(data?.title);
+            setmaxParticipants(data?.maxParticipants);
+            setStartTime(timeTo12HrFormat(data?.startTime));
+            setEndTime(timeTo12HrFormat(data?.endTime));
+            setDate((data?.date).toDate());
+            setPhotos(data?.photos);
+            setKeywords(data?.keywords);
+            setCost(event?.cost === 0 ? "Free" : data.cost);
+            setDescription(data?.description);
+            setAddress(data?.address);
+            setCreator(data?.CreatedBy)
+            setLocation(data?.address.city + ", " + data?.address.principalSubdivision + ", " + data.address.countryCode)
+            setDisplayAddress(data?.address.displayAddress ? data.address.displayAddress : event.displayAddress);
             /* change event.date */
-            GetUsersByIds(data.joined).then((usersData) => {
+            GetUsersByIds(data?.joined).then((usersData) => {
                 /* check array for null */
                 const crrData = usersData.filter((user) => user !== null);
                 setUsers(crrData);
             });
         });
         HasUserJoinedEvent(id).then((data) => {
+            debugger
             setIsUserJoined(data);
         })
     }, []);
