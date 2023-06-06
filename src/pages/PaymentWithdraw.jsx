@@ -4,7 +4,8 @@ import CreditCard from "../components/CreditCard";
 import {useModalsContext} from "../modals/ModalsContext";
 import { MODALS } from "../modals/modals";
 import PaymentWithdrwaMoal from "../modals/PaymentWithdrwaModal";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 
 const paymentDetail = [
@@ -15,7 +16,16 @@ const paymentDetail = [
 
 
 export const PaymentCard = ({cardType, paymentPrice}) => {
+    useEffect( () => {
+        const url = "https://us-central1-recessmobile-d2ab0.cloudfunctions.net/payment_withdraw";
+        debugger
+       axios.get(url).then((res)=> {
+            console.log(res)
+        }).catch((e)=> console.log(e));
+        debugger
 
+
+    },[])
 
 
     return (

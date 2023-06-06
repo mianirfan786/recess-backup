@@ -30,7 +30,8 @@ function PaymentForm({open, handleClose, displayAddress, cost, currentEvent, eve
         setProcessing(true);
 
         const url = process.env.REACT_APP_FIREBASE_DATABASE_URL+"/create_payment"
-      
+
+
         const { data: { clientSecret } } = await axios.post(url, { amount: (cost * attendees) * 100, currency: 'usd' });
         const cardElement = elements.getElement(CardElement);
         debugger

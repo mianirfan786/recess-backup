@@ -16,6 +16,7 @@ const PaymentWithdrawModal = ({ open, onClose , payment }) => {
   const elements = useElements();
 
 
+
   const onModalClose = () => {
       setPaymentPrice(payment)
     onClose();
@@ -64,6 +65,9 @@ const PaymentWithdrawModal = ({ open, onClose , payment }) => {
     setPaymentPrice(0);
     onClose();
   };
+
+
+
   return (
     <DefaultModal open={open} onClose={onModalClose}>
       <div>
